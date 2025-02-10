@@ -1,0 +1,223 @@
+2025-02-10 16:03:18,923 - get_images - INFO - Connected to node_1 at http://192.168.195.70:5001
+2025-02-10 16:03:18,923 - get_images - INFO - Connected to node_2 at http://192.168.195.56:5001
+2025-02-10 16:03:19,971 - get_images - ERROR - Capture error from node_2: 500: Capture failed: [0:10:26.815660876] [1405] [1;32m INFO [1;37mCamera [1;34mcamera_manager.cpp:327 [0mlibcamera v0.4.0+51-ca36c77f
+ERROR: *** no cameras available ***
+
+2025-02-10 16:03:20,971 - get_images - ERROR - Capture error from node_2: 500: Capture failed: [0:10:27.822674386] [1410] [1;32m INFO [1;37mCamera [1;34mcamera_manager.cpp:327 [0mlibcamera v0.4.0+51-ca36c77f
+ERROR: *** no cameras available ***
+
+2025-02-10 16:03:21,969 - get_images - ERROR - Capture error from node_2: 500: Capture failed: [0:10:28.823122847] [1415] [1;32m INFO [1;37mCamera [1;34mcamera_manager.cpp:327 [0mlibcamera v0.4.0+51-ca36c77f
+ERROR: *** no cameras available ***
+
+2025-02-10 16:03:22,985 - get_images - ERROR - Capture error from node_2: 500: Capture failed: [0:10:29.832580852] [1420] [1;32m INFO [1;37mCamera [1;34mcamera_manager.cpp:327 [0mlibcamera v0.4.0+51-ca36c77f
+ERROR: *** no cameras available ***
+
+2025-02-10 16:03:23,702 - get_images - INFO - Received metadata from node_1: {'filename': 'capture_20250210_160319_3.dng', 'timestamp': '20250210_160319', 'node_id': '3', 'size': 10137262, 'chunk_size': 1048576}
+2025-02-10 16:03:24,035 - get_images - ERROR - Capture error from node_2: 500: Capture failed: [0:10:30.861350359] [1425] [1;32m INFO [1;37mCamera [1;34mcamera_manager.cpp:327 [0mlibcamera v0.4.0+51-ca36c77f
+ERROR: *** no cameras available ***
+
+2025-02-10 16:03:24,636 - get_images - WARNING - Failed to connect to node_3 (http://192.168.1.103:5001): Connection refused by the server. Retrying in 5 seconds...
+2025-02-10 16:03:24,636 - get_images - WARNING - Failed to connect to node_4 (http://192.168.1.104:5001): Connection refused by the server. Retrying in 5 seconds...
+2025-02-10 16:03:25,086 - get_images - ERROR - Capture error from node_2: 500: Capture failed: [0:10:31.914259566] [1430] [1;32m INFO [1;37mCamera [1;34mcamera_manager.cpp:327 [0mlibcamera v0.4.0+51-ca36c77f
+ERROR: *** no cameras available ***
+
+2025-02-10 16:03:26,168 - get_images - ERROR - Capture error from node_2: 500: Capture failed: [0:10:32.994779558] [1435] [1;32m INFO [1;37mCamera [1;34mcamera_manager.cpp:327 [0mlibcamera v0.4.0+51-ca36c77f
+ERROR: *** no cameras available ***
+
+2025-02-10 16:03:26,785 - get_images - INFO - Received complete image from node_1
+2025-02-10 16:03:26,785 - get_images - INFO - Image transfer time from node_1: 3.0829 seconds
+2025-02-10 16:03:26,785 - get_images - INFO - Total time elapsed: 7.9472 seconds
+2025-02-10 16:03:26,801 - get_images - INFO - Saved image from node_1 to received_images\node_1\capture_20250210_160319_3.dng
+2025-02-10 16:03:27,221 - get_images - ERROR - Capture error from node_2: 500: Capture failed: [0:10:34.066012613] [1440] [1;32m INFO [1;37mCamera [1;34mcamera_manager.cpp:327 [0mlibcamera v0.4.0+51-ca36c77f
+ERROR: *** no cameras available ***
+
+2025-02-10 16:03:28,219 - get_images - ERROR - Capture error from node_2: 500: Capture failed: [0:10:35.074528382] [1445] [1;32m INFO [1;37mCamera [1;34mcamera_manager.cpp:327 [0mlibcamera v0.4.0+51-ca36c77f
+ERROR: *** no cameras available ***
+
+2025-02-10 16:03:29,269 - get_images - ERROR - Capture error from node_2: 500: Capture failed: [0:10:36.082496092] [1450] [1;32m INFO [1;37mCamera [1;34mcamera_manager.cpp:327 [0mlibcamera v0.4.0+51-ca36c77f
+ERROR: *** no cameras available ***
+
+2025-02-10 16:03:30,285 - get_images - ERROR - Capture error from node_2: 500: Capture failed: [0:10:37.129554908] [1455] [1;32m INFO [1;37mCamera [1;34mcamera_manager.cpp:327 [0mlibcamera v0.4.0+51-ca36c77f
+ERROR: *** no cameras available ***
+
+2025-02-10 16:03:30,770 - get_images - INFO - Received metadata from node_1: {'filename': 'capture_20250210_160327_3.dng', 'timestamp': '20250210_160327', 'node_id': '3', 'size': 10137262, 'chunk_size': 1048576}
+2025-02-10 16:03:31,336 - get_images - ERROR - Capture error from node_2: 500: Capture failed: [0:10:38.138597342] [1460] [1;32m INFO [1;37mCamera [1;34mcamera_manager.cpp:327 [0mlibcamera v0.4.0+51-ca36c77f
+ERROR: *** no cameras available ***
+
+2025-02-10 16:03:32,408 - get_images - ERROR - Capture error from node_2: 500: Capture failed: [0:10:39.228922787] [1465] [1;32m INFO [1;37mCamera [1;34mcamera_manager.cpp:327 [0mlibcamera v0.4.0+51-ca36c77f
+ERROR: *** no cameras available ***
+
+2025-02-10 16:03:33,485 - get_images - ERROR - Capture error from node_2: 500: Capture failed: [0:10:40.314424100] [1471] [1;32m INFO [1;37mCamera [1;34mcamera_manager.cpp:327 [0mlibcamera v0.4.0+51-ca36c77f
+ERROR: *** no cameras available ***
+
+2025-02-10 16:03:33,601 - get_images - INFO - Received complete image from node_1
+2025-02-10 16:03:33,601 - get_images - INFO - Image transfer time from node_1: 2.8309 seconds
+2025-02-10 16:03:33,601 - get_images - INFO - Total time elapsed: 6.8000 seconds
+2025-02-10 16:03:33,601 - get_images - INFO - Saved image from node_1 to received_images\node_1\capture_20250210_160327_3.dng
+2025-02-10 16:03:34,568 - get_images - ERROR - Capture error from node_2: 500: Capture failed: [0:10:41.386257553] [1476] [1;32m INFO [1;37mCamera [1;34mcamera_manager.cpp:327 [0mlibcamera v0.4.0+51-ca36c77f
+ERROR: *** no cameras available ***
+
+2025-02-10 16:03:35,568 - get_images - ERROR - Capture error from node_2: 500: Capture failed: [0:10:42.428781601] [1481] [1;32m INFO [1;37mCamera [1;34mcamera_manager.cpp:327 [0mlibcamera v0.4.0+51-ca36c77f
+ERROR: *** no cameras available ***
+
+2025-02-10 16:03:35,651 - get_images - WARNING - Failed to connect to node_3 (http://192.168.1.103:5001): Connection refused by the server. Retrying in 5 seconds...
+2025-02-10 16:03:35,651 - get_images - WARNING - Failed to connect to node_4 (http://192.168.1.104:5001): Connection refused by the server. Retrying in 5 seconds...
+2025-02-10 16:03:36,577 - get_images - ERROR - Capture error from node_2: 500: Capture failed: [0:10:43.428615420] [1486] [1;32m INFO [1;37mCamera [1;34mcamera_manager.cpp:327 [0mlibcamera v0.4.0+51-ca36c77f
+ERROR: *** no cameras available ***
+
+2025-02-10 16:03:37,582 - get_images - INFO - Received metadata from node_1: {'filename': 'capture_20250210_160333_3.dng', 'timestamp': '20250210_160333', 'node_id': '3', 'size': 10137262, 'chunk_size': 1048576}
+2025-02-10 16:03:37,603 - get_images - ERROR - Capture error from node_2: 500: Capture failed: [0:10:44.460807010] [1491] [1;32m INFO [1;37mCamera [1;34mcamera_manager.cpp:327 [0mlibcamera v0.4.0+51-ca36c77f
+ERROR: *** no cameras available ***
+
+2025-02-10 16:03:38,674 - get_images - ERROR - Capture error from node_2: 500: Capture failed: [0:10:45.473033952] [1496] [1;32m INFO [1;37mCamera [1;34mcamera_manager.cpp:327 [0mlibcamera v0.4.0+51-ca36c77f
+ERROR: *** no cameras available ***
+
+2025-02-10 16:03:39,771 - get_images - ERROR - Capture error from node_2: 500: Capture failed: [0:10:46.588653957] [1501] [1;32m INFO [1;37mCamera [1;34mcamera_manager.cpp:327 [0mlibcamera v0.4.0+51-ca36c77f
+ERROR: *** no cameras available ***
+
+2025-02-10 16:03:40,473 - get_images - INFO - Received complete image from node_1
+2025-02-10 16:03:40,474 - get_images - INFO - Image transfer time from node_1: 2.8928 seconds
+2025-02-10 16:03:40,474 - get_images - INFO - Total time elapsed: 6.8730 seconds
+2025-02-10 16:03:40,482 - get_images - INFO - Saved image from node_1 to received_images\node_1\capture_20250210_160333_3.dng
+2025-02-10 16:03:40,865 - get_images - ERROR - Capture error from node_2: 500: Capture failed: [0:10:47.701521801] [1506] [1;32m INFO [1;37mCamera [1;34mcamera_manager.cpp:327 [0mlibcamera v0.4.0+51-ca36c77f
+ERROR: *** no cameras available ***
+
+2025-02-10 16:03:41,865 - get_images - ERROR - Capture error from node_2: 500: Capture failed: [0:10:48.720664989] [1511] [1;32m INFO [1;37mCamera [1;34mcamera_manager.cpp:327 [0mlibcamera v0.4.0+51-ca36c77f
+ERROR: *** no cameras available ***
+
+2025-02-10 16:03:42,881 - get_images - ERROR - Capture error from node_2: 500: Capture failed: [0:10:49.739450328] [1516] [1;32m INFO [1;37mCamera [1;34mcamera_manager.cpp:327 [0mlibcamera v0.4.0+51-ca36c77f
+ERROR: *** no cameras available ***
+
+2025-02-10 16:03:43,886 - get_images - ERROR - Capture error from node_2: 500: Capture failed: [0:10:50.747283556] [1521] [1;32m INFO [1;37mCamera [1;34mcamera_manager.cpp:327 [0mlibcamera v0.4.0+51-ca36c77f
+ERROR: *** no cameras available ***
+
+2025-02-10 16:03:44,434 - get_images - INFO - Received metadata from node_1: {'filename': 'capture_20250210_160340_3.dng', 'timestamp': '20250210_160340', 'node_id': '3', 'size': 10137262, 'chunk_size': 1048576}
+2025-02-10 16:03:44,969 - get_images - ERROR - Capture error from node_2: 500: Capture failed: [0:10:51.745680969] [1526] [1;32m INFO [1;37mCamera [1;34mcamera_manager.cpp:327 [0mlibcamera v0.4.0+51-ca36c77f
+ERROR: *** no cameras available ***
+
+2025-02-10 16:03:46,078 - get_images - ERROR - Capture error from node_2: 500: Capture failed: [0:10:52.889681963] [1531] [1;32m INFO [1;37mCamera [1;34mcamera_manager.cpp:327 [0mlibcamera v0.4.0+51-ca36c77f
+ERROR: *** no cameras available ***
+
+2025-02-10 16:03:46,634 - get_images - WARNING - Failed to connect to node_4 (http://192.168.1.104:5001): Connection refused by the server. Retrying in 5 seconds...
+2025-02-10 16:03:46,634 - get_images - WARNING - Failed to connect to node_3 (http://192.168.1.103:5001): Connection refused by the server. Retrying in 5 seconds...
+2025-02-10 16:03:47,301 - get_images - INFO - Received complete image from node_1
+2025-02-10 16:03:47,301 - get_images - INFO - Image transfer time from node_1: 2.8675 seconds
+2025-02-10 16:03:47,301 - get_images - INFO - Total time elapsed: 6.8165 seconds
+2025-02-10 16:03:47,318 - get_images - INFO - Saved image from node_1 to received_images\node_1\capture_20250210_160340_3.dng
+2025-02-10 16:03:47,318 - get_images - ERROR - Capture error from node_2: 500: Capture failed: [0:10:53.980842406] [1536] [1;32m INFO [1;37mCamera [1;34mcamera_manager.cpp:327 [0mlibcamera v0.4.0+51-ca36c77f
+ERROR: *** no cameras available ***
+
+2025-02-10 16:03:48,368 - get_images - ERROR - Capture error from node_2: 500: Capture failed: [0:10:55.181016510] [1541] [1;32m INFO [1;37mCamera [1;34mcamera_manager.cpp:327 [0mlibcamera v0.4.0+51-ca36c77f
+ERROR: *** no cameras available ***
+
+2025-02-10 16:03:49,368 - get_images - ERROR - Capture error from node_2: 500: Capture failed: [0:10:56.227241233] [1546] [1;32m INFO [1;37mCamera [1;34mcamera_manager.cpp:327 [0mlibcamera v0.4.0+51-ca36c77f
+ERROR: *** no cameras available ***
+
+2025-02-10 16:03:50,368 - get_images - ERROR - Capture error from node_2: 500: Capture failed: [0:10:57.235259778] [1551] [1;32m INFO [1;37mCamera [1;34mcamera_manager.cpp:327 [0mlibcamera v0.4.0+51-ca36c77f
+ERROR: *** no cameras available ***
+
+2025-02-10 16:03:50,725 - get_images - INFO - Received metadata from node_1: {'filename': 'capture_20250210_160347_3.dng', 'timestamp': '20250210_160347', 'node_id': '3', 'size': 10137262, 'chunk_size': 1048576}
+2025-02-10 16:03:51,387 - get_images - ERROR - Capture error from node_2: 500: Capture failed: [0:10:58.235038272] [1556] [1;32m INFO [1;37mCamera [1;34mcamera_manager.cpp:327 [0mlibcamera v0.4.0+51-ca36c77f
+ERROR: *** no cameras available ***
+
+2025-02-10 16:03:52,458 - get_images - ERROR - Capture error from node_2: 500: Capture failed: [0:10:59.282829371] [1561] [1;32m INFO [1;37mCamera [1;34mcamera_manager.cpp:327 [0mlibcamera v0.4.0+51-ca36c77f
+ERROR: *** no cameras available ***
+
+2025-02-10 16:03:53,535 - get_images - ERROR - Capture error from node_2: 500: Capture failed: [0:11:00.391976552] [1566] [1;32m INFO [1;37mCamera [1;34mcamera_manager.cpp:327 [0mlibcamera v0.4.0+51-ca36c77f
+ERROR: *** no cameras available ***
+
+2025-02-10 16:03:53,535 - get_images - INFO - Received complete image from node_1
+2025-02-10 16:03:53,535 - get_images - INFO - Image transfer time from node_1: 2.8096 seconds
+2025-02-10 16:03:53,535 - get_images - INFO - Total time elapsed: 6.2163 seconds
+2025-02-10 16:03:53,555 - get_images - INFO - Saved image from node_1 to received_images\node_1\capture_20250210_160347_3.dng
+2025-02-10 16:03:54,539 - get_images - ERROR - Capture error from node_2: 500: Capture failed: [0:11:01.396344895] [1571] [1;32m INFO [1;37mCamera [1;34mcamera_manager.cpp:327 [0mlibcamera v0.4.0+51-ca36c77f
+ERROR: *** no cameras available ***
+
+2025-02-10 16:03:55,543 - get_images - ERROR - Capture error from node_2: 500: Capture failed: [0:11:02.405974969] [1576] [1;32m INFO [1;37mCamera [1;34mcamera_manager.cpp:327 [0mlibcamera v0.4.0+51-ca36c77f
+ERROR: *** no cameras available ***
+
+2025-02-10 16:03:56,547 - get_images - ERROR - Capture error from node_2: 500: Capture failed: [0:11:03.406189857] [1581] [1;32m INFO [1;37mCamera [1;34mcamera_manager.cpp:327 [0mlibcamera v0.4.0+51-ca36c77f
+ERROR: *** no cameras available ***
+
+2025-02-10 16:03:56,649 - get_images - WARNING - Failed to connect to node_4 (http://192.168.1.104:5001): Connection refused by the server. Retrying in 5 seconds...
+2025-02-10 16:03:56,651 - get_images - WARNING - Failed to connect to node_3 (http://192.168.1.103:5001): Connection refused by the server. Retrying in 5 seconds...
+2025-02-10 16:03:57,001 - get_images - INFO - Received metadata from node_1: {'filename': 'capture_20250210_160353_3.dng', 'timestamp': '20250210_160353', 'node_id': '3', 'size': 10137262, 'chunk_size': 1048576}
+2025-02-10 16:03:57,714 - get_images - ERROR - Capture error from node_2: 500: Capture failed: [0:11:04.437193293] [1586] [1;32m INFO [1;37mCamera [1;34mcamera_manager.cpp:327 [0mlibcamera v0.4.0+51-ca36c77f
+ERROR: *** no cameras available ***
+
+2025-02-10 16:03:58,886 - get_images - ERROR - Capture error from node_2: 500: Capture failed: [0:11:05.633021462] [1591] [1;32m INFO [1;37mCamera [1;34mcamera_manager.cpp:327 [0mlibcamera v0.4.0+51-ca36c77f
+ERROR: *** no cameras available ***
+
+2025-02-10 16:03:59,781 - get_images - INFO - Received complete image from node_1
+2025-02-10 16:03:59,781 - get_images - INFO - Image transfer time from node_1: 2.7800 seconds
+2025-02-10 16:03:59,781 - get_images - INFO - Total time elapsed: 6.2241 seconds
+2025-02-10 16:03:59,796 - get_images - INFO - Saved image from node_1 to received_images\node_1\capture_20250210_160353_3.dng
+2025-02-10 16:03:59,948 - get_images - ERROR - Capture error from node_2: 500: Capture failed: [0:11:06.801959714] [1596] [1;32m INFO [1;37mCamera [1;34mcamera_manager.cpp:327 [0mlibcamera v0.4.0+51-ca36c77f
+ERROR: *** no cameras available ***
+
+2025-02-10 16:04:00,951 - get_images - ERROR - Capture error from node_2: 500: Capture failed: [0:11:07.807486283] [1601] [1;32m INFO [1;37mCamera [1;34mcamera_manager.cpp:327 [0mlibcamera v0.4.0+51-ca36c77f
+ERROR: *** no cameras available ***
+
+2025-02-10 16:04:01,956 - get_images - ERROR - Capture error from node_2: 500: Capture failed: [0:11:08.809259566] [1606] [1;32m INFO [1;37mCamera [1;34mcamera_manager.cpp:327 [0mlibcamera v0.4.0+51-ca36c77f
+ERROR: *** no cameras available ***
+
+2025-02-10 16:04:02,970 - get_images - ERROR - Capture error from node_2: 500: Capture failed: [0:11:09.815400077] [1611] [1;32m INFO [1;37mCamera [1;34mcamera_manager.cpp:327 [0mlibcamera v0.4.0+51-ca36c77f
+ERROR: *** no cameras available ***
+
+2025-02-10 16:04:03,433 - get_images - INFO - Received metadata from node_1: {'filename': 'capture_20250210_160400_3.dng', 'timestamp': '20250210_160400', 'node_id': '3', 'size': 10137262, 'chunk_size': 1048576}
+2025-02-10 16:04:04,030 - get_images - ERROR - Capture error from node_2: 500: Capture failed: [0:11:10.830471152] [1616] [1;32m INFO [1;37mCamera [1;34mcamera_manager.cpp:327 [0mlibcamera v0.4.0+51-ca36c77f
+ERROR: *** no cameras available ***
+
+2025-02-10 16:04:05,102 - get_images - ERROR - Capture error from node_2: 500: Capture failed: [0:11:11.909473344] [1621] [1;32m INFO [1;37mCamera [1;34mcamera_manager.cpp:327 [0mlibcamera v0.4.0+51-ca36c77f
+ERROR: *** no cameras available ***
+
+2025-02-10 16:04:06,185 - get_images - INFO - Received complete image from node_1
+2025-02-10 16:04:06,186 - get_images - INFO - Image transfer time from node_1: 2.7527 seconds
+2025-02-10 16:04:06,186 - get_images - INFO - Total time elapsed: 6.3897 seconds
+2025-02-10 16:04:06,189 - get_images - INFO - Saved image from node_1 to received_images\node_1\capture_20250210_160400_3.dng
+2025-02-10 16:04:06,189 - get_images - ERROR - Capture error from node_2: 500: Capture failed: [0:11:13.011009718] [1626] [1;32m INFO [1;37mCamera [1;34mcamera_manager.cpp:327 [0mlibcamera v0.4.0+51-ca36c77f
+ERROR: *** no cameras available ***
+
+2025-02-10 16:04:07,188 - get_images - ERROR - Capture error from node_2: 500: Capture failed: [0:11:14.035129976] [1631] [1;32m INFO [1;37mCamera [1;34mcamera_manager.cpp:327 [0mlibcamera v0.4.0+51-ca36c77f
+ERROR: *** no cameras available ***
+
+2025-02-10 16:04:07,650 - get_images - WARNING - Failed to connect to node_3 (http://192.168.1.103:5001): Connection refused by the server. Retrying in 5 seconds...
+2025-02-10 16:04:07,651 - get_images - WARNING - Failed to connect to node_4 (http://192.168.1.104:5001): Connection refused by the server. Retrying in 5 seconds...
+2025-02-10 16:04:08,186 - get_images - ERROR - Capture error from node_2: 500: Capture failed: [0:11:15.039291459] [1636] [1;32m INFO [1;37mCamera [1;34mcamera_manager.cpp:327 [0mlibcamera v0.4.0+51-ca36c77f
+ERROR: *** no cameras available ***
+
+2025-02-10 16:04:09,201 - get_images - ERROR - Capture error from node_2: 500: Capture failed: [0:11:16.044915998] [1641] [1;32m INFO [1;37mCamera [1;34mcamera_manager.cpp:327 [0mlibcamera v0.4.0+51-ca36c77f
+ERROR: *** no cameras available ***
+
+2025-02-10 16:04:10,085 - get_images - INFO - Received metadata from node_1: {'filename': 'capture_20250210_160406_3.dng', 'timestamp': '20250210_160406', 'node_id': '3', 'size': 10137262, 'chunk_size': 1048576}
+2025-02-10 16:04:10,213 - get_images - ERROR - Capture error from node_2: 500: Capture failed: [0:11:17.052350661] [1646] [1;32m INFO [1;37mCamera [1;34mcamera_manager.cpp:327 [0mlibcamera v0.4.0+51-ca36c77f
+ERROR: *** no cameras available ***
+
+2025-02-10 16:04:11,270 - get_images - ERROR - Capture error from node_2: 500: Capture failed: [0:11:18.077436070] [1651] [1;32m INFO [1;37mCamera [1;34mcamera_manager.cpp:327 [0mlibcamera v0.4.0+51-ca36c77f
+ERROR: *** no cameras available ***
+
+2025-02-10 16:04:12,384 - get_images - ERROR - Capture error from node_2: 500: Capture failed: [0:11:19.175843954] [1656] [1;32m INFO [1;37mCamera [1;34mcamera_manager.cpp:327 [0mlibcamera v0.4.0+51-ca36c77f
+ERROR: *** no cameras available ***
+
+2025-02-10 16:04:13,106 - get_images - INFO - Received complete image from node_1
+2025-02-10 16:04:13,106 - get_images - INFO - Image transfer time from node_1: 3.0206 seconds
+2025-02-10 16:04:13,106 - get_images - INFO - Total time elapsed: 6.9171 seconds
+2025-02-10 16:04:13,106 - get_images - INFO - Saved image from node_1 to received_images\node_1\capture_20250210_160406_3.dng
+2025-02-10 16:04:13,469 - get_images - ERROR - Capture error from node_2: 500: Capture failed: [0:11:20.313158439] [1661] [1;32m INFO [1;37mCamera [1;34mcamera_manager.cpp:327 [0mlibcamera v0.4.0+51-ca36c77f
+ERROR: *** no cameras available ***
+
+2025-02-10 16:04:14,467 - get_images - ERROR - Capture error from node_2: 500: Capture failed: [0:11:21.315502106] [1666] [1;32m INFO [1;37mCamera [1;34mcamera_manager.cpp:327 [0mlibcamera v0.4.0+51-ca36c77f
+ERROR: *** no cameras available ***
+
+2025-02-10 16:04:15,463 - get_images - ERROR - Capture error from node_2: 500: Capture failed: [0:11:22.313941892] [1671] [1;32m INFO [1;37mCamera [1;34mcamera_manager.cpp:327 [0mlibcamera v0.4.0+51-ca36c77f
+ERROR: *** no cameras available ***
+
+2025-02-10 16:04:16,484 - get_images - ERROR - Capture error from node_2: 500: Capture failed: [0:11:23.328364129] [1677] [1;32m INFO [1;37mCamera [1;34mcamera_manager.cpp:327 [0mlibcamera v0.4.0+51-ca36c77f
+ERROR: *** no cameras available ***
+
+2025-02-10 16:04:17,118 - get_images - INFO - Received metadata from node_1: {'filename': 'capture_20250210_160413_3.dng', 'timestamp': '20250210_160413', 'node_id': '3', 'size': 10137262, 'chunk_size': 1048576}
+2025-02-10 16:04:17,525 - get_images - ERROR - Capture error from node_2: 500: Capture failed: [0:11:24.331407444] [1682] [1;32m INFO [1;37mCamera [1;34mcamera_manager.cpp:327 [0mlibcamera v0.4.0+51-ca36c77f
+ERROR: *** no cameras available ***
+
+2025-02-10 16:04:17,638 - get_images - WARNING - Failed to connect to node_3 (http://192.168.1.103:5001): Connection refused by the server. Retrying in 5 seconds...
+2025-02-10 16:04:17,638 - get_images - WARNING - Failed to connect to node_4 (http://192.168.1.104:5001): Connection refused by the server. Retrying in 5 seconds...

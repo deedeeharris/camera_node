@@ -1,6 +1,9 @@
 done with libs and python App
-1,2
+1,2,3,4
 
-with raspi os
-3
-
+todo
+* update 1 and 2, to latest, including reinstalling reqs.txt (since we transformed to ws)
+* configure the rasberry pi 4 with a hotspot, with set gateway, and then configure the nodes, 
+with set static ip addresses, and automaticly connect to the main rasberry pi 4. 
+* create the main server, to handle the concurrent imaging like in get_images.py,
+and also a queue for uploading the images, etc. 
