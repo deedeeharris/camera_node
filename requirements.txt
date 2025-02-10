@@ -7,3 +7,4 @@ typing-extensions
 psutil
 requests
 python-dotenv
+websockets

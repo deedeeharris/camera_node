@@ -1,4 +1,4 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, WebSocket, HTTPException, WebSocketDisconnect
 from fastapi.responses import FileResponse
 
 import uvicorn
@@ -37,6 +37,8 @@ MAX_LOG_SIZE_MB = 10
 MAX_LOG_FILES = 5
 PORT = int(os.getenv("PORT", 5001))
 NODE_ID = os.getenv("NODE_ID", f"camera_node_{os.getpid()}")
+# Add a set to keep track of connected clients
+connected_clients = set()
 
 # Set up logging
 os.makedirs(LOG_DIR, exist_ok=True)
@@ -91,7 +93,7 @@ def cleanup_old_files():
     """Remove oldest files if storage limit is reached."""
     if not os.path.exists(CAPTURE_DIR):
         return
-        
+
     while get_directory_size_mb(CAPTURE_DIR) > STORAGE_LIMIT_MB:
         files = sorted(Path(CAPTURE_DIR).glob('*.dng'), key=os.path.getctime)
         if files:
@@ -106,11 +108,11 @@ def check_camera():
         result = subprocess.run(cmd, shell=True, capture_output=True, text=True)
         if result.returncode != 0:
             raise Exception("No cameras detected")
-        
+
         cameras = result.stdout.strip().split('\n')
         if not cameras:
             raise Exception("No cameras found")
-            
+
         logger.info(f"Detected cameras: {cameras}")
         return True
     except Exception as e:
@@ -128,19 +130,19 @@ def capture_image() -> Dict:
     timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
     filename = f"capture_{timestamp}_{NODE_ID}.dng"
     filepath = os.path.join(CAPTURE_DIR, filename)
-    
+
     try:
         cmd = f"libcamera-still --raw -o {filepath} --timeout 1000 --nopreview"
         logger.info(f"Executing capture command: {cmd}")
-        
+
         result = subprocess.run(cmd, shell=True, capture_output=True, text=True)
-        
+
         if result.returncode != 0:
             raise Exception(f"Capture failed: {result.stderr}")
-            
+
         file_size = os.path.getsize(filepath)
         logger.info(f"Image captured successfully: {filename} (Size: {file_size/1024/1024:.2f}MB)")
-        
+
         return {
             "filename": filename,
             "filepath": filepath,
@@ -153,27 +155,59 @@ def capture_image() -> Dict:
             os.remove(filepath)
         raise HTTPException(status_code=500, detail=str(e))
 
-@app.post("/capture")
-async def handle_capture(return_file: bool = False):
-    """Handle capture request. Can return either file info or the file itself."""
-    try:
-        file_info = capture_image()
-        
-        if return_file:
-            return FileResponse(
-                file_info["filepath"],
-                media_type="image/x-adobe-dng",
-                filename=file_info["filename"]
-            )
-            
-        return {
-            "status": "success",
-            "file_info": file_info,
-            "node_id": NODE_ID
-        }
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+async def send_image_to_clients(file_info: Dict):
+    """Sends the captured image to all connected WebSocket clients."""
+    if not connected_clients:
+        logger.info("No clients connected, image will be stored locally only.")
+        return
 
+    with open(file_info["filepath"], "rb") as image_file:
+        image_data = image_file.read()
+
+    metadata = {
+        "filename": file_info["filename"],
+        "timestamp": file_info["timestamp"],
+        "node_id": NODE_ID,
+        "size": file_info["size"]
+    }
+
+    for client in connected_clients:
+        try:
+            await client.send_json(metadata)  # Send metadata first
+            await client.send_bytes(image_data)  # Then send the image data
+            logger.info(f"Sent image {metadata['filename']} to client: {client}")
+        except Exception as e:
+            logger.error(f"Failed to send image to client {client}: {e}")
+
+
+@app.websocket("/ws")
+async def websocket_endpoint(websocket: WebSocket):
+    """WebSocket endpoint for image streaming."""
+    await websocket.accept()
+    connected_clients.add(websocket)
+    logger.info(f"Client connected: {websocket.client.host}, Total Clients: {len(connected_clients)}")
+    try:
+        while True:
+            #  keep the connection, and listen for a message to take a picture
+            data = await websocket.receive_text()
+            if data == "capture":
+                try:
+                    file_info = capture_image()
+                    await send_image_to_clients(file_info)
+                except Exception as e:
+                    logger.error(f"Capture and send failed: {e}")
+                    await websocket.send_json({"error": str(e)})
+            else:
+                logger.info("else statement")
+    except WebSocketDisconnect:
+        connected_clients.remove(websocket)
+        logger.info(f"Client disconnected: {websocket.client.host}, Total Clients: {len(connected_clients)}")
+    except Exception as e:
+        logger.error(f"error: {str(e)}")
+        connected_clients.remove(websocket)
+        logger.info(f"Client disconnected: {websocket.client.host}, Total Clients: {len(connected_clients)}")
+
+# --- Keep existing REST endpoints ---
 @app.get("/images/{filename}")
 async def get_image(filename: str):
     """Get an image file by filename."""
@@ -181,7 +215,7 @@ async def get_image(filename: str):
         filepath = os.path.join(CAPTURE_DIR, filename)
         if not os.path.exists(filepath):
             raise HTTPException(status_code=404, detail="Image not found")
-            
+
         return FileResponse(
             filepath,
             media_type="image/x-adobe-dng",
@@ -248,10 +282,31 @@ async def status():
             },
             "system": get_system_info(),
             "node_id": NODE_ID,
-            "timestamp": datetime.datetime.now().isoformat()
+            "timestamp": datetime.datetime.now().isoformat(),
+            "connected_clients": len(connected_clients)  # Report number of clients
         }
     except Exception as e:
         logger.error(f"Error getting status: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
+@app.post("/capture_rest")
+async def handle_capture(return_file: bool = False):
+    """Handle capture request. Can return either file info or the file itself."""
+    try:
+        file_info = capture_image()
+
+        if return_file:
+            return FileResponse(
+                file_info["filepath"],
+                media_type="image/x-adobe-dng",
+                filename=file_info["filename"]
+            )
+
+        return {
+            "status": "success",
+            "file_info": file_info,
+            "node_id": NODE_ID
+        }
+    except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
 if __name__ == "__main__":

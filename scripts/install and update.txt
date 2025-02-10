@@ -1,8 +1,11 @@
 chmod +x install_camera_node.sh
 
-sudo ./install_camera_node.sh 2
+sudo ./install_camera_node.sh 4
 
 sudo systemctl status camera_node.service
+
+
+sudo systemctl restart camera_node.service
 
 journalctl -u camera_node.service
 

@@ -1,0 +1,6 @@
+done with libs and python App
+1,2
+
+with raspi os
+3
+

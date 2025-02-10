@@ -3,7 +3,7 @@
 # Script to update the camera_node Python script from the Git repository
 
 REPO_URL="https://github.com/deedeeharris/camera_node.git"
-PROJECT_DIR="/home/pi/camera_node"  # Must match the directory used in the installation script
+PROJECT_DIR="/home/user/camera_node"  # Must match the directory used in the installation script
 TEMP_DIR="/tmp/camera_node_update"
 
 # Check if the project directory exists
