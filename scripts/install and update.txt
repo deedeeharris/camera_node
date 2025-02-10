@@ -18,3 +18,8 @@ journalctl -u camera_node.service -f
 
 chmod +x get_repo_updates.sh
 sudo ./get_repo_updates.sh
+
+
+# activate env
+
+source venv/bin/activate

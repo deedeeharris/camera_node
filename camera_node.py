@@ -1,6 +1,5 @@
-from fastapi import FastAPI, WebSocket, HTTPException, WebSocketDisconnect
+from fastapi import FastAPI, HTTPException
 from fastapi.responses import FileResponse
-
 import uvicorn
 import os
 import datetime
@@ -15,12 +14,16 @@ import psutil
 import json
 from fastapi.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
+import socketio
 
 load_dotenv()
 
+# --- Socket.IO Setup ---
+sio = socketio.AsyncServer(async_mode='asgi', cors_allowed_origins='*')
 app = FastAPI(title="Camera Node API")
+socket_app = socketio.ASGIApp(sio, app)  # Combine Socket.IO and FastAPI
 
-# Enable CORS
+# Enable CORS for FastAPI (still needed for REST endpoints)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -37,8 +40,7 @@ MAX_LOG_SIZE_MB = 10
 MAX_LOG_FILES = 5
 PORT = int(os.getenv("PORT", 5001))
 NODE_ID = os.getenv("NODE_ID", f"camera_node_{os.getpid()}")
-# Add a set to keep track of connected clients
-connected_clients = set()
+CHUNK_SIZE = 1024 * 1024  # 1MB chunks
 
 # Set up logging
 os.makedirs(LOG_DIR, exist_ok=True)
@@ -155,57 +157,50 @@ def capture_image() -> Dict:
             os.remove(filepath)
         raise HTTPException(status_code=500, detail=str(e))
 
-async def send_image_to_clients(file_info: Dict):
-    """Sends the captured image to all connected WebSocket clients."""
-    if not connected_clients:
-        logger.info("No clients connected, image will be stored locally only.")
-        return
 
-    with open(file_info["filepath"], "rb") as image_file:
-        image_data = image_file.read()
+# --- Socket.IO Event Handlers ---
 
-    metadata = {
-        "filename": file_info["filename"],
-        "timestamp": file_info["timestamp"],
-        "node_id": NODE_ID,
-        "size": file_info["size"]
-    }
+@sio.event
+async def connect(sid, environ):
+    """Handle client connections."""
+    logger.info(f"Client connected: {sid}")
 
-    for client in connected_clients:
-        try:
-            await client.send_json(metadata)  # Send metadata first
-            await client.send_bytes(image_data)  # Then send the image data
-            logger.info(f"Sent image {metadata['filename']} to client: {client}")
-        except Exception as e:
-            logger.error(f"Failed to send image to client {client}: {e}")
+@sio.event
+async def disconnect(sid):
+    """Handle client disconnections."""
+    logger.info(f"Client disconnected: {sid}")
 
-
-@app.websocket("/ws")
-async def websocket_endpoint(websocket: WebSocket):
-    """WebSocket endpoint for image streaming."""
-    await websocket.accept()
-    connected_clients.add(websocket)
-    logger.info(f"Client connected: {websocket.client.host}, Total Clients: {len(connected_clients)}")
+@sio.on('capture')
+async def handle_capture(sid, data):
+    """Handle image capture requests."""
+    logger.info(f"Received capture request from {sid}")
     try:
-        while True:
-            #  keep the connection, and listen for a message to take a picture
-            data = await websocket.receive_text()
-            if data == "capture":
-                try:
-                    file_info = capture_image()
-                    await send_image_to_clients(file_info)
-                except Exception as e:
-                    logger.error(f"Capture and send failed: {e}")
-                    await websocket.send_json({"error": str(e)})
-            else:
-                logger.info("else statement")
-    except WebSocketDisconnect:
-        connected_clients.remove(websocket)
-        logger.info(f"Client disconnected: {websocket.client.host}, Total Clients: {len(connected_clients)}")
+        file_info = capture_image()
+        await send_image(sid, file_info)
     except Exception as e:
-        logger.error(f"error: {str(e)}")
-        connected_clients.remove(websocket)
-        logger.info(f"Client disconnected: {websocket.client.host}, Total Clients: {len(connected_clients)}")
+        logger.error(f"Capture failed: {e}")
+        await sio.emit('capture_error', {'error': str(e)}, room=sid)
+
+
+async def send_image(sid, file_info):
+    """Send image data in chunks."""
+    with open(file_info["filepath"], "rb") as image_file:
+        metadata = {
+            "filename": file_info["filename"],
+            "timestamp": file_info["timestamp"],
+            "node_id": NODE_ID,
+            "size": file_info["size"],
+            "chunk_size": CHUNK_SIZE
+        }
+        await sio.emit('image_metadata', metadata, room=sid) # Send metadata
+
+        while True:
+            chunk = image_file.read(CHUNK_SIZE)
+            if not chunk:
+                break
+            await sio.emit('image_chunk', chunk, room=sid)  # Send the chunk
+        await sio.emit('image_complete', room=sid) # Signal completion
+        logger.info(f"Sent image {file_info['filename']} to client: {sid}")
 
 # --- Keep existing REST endpoints ---
 @app.get("/images/{filename}")
@@ -273,6 +268,7 @@ async def status():
     """Return node status including storage and system info."""
     try:
         storage_used = get_directory_size_mb(CAPTURE_DIR) if os.path.exists(CAPTURE_DIR) else 0
+        connected_clients = len(sio.manager.rooms.get('/', {}))  # Correct way to get connected clients
         return {
             "status": "online",
             "storage": {
@@ -283,12 +279,13 @@ async def status():
             "system": get_system_info(),
             "node_id": NODE_ID,
             "timestamp": datetime.datetime.now().isoformat(),
-            "connected_clients": len(connected_clients)  # Report number of clients
+            "connected_clients": connected_clients
         }
     except Exception as e:
         logger.error(f"Error getting status: {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))
-@app.post("/capture_rest")
+
+@app.post("/capture_rest")  # Keep the REST capture endpoint
 async def handle_capture(return_file: bool = False):
     """Handle capture request. Can return either file info or the file itself."""
     try:
@@ -316,4 +313,4 @@ if __name__ == "__main__":
         logger.error("No camera detected. Please connect a camera and restart the application.")
         sys.exit(1)
     logger.info("Camera detected, starting server...")
-    uvicorn.run(app, host="0.0.0.0", port=PORT)
+    uvicorn.run(socket_app, host="0.0.0.0", port=PORT)
