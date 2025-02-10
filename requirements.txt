@@ -1,0 +1,9 @@
+fastapi
+uvicorn
+Pillow
+python-multipart
+pydantic
+typing-extensions
+psutil
+requests
+python-dotenv
