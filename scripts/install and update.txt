@@ -1,0 +1,13 @@
+chmod +x install_camera_node.sh
+
+sudo ./install_camera_node.sh 1
+
+sudo systemctl status camera_node.service
+
+journalctl -u camera_node.service
+
+
+## update
+
+chmod +x get_repo_updates.sh
+sudo ./get_repo_updates.sh
