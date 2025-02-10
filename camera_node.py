@@ -126,7 +126,7 @@ def capture_image() -> Dict:
     """Capture raw image and save locally."""
     ensure_capture_dir()
     timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
-    filename = f"capture_{timestamp}.dng"
+    filename = f"capture_{timestamp}_{NODE_ID}.dng"
     filepath = os.path.join(CAPTURE_DIR, filename)
     
     try:

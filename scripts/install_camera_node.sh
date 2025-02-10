@@ -29,7 +29,8 @@ fi
 
 NODE_ID="$1"
 REPO_URL="https://github.com/deedeeharris/camera_node.git"
-PROJECT_DIR="/home/pi/camera_node"  # You can change this if you want a different directory
+PROJECT_DIR="/home/user/camera_node"  # Corrected path
+VENV_DIR="$PROJECT_DIR/venv"
 
 # Clone the repository
 if [ -d "$PROJECT_DIR" ]; then
@@ -42,17 +43,18 @@ else
   cd "$PROJECT_DIR"
 fi
 
-
-# Install Python requirements
-echo "Installing Python requirements..."
-if command_exists pip; then
-    pip install -r requirements.txt
-elif command_exists pip3; then
-    pip3 install -r requirements.txt
-else
-    echo "Error: Neither pip nor pip3 is installed. Please install pip."
+# Create a virtual environment
+echo "Creating virtual environment..."
+if ! command_exists python3; then
+    echo "Error: python3 command not found. Please install Python 3."
     exit 1
 fi
+
+python3 -m venv "$VENV_DIR"
+
+# Install Python requirements *within the virtual environment*
+echo "Installing Python requirements..."
+"$VENV_DIR/bin/pip" install -r requirements.txt
 
 # Update .env file with the provided NODE_ID
 echo "Updating .env file with NODE_ID=$NODE_ID..."
@@ -63,6 +65,15 @@ else
   echo "PORT=5001" >> "$PROJECT_DIR/.env.txt" # Add default port if .env.txt didn't exist
 fi
 
+# Ensure correct ownership and permissions for the project directory
+echo "Setting correct ownership and permissions..."
+sudo chown -R user:user "$PROJECT_DIR"
+sudo chmod -R 755 "$PROJECT_DIR"
+
+# Install libcamera-apps
+echo "Installing libcamera-apps..."
+sudo apt-get install libcamera-apps -y
+
 # Create systemd service file
 echo "Creating systemd service file..."
 sudo tee /etc/systemd/system/camera_node.service > /dev/null <<EOF
@@ -71,10 +82,12 @@ Description=Camera Node Service
 After=network.target
 
 [Service]
-User=pi
+User=user
 WorkingDirectory=$PROJECT_DIR
-ExecStart=/usr/bin/python3 $PROJECT_DIR/camera_node.py
+ExecStartPre=/bin/bash -c 'source $VENV_DIR/bin/activate'  # Activate the venv
+ExecStart=$VENV_DIR/bin/python3 $PROJECT_DIR/camera_node.py
 Restart=always
+Type=simple
 
 [Install]
 WantedBy=multi-user.target

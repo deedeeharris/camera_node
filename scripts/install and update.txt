@@ -1,11 +1,15 @@
 chmod +x install_camera_node.sh
 
-sudo ./install_camera_node.sh 1
+sudo ./install_camera_node.sh 2
 
 sudo systemctl status camera_node.service
 
 journalctl -u camera_node.service
 
+journalctl -u camera_node.service -b 0 --no-pager
+
+# live logs
+journalctl -u camera_node.service -f 
 
 ## update
 
