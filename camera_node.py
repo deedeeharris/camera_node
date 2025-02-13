@@ -201,6 +201,7 @@ def get_camera_info() -> Tuple[int, int, str]:
         raise
 
 
+
 def capture_image(resolution: str = DEFAULT_RESOLUTION) -> Dict:
     """Capture raw Bayer data, extract red channel if NoIR, and save."""
     global camera_info
@@ -226,11 +227,7 @@ def capture_image(resolution: str = DEFAULT_RESOLUTION) -> Dict:
         if result.returncode != 0:
             raise Exception(f"Capture failed: {result.stderr}")
 
-        # Get the ACTUAL file size AFTER capture
-        file_size = os.path.getsize(filepath)
-        logger.info(f"Image captured: {filename} (Size: {file_size/1024:.2f}KB)")
-
-
+        # NO channel extraction on node_1.  Leave file as is.
         if NODE_ID != "1":  # NoIR cameras - extract red channel
             with open(filepath, "rb") as f:
                 # Read as 8-bit initially. We'll handle unpacking in get_images.py
@@ -252,11 +249,13 @@ def capture_image(resolution: str = DEFAULT_RESOLUTION) -> Dict:
 
             with open(filepath, "wb") as f:
                 red_channel.tofile(f)
-            file_size = os.path.getsize(filepath)  # Update file_size AFTER extraction
+            # file_size = os.path.getsize(filepath)  # Update file_size AFTER extraction # THIS IS MOVED DOWN
             logger.info(f"Extracted red channel. New size: {file_size/1024:.2f}KB")
             width, height = red_channel.shape[1], red_channel.shape[0] # Update width/height
 
-        # NO ELSE CLAUSE NEEDED.  The width, height, and file_size are already correct for node_1
+        # Get the ACTUAL file size AFTER capture and potential channel extraction
+        file_size = os.path.getsize(filepath) # Moved here!
+        logger.info(f"Image captured: {filename} (Size: {file_size/1024:.2f}KB)")
 
         return {
             "filename": filename,

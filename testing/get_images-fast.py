@@ -137,7 +137,6 @@ async def receive_images(node_address: str, node_id: str) -> None:
             logger.exception(f"An unexpected error: {e}")
             await asyncio.sleep(5)
 
-
 def process_raw_data(data: bytearray, metadata: Dict[str, Any], node_id: str):
     """Processes raw data (demosaics RGB, prepares NoIR), saves without WR."""
 
@@ -210,7 +209,7 @@ def process_raw_data(data: bytearray, metadata: Dict[str, Any], node_id: str):
         noir_channel = raw_image
         logger.info(f"Processed NoIR data from {node_id}. Channel shape: {noir_channel.shape}")
         np.save(f"received_images/raw_noir_{node_id}.npy", noir_channel)  # Save in received_images
-
+        
 
 async def main():
     """Connects to multiple nodes concurrently."""
