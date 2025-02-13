@@ -217,33 +217,35 @@ def capture_image(resolution: str = DEFAULT_RESOLUTION) -> Dict:
     camera_width, camera_height, bayer_pattern = camera_info
 
     try:
+        # Construct the --mode string.  Assume 10-bit packed data ("P").
+        mode_string = f"{width}:{height}:10:P"
+
         cmd = (
-            f"libcamera-raw -t 1000 --nopreview --width {width} --height {height} -o {filepath} --raw-format {bayer_pattern.lower()}10" #added raw format
+            f"libcamera-raw -t 1000 --nopreview --width {width} --height {height} -o {filepath} --mode {mode_string}"
         )
         logger.info(f"Executing capture command: {cmd}")
-        result = subprocess.run(cmd, shell=True, capture_output=True, text=True, timeout=15) # Increased timeout
+        result = subprocess.run(cmd, shell=True, capture_output=True, text=True, timeout=15)
         if result.returncode != 0:
             raise Exception(f"Capture failed: {result.stderr}")
 
         file_size = os.path.getsize(filepath)
         logger.info(f"Image captured: {filename} (Size: {file_size/1024:.2f}KB)")
 
-
         if NODE_ID != "1":  # NoIR cameras - extract red channel
             with open(filepath, "rb") as f:
-                # Read as 16-bit, then convert to 8-bit by taking the high byte
-                raw_data = np.fromfile(f, dtype=np.uint16)
-                raw_data_8bit = (raw_data >> 2).astype(np.uint8)  # Correct bit shift for 10-bit to 8-bit
+                # Read as 8-bit initially. We'll handle unpacking in get_images.py
+                raw_data = np.fromfile(f, dtype=np.uint8)
 
-            raw_image = raw_data_8bit.reshape((height, width))
 
-            if bayer_pattern == "RGGB":
+            raw_image = raw_data.reshape((height, width)) # Keep original resolution
+
+            if bayer_pattern.startswith("RGGB"):
                 red_channel = raw_image[0::2, 0::2]
-            elif bayer_pattern == "BGGR":
+            elif bayer_pattern.startswith("BGGR"):
                 red_channel = raw_image[1::2, 1::2]
-            elif bayer_pattern == "GRBG":
+            elif bayer_pattern.startswith("GRBG"):
                 red_channel = raw_image[1::2, 0::2]
-            elif bayer_pattern == "GBRG":
+            elif bayer_pattern.startswith("GBRG"):
                 red_channel = raw_image[0::2, 1::2]
             else:
                 raise ValueError(f"Unsupported Bayer pattern: {bayer_pattern}")
@@ -269,14 +271,14 @@ def capture_image(resolution: str = DEFAULT_RESOLUTION) -> Dict:
         logger.error("Image capture timed out.")
         if os.path.exists(filepath):
             os.remove(filepath)
-        raise HTTPException(status_code=504, detail="Capture timed out")  # 504 Gateway Timeout
+        raise HTTPException(status_code=504, detail="Capture timed out")
     except Exception as e:
         logger.error(f"Capture failed: {e}")
         if os.path.exists(filepath):
             os.remove(filepath)
         raise HTTPException(status_code=500, detail=str(e))
 
-
+        
 # --- Socket.IO Event Handlers ---
 @sio.event
 async def connect(sid, environ):

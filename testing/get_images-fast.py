@@ -137,6 +137,7 @@ async def receive_images(node_address: str, node_id: str) -> None:
             logger.exception(f"An unexpected error: {e}")
             await asyncio.sleep(5)
 
+
 def process_raw_data(data: bytearray, metadata: Dict[str, Any], node_id: str):
     """Processes raw data (demosaics RGB, prepares NoIR), saves without WR."""
 
@@ -148,26 +149,47 @@ def process_raw_data(data: bytearray, metadata: Dict[str, Any], node_id: str):
 
     raw_array = np.frombuffer(data, dtype=np.uint8)
 
-    # Efficient Reshape and Crop
-    if width != camera_width or height != camera_height:
-        logger.warning(f"Captured dimensions ({width}x{height}) differ from camera dimensions ({camera_width}x{camera_height}).")
-        expected_size = width * height
-        if len(raw_array) > expected_size:
-            raw_array = raw_array[:expected_size]  # Truncate if larger
-        raw_image = raw_array.reshape((height, width))
+    # --- 10-bit Unpacking (for ALL nodes) ---
+    # Reshape to 5 bytes for every 4 pixels
+    reshaped_data = raw_array.reshape((height * width // 4, 5))
 
-    else:
-        raw_image = raw_array.reshape((height, width))
+    # Unpack the 10-bit data
+    unpacked_data = np.zeros((height * width,), dtype=np.uint16)
+    unpacked_data[0::4] = ((reshaped_data[:, 0] << 2) | (reshaped_data[:, 1] >> 6)) & 0x3FF
+    unpacked_data[1::4] = ((reshaped_data[:, 1] << 4) | (reshaped_data[:, 2] >> 4)) & 0x3FF
+    unpacked_data[2::4] = ((reshaped_data[:, 2] << 6) | (reshaped_data[:, 3] >> 2)) & 0x3FF
+    unpacked_data[3::4] = ((reshaped_data[:, 3] << 8) | reshaped_data[:, 4]) & 0x3FF
+
+    # Reshape to image dimensions
+    raw_image = unpacked_data.reshape((height, width))
 
 
     if node_id == "node_1":  # RGB Camera
         # Correct Bayer Pattern Handling
-        if bayer_pattern.startswith("RGGB"):  # Handle variations like "RGGB10"
-            rgb_image = np.zeros((height, width, 3), dtype=np.uint8)
+        if bayer_pattern.startswith("RGGB"):
+            rgb_image = np.zeros((height, width, 3), dtype=np.uint16) # Use uint16 for 10-bit
             rgb_image[:, :, 0] = raw_image[0::2, 0::2]  # Red
             rgb_image[:, :, 1] = (raw_image[0::2, 1::2] + raw_image[1::2, 0::2]) // 2  # Green (average)
             rgb_image[:, :, 2] = raw_image[1::2, 1::2]  # Blue
         # Add other Bayer patterns as needed (BGGR, GRBG, GBRG)
+        elif bayer_pattern.startswith("BGGR"):
+            rgb_image = np.zeros((height, width, 3), dtype=np.uint16)
+            rgb_image[:, :, 2] = raw_image[0::2, 0::2]  # Blue
+            rgb_image[:, :, 1] = (raw_image[0::2, 1::2] + raw_image[1::2, 0::2]) // 2  # Green (average)
+            rgb_image[:, :, 0] = raw_image[1::2, 1::2]  # Red
+        elif bayer_pattern.startswith("GRBG"):
+            rgb_image = np.zeros((height, width, 3), dtype=np.uint16)
+            rgb_image[:, :, 1] = raw_image[0::2, 0::2]  # Green
+            rgb_image[:, :, 0] = raw_image[0::2, 1::2]  # Red
+            rgb_image[:, :, 2] = raw_image[1::2, 0::2]  # Blue
+            rgb_image[:, :, 1] = (rgb_image[:,:,1] + raw_image[1::2, 1::2])//2 # Green
+        elif bayer_pattern.startswith("GBRG"):
+            rgb_image = np.zeros((height, width, 3), dtype=np.uint16)
+            rgb_image[:, :, 1] = raw_image[0::2, 0::2]  # Green
+            rgb_image[:, :, 2] = raw_image[0::2, 1::2]  # Blue
+            rgb_image[:, :, 0] = raw_image[1::2, 0::2]  # Red
+            rgb_image[:, :, 1] = (rgb_image[:,:,1] + raw_image[1::2, 1::2])//2 # Green
+
         else:
             raise ValueError(f"Unsupported Bayer pattern: {bayer_pattern}")
 
@@ -175,11 +197,10 @@ def process_raw_data(data: bytearray, metadata: Dict[str, Any], node_id: str):
         np.save(f"received_images/raw_rgb_{node_id}.npy", rgb_image)  # Save in received_images
 
     else:  # NoIR Cameras
-        # No channel extraction needed - already done on the camera node
+        # No channel extraction needed on get_images.py anymore
         noir_channel = raw_image
         logger.info(f"Processed NoIR data from {node_id}. Channel shape: {noir_channel.shape}")
         np.save(f"received_images/raw_noir_{node_id}.npy", noir_channel)  # Save in received_images
-
 
 async def main():
     """Connects to multiple nodes concurrently."""
