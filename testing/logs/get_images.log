@@ -221,3 +221,269 @@ ERROR: *** no cameras available ***
 
 2025-02-10 16:04:17,638 - get_images - WARNING - Failed to connect to node_3 (http://192.168.1.103:5001): Connection refused by the server. Retrying in 5 seconds...
 2025-02-10 16:04:17,638 - get_images - WARNING - Failed to connect to node_4 (http://192.168.1.104:5001): Connection refused by the server. Retrying in 5 seconds...
+2025-02-13 09:31:40,662 - get_images - INFO - Connected to node_3 at http://192.168.195.70:5001
+2025-02-13 09:31:40,882 - get_images - INFO - Connected to node_4 at http://192.168.195.56:5001
+2025-02-13 09:31:41,993 - get_images - WARNING - Failed to connect to node_1 (http://192.168.195.57:5001): Cannot connect to host 192.168.195.57:5001 ssl:default [The remote computer refused the network connection]. Retrying in 5 seconds...
+2025-02-13 09:31:41,994 - get_images - WARNING - Failed to connect to node_2 (http://192.168.195.73:5001): Cannot connect to host 192.168.195.73:5001 ssl:default [The remote computer refused the network connection]. Retrying in 5 seconds...
+2025-02-13 09:31:44,168 - get_images - ERROR - Capture error from node_3: 500: Capture failed: [0:02:08.804950472] [1396] [1;32m INFO [1;37mCamera [1;34mcamera_manager.cpp:327 [0mlibcamera v0.4.0+51-ca36c77f
+ERROR: *** no cameras available ***
+
+2025-02-13 09:31:44,553 - get_images - ERROR - Capture error from node_4: 500: Capture failed: [0:03:33.496822324] [1425] [1;32m INFO [1;37mCamera [1;34mcamera_manager.cpp:327 [0mlibcamera v0.4.0+51-ca36c77f
+ERROR: *** no cameras available ***
+
+2025-02-13 09:31:45,297 - get_images - ERROR - Capture error from node_3: 500: Capture failed: [0:02:10.360973111] [1401] [1;32m INFO [1;37mCamera [1;34mcamera_manager.cpp:327 [0mlibcamera v0.4.0+51-ca36c77f
+ERROR: *** no cameras available ***
+
+2025-02-13 09:31:45,604 - get_images - ERROR - Capture error from node_4: 500: Capture failed: [0:03:34.965089641] [1430] [1;32m INFO [1;37mCamera [1;34mcamera_manager.cpp:327 [0mlibcamera v0.4.0+51-ca36c77f
+ERROR: *** no cameras available ***
+
+2025-02-13 09:31:46,309 - get_images - ERROR - Capture error from node_3: 500: Capture failed: [0:02:11.373743345] [1406] [1;32m INFO [1;37mCamera [1;34mcamera_manager.cpp:327 [0mlibcamera v0.4.0+51-ca36c77f
+ERROR: *** no cameras available ***
+
+2025-02-13 09:31:46,600 - get_images - ERROR - Capture error from node_4: 500: Capture failed: [0:03:35.973748841] [1435] [1;32m INFO [1;37mCamera [1;34mcamera_manager.cpp:327 [0mlibcamera v0.4.0+51-ca36c77f
+ERROR: *** no cameras available ***
+
+2025-02-13 09:31:47,320 - get_images - ERROR - Capture error from node_3: 500: Capture failed: [0:02:12.382449915] [1411] [1;32m INFO [1;37mCamera [1;34mcamera_manager.cpp:327 [0mlibcamera v0.4.0+51-ca36c77f
+ERROR: *** no cameras available ***
+
+2025-02-13 09:31:47,649 - get_images - ERROR - Capture error from node_4: 500: Capture failed: [0:03:37.022813511] [1440] [1;32m INFO [1;37mCamera [1;34mcamera_manager.cpp:327 [0mlibcamera v0.4.0+51-ca36c77f
+ERROR: *** no cameras available ***
+
+2025-02-13 09:31:48,325 - get_images - ERROR - Capture error from node_3: 500: Capture failed: [0:02:13.391574515] [1416] [1;32m INFO [1;37mCamera [1;34mcamera_manager.cpp:327 [0mlibcamera v0.4.0+51-ca36c77f
+ERROR: *** no cameras available ***
+
+2025-02-13 09:31:48,699 - get_images - ERROR - Capture error from node_4: 500: Capture failed: [0:03:38.072557472] [1445] [1;32m INFO [1;37mCamera [1;34mcamera_manager.cpp:327 [0mlibcamera v0.4.0+51-ca36c77f
+ERROR: *** no cameras available ***
+
+2025-02-13 09:31:49,149 - get_images - WARNING - Failed to connect to node_2 (http://192.168.195.73:5001): Cannot connect to host 192.168.195.73:5001 ssl:default [The remote computer refused the network connection]. Retrying in 5 seconds...
+2025-02-13 09:31:49,159 - get_images - WARNING - Failed to connect to node_1 (http://192.168.195.57:5001): Cannot connect to host 192.168.195.57:5001 ssl:default [The remote computer refused the network connection]. Retrying in 5 seconds...
+2025-02-13 09:31:49,341 - get_images - ERROR - Capture error from node_3: 500: Capture failed: [0:02:14.397444436] [1421] [1;32m INFO [1;37mCamera [1;34mcamera_manager.cpp:327 [0mlibcamera v0.4.0+51-ca36c77f
+ERROR: *** no cameras available ***
+
+2025-02-13 09:31:49,741 - get_images - ERROR - Capture error from node_4: 500: Capture failed: [0:03:39.085880575] [1450] [1;32m INFO [1;37mCamera [1;34mcamera_manager.cpp:327 [0mlibcamera v0.4.0+51-ca36c77f
+ERROR: *** no cameras available ***
+
+2025-02-13 09:31:50,365 - get_images - ERROR - Capture error from node_3: 500: Capture failed: [0:02:15.425299352] [1426] [1;32m INFO [1;37mCamera [1;34mcamera_manager.cpp:327 [0mlibcamera v0.4.0+51-ca36c77f
+ERROR: *** no cameras available ***
+
+2025-02-13 09:31:50,782 - get_images - ERROR - Capture error from node_4: 500: Capture failed: [0:03:40.127987074] [1455] [1;32m INFO [1;37mCamera [1;34mcamera_manager.cpp:327 [0mlibcamera v0.4.0+51-ca36c77f
+ERROR: *** no cameras available ***
+
+2025-02-13 09:31:51,377 - get_images - ERROR - Capture error from node_3: 500: Capture failed: [0:02:16.437626682] [1431] [1;32m INFO [1;37mCamera [1;34mcamera_manager.cpp:327 [0mlibcamera v0.4.0+51-ca36c77f
+ERROR: *** no cameras available ***
+
+2025-02-13 09:31:51,841 - get_images - ERROR - Capture error from node_4: 500: Capture failed: [0:03:41.187949464] [1460] [1;32m INFO [1;37mCamera [1;34mcamera_manager.cpp:327 [0mlibcamera v0.4.0+51-ca36c77f
+ERROR: *** no cameras available ***
+
+2025-02-13 09:31:52,388 - get_images - ERROR - Capture error from node_3: 500: Capture failed: [0:02:17.446199148] [1436] [1;32m INFO [1;37mCamera [1;34mcamera_manager.cpp:327 [0mlibcamera v0.4.0+51-ca36c77f
+ERROR: *** no cameras available ***
+
+2025-02-13 09:31:52,898 - get_images - ERROR - Capture error from node_4: 500: Capture failed: [0:03:42.272865445] [1465] [1;32m INFO [1;37mCamera [1;34mcamera_manager.cpp:327 [0mlibcamera v0.4.0+51-ca36c77f
+ERROR: *** no cameras available ***
+
+2025-02-13 09:31:53,400 - get_images - ERROR - Capture error from node_3: 500: Capture failed: [0:02:18.465590987] [1441] [1;32m INFO [1;37mCamera [1;34mcamera_manager.cpp:327 [0mlibcamera v0.4.0+51-ca36c77f
+ERROR: *** no cameras available ***
+
+2025-02-13 09:31:53,941 - get_images - ERROR - Capture error from node_4: 500: Capture failed: [0:03:43.285703961] [1470] [1;32m INFO [1;37mCamera [1;34mcamera_manager.cpp:327 [0mlibcamera v0.4.0+51-ca36c77f
+ERROR: *** no cameras available ***
+
+2025-02-13 09:31:54,441 - get_images - ERROR - Capture error from node_3: 500: Capture failed: [0:02:19.504284515] [1446] [1;32m INFO [1;37mCamera [1;34mcamera_manager.cpp:327 [0mlibcamera v0.4.0+51-ca36c77f
+ERROR: *** no cameras available ***
+
+2025-02-13 09:31:54,981 - get_images - ERROR - Capture error from node_4: 500: Capture failed: [0:03:44.329355855] [1475] [1;32m INFO [1;37mCamera [1;34mcamera_manager.cpp:327 [0mlibcamera v0.4.0+51-ca36c77f
+ERROR: *** no cameras available ***
+
+2025-02-13 09:31:55,457 - get_images - ERROR - Capture error from node_3: 500: Capture failed: [0:02:20.518421520] [1451] [1;32m INFO [1;37mCamera [1;34mcamera_manager.cpp:327 [0mlibcamera v0.4.0+51-ca36c77f
+ERROR: *** no cameras available ***
+
+2025-02-13 09:31:55,991 - get_images - ERROR - Capture error from node_4: 500: Capture failed: [0:03:45.362189704] [1480] [1;32m INFO [1;37mCamera [1;34mcamera_manager.cpp:327 [0mlibcamera v0.4.0+51-ca36c77f
+ERROR: *** no cameras available ***
+
+2025-02-13 09:31:56,267 - get_images - WARNING - Failed to connect to node_2 (http://192.168.195.73:5001): Cannot connect to host 192.168.195.73:5001 ssl:default [The remote computer refused the network connection]. Retrying in 5 seconds...
+2025-02-13 09:31:56,275 - get_images - WARNING - Failed to connect to node_1 (http://192.168.195.57:5001): Cannot connect to host 192.168.195.57:5001 ssl:default [The remote computer refused the network connection]. Retrying in 5 seconds...
+2025-02-13 09:31:56,475 - get_images - ERROR - Capture error from node_3: 500: Capture failed: [0:02:21.539714912] [1456] [1;32m INFO [1;37mCamera [1;34mcamera_manager.cpp:327 [0mlibcamera v0.4.0+51-ca36c77f
+ERROR: *** no cameras available ***
+
+2025-02-13 09:31:57,032 - get_images - ERROR - Capture error from node_4: 500: Capture failed: [0:03:46.398319873] [1485] [1;32m INFO [1;37mCamera [1;34mcamera_manager.cpp:327 [0mlibcamera v0.4.0+51-ca36c77f
+ERROR: *** no cameras available ***
+
+2025-02-13 09:31:57,489 - get_images - ERROR - Capture error from node_3: 500: Capture failed: [0:02:22.549670316] [1461] [1;32m INFO [1;37mCamera [1;34mcamera_manager.cpp:327 [0mlibcamera v0.4.0+51-ca36c77f
+ERROR: *** no cameras available ***
+
+2025-02-13 09:31:58,033 - get_images - ERROR - Capture error from node_4: 500: Capture failed: [0:03:47.408093749] [1490] [1;32m INFO [1;37mCamera [1;34mcamera_manager.cpp:327 [0mlibcamera v0.4.0+51-ca36c77f
+ERROR: *** no cameras available ***
+
+2025-02-13 09:31:58,501 - get_images - ERROR - Capture error from node_3: 500: Capture failed: [0:02:23.561167629] [1466] [1;32m INFO [1;37mCamera [1;34mcamera_manager.cpp:327 [0mlibcamera v0.4.0+51-ca36c77f
+ERROR: *** no cameras available ***
+
+2025-02-13 09:31:59,068 - get_images - ERROR - Capture error from node_4: 500: Capture failed: [0:03:48.450540006] [1495] [1;32m INFO [1;37mCamera [1;34mcamera_manager.cpp:327 [0mlibcamera v0.4.0+51-ca36c77f
+ERROR: *** no cameras available ***
+
+2025-02-13 09:31:59,509 - get_images - ERROR - Capture error from node_3: 500: Capture failed: [0:02:24.578315048] [1471] [1;32m INFO [1;37mCamera [1;34mcamera_manager.cpp:327 [0mlibcamera v0.4.0+51-ca36c77f
+ERROR: *** no cameras available ***
+
+2025-02-13 09:32:00,068 - get_images - ERROR - Capture error from node_4: 500: Capture failed: [0:03:49.448489512] [1500] [1;32m INFO [1;37mCamera [1;34mcamera_manager.cpp:327 [0mlibcamera v0.4.0+51-ca36c77f
+ERROR: *** no cameras available ***
+
+2025-02-13 09:32:00,529 - get_images - ERROR - Capture error from node_3: 500: Capture failed: [0:02:25.587159460] [1476] [1;32m INFO [1;37mCamera [1;34mcamera_manager.cpp:327 [0mlibcamera v0.4.0+51-ca36c77f
+ERROR: *** no cameras available ***
+
+2025-02-13 09:32:01,097 - get_images - ERROR - Capture error from node_4: 500: Capture failed: [0:03:50.469551765] [1505] [1;32m INFO [1;37mCamera [1;34mcamera_manager.cpp:327 [0mlibcamera v0.4.0+51-ca36c77f
+ERROR: *** no cameras available ***
+
+2025-02-13 09:32:01,537 - get_images - ERROR - Capture error from node_3: 500: Capture failed: [0:02:26.601104274] [1481] [1;32m INFO [1;37mCamera [1;34mcamera_manager.cpp:327 [0mlibcamera v0.4.0+51-ca36c77f
+ERROR: *** no cameras available ***
+
+2025-02-13 09:32:02,108 - get_images - ERROR - Capture error from node_4: 500: Capture failed: [0:03:51.484960437] [1510] [1;32m INFO [1;37mCamera [1;34mcamera_manager.cpp:327 [0mlibcamera v0.4.0+51-ca36c77f
+ERROR: *** no cameras available ***
+
+2025-02-13 09:32:02,542 - get_images - ERROR - Capture error from node_3: 500: Capture failed: [0:02:27.603134338] [1486] [1;32m INFO [1;37mCamera [1;34mcamera_manager.cpp:327 [0mlibcamera v0.4.0+51-ca36c77f
+ERROR: *** no cameras available ***
+
+2025-02-13 09:32:03,117 - get_images - ERROR - Capture error from node_4: 500: Capture failed: [0:03:52.493410807] [1515] [1;32m INFO [1;37mCamera [1;34mcamera_manager.cpp:327 [0mlibcamera v0.4.0+51-ca36c77f
+ERROR: *** no cameras available ***
+
+2025-02-13 09:32:03,409 - get_images - WARNING - Failed to connect to node_1 (http://192.168.195.57:5001): Cannot connect to host 192.168.195.57:5001 ssl:default [The remote computer refused the network connection]. Retrying in 5 seconds...
+2025-02-13 09:32:03,409 - get_images - WARNING - Failed to connect to node_2 (http://192.168.195.73:5001): Cannot connect to host 192.168.195.73:5001 ssl:default [The remote computer refused the network connection]. Retrying in 5 seconds...
+2025-02-13 09:32:03,550 - get_images - ERROR - Capture error from node_3: 500: Capture failed: [0:02:28.619273328] [1491] [1;32m INFO [1;37mCamera [1;34mcamera_manager.cpp:327 [0mlibcamera v0.4.0+51-ca36c77f
+ERROR: *** no cameras available ***
+
+2025-02-13 09:32:04,125 - get_images - ERROR - Capture error from node_4: 500: Capture failed: [0:03:53.500670597] [1520] [1;32m INFO [1;37mCamera [1;34mcamera_manager.cpp:327 [0mlibcamera v0.4.0+51-ca36c77f
+ERROR: *** no cameras available ***
+
+2025-02-13 09:32:04,581 - get_images - ERROR - Capture error from node_3: 500: Capture failed: [0:02:29.643756813] [1496] [1;32m INFO [1;37mCamera [1;34mcamera_manager.cpp:327 [0mlibcamera v0.4.0+51-ca36c77f
+ERROR: *** no cameras available ***
+
+2025-02-13 09:32:05,132 - get_images - ERROR - Capture error from node_4: 500: Capture failed: [0:03:54.511853365] [1525] [1;32m INFO [1;37mCamera [1;34mcamera_manager.cpp:327 [0mlibcamera v0.4.0+51-ca36c77f
+ERROR: *** no cameras available ***
+
+2025-02-13 09:32:05,609 - get_images - ERROR - Capture error from node_3: 500: Capture failed: [0:02:30.673391946] [1501] [1;32m INFO [1;37mCamera [1;34mcamera_manager.cpp:327 [0mlibcamera v0.4.0+51-ca36c77f
+ERROR: *** no cameras available ***
+
+2025-02-13 09:32:06,160 - get_images - ERROR - Capture error from node_4: 500: Capture failed: [0:03:55.536122720] [1530] [1;32m INFO [1;37mCamera [1;34mcamera_manager.cpp:327 [0mlibcamera v0.4.0+51-ca36c77f
+ERROR: *** no cameras available ***
+
+2025-02-13 10:06:09,434 - get_images - INFO - Connected to node_4 at http://192.168.195.56:5001
+2025-02-13 10:06:09,457 - get_images - INFO - Connected to node_3 at http://192.168.195.70:5001
+2025-02-13 10:06:10,737 - get_images - WARNING - Failed to connect to node_2 (http://192.168.195.73:5001): Cannot connect to host 192.168.195.73:5001 ssl:default [The remote computer refused the network connection]. Retrying in 5 seconds...
+2025-02-13 10:06:10,741 - get_images - WARNING - Failed to connect to node_1 (http://192.168.195.57:5001): Cannot connect to host 192.168.195.57:5001 ssl:default [The remote computer refused the network connection]. Retrying in 5 seconds...
+2025-02-13 10:06:15,227 - get_images - INFO - Received metadata from node_3: {'filename': 'capture_20250213_100609_3.dng', 'timestamp': '20250213_100609', 'node_id': '3', 'size': 24028630, 'chunk_size': 1048576}
+2025-02-13 10:06:15,834 - get_images - INFO - Received metadata from node_4: {'filename': 'capture_20250213_100609_4.dng', 'timestamp': '20250213_100609', 'node_id': '4', 'size': 24028630, 'chunk_size': 1048576}
+2025-02-13 10:06:18,060 - get_images - WARNING - Failed to connect to node_1 (http://192.168.195.57:5001): Cannot connect to host 192.168.195.57:5001 ssl:default [The remote computer refused the network connection]. Retrying in 5 seconds...
+2025-02-13 10:06:18,067 - get_images - WARNING - Failed to connect to node_2 (http://192.168.195.73:5001): Cannot connect to host 192.168.195.73:5001 ssl:default [The remote computer refused the network connection]. Retrying in 5 seconds...
+2025-02-13 10:06:25,302 - get_images - WARNING - Failed to connect to node_1 (http://192.168.195.57:5001): Cannot connect to host 192.168.195.57:5001 ssl:default [The remote computer refused the network connection]. Retrying in 5 seconds...
+2025-02-13 10:06:25,322 - get_images - WARNING - Failed to connect to node_2 (http://192.168.195.73:5001): Cannot connect to host 192.168.195.73:5001 ssl:default [The remote computer refused the network connection]. Retrying in 5 seconds...
+2025-02-13 10:06:47,004 - get_images - INFO - Connected to node_3 at http://192.168.195.70:5001
+2025-02-13 10:06:47,007 - get_images - INFO - Connected to node_4 at http://192.168.195.56:5001
+2025-02-13 10:06:49,030 - get_images - WARNING - Failed to connect to node_1 (http://192.168.195.57:5001): Cannot connect to host 192.168.195.57:5001 ssl:default [The remote computer refused the network connection]. Retrying in 5 seconds...
+2025-02-13 10:06:49,032 - get_images - WARNING - Failed to connect to node_2 (http://192.168.195.73:5001): Cannot connect to host 192.168.195.73:5001 ssl:default [The remote computer refused the network connection]. Retrying in 5 seconds...
+2025-02-13 10:06:52,605 - get_images - INFO - Received metadata from node_4: {'filename': 'capture_20250213_100647_4.dng', 'timestamp': '20250213_100647', 'node_id': '4', 'size': 24028630, 'chunk_size': 1048576}
+2025-02-13 10:06:52,667 - get_images - INFO - Received metadata from node_3: {'filename': 'capture_20250213_100647_3.dng', 'timestamp': '20250213_100647', 'node_id': '3', 'size': 24028630, 'chunk_size': 1048576}
+2025-02-13 10:07:15,809 - get_images - INFO - Connected to node_3 at http://192.168.195.70:5001
+2025-02-13 10:07:15,812 - get_images - INFO - Connected to node_4 at http://192.168.195.56:5001
+2025-02-13 10:07:17,817 - get_images - WARNING - Failed to connect to node_2 (http://192.168.195.73:5001): Cannot connect to host 192.168.195.73:5001 ssl:default [The remote computer refused the network connection]. Retrying in 5 seconds...
+2025-02-13 10:07:17,918 - get_images - WARNING - Failed to connect to node_1 (http://192.168.195.57:5001): Cannot connect to host 192.168.195.57:5001 ssl:default [The remote computer refused the network connection]. Retrying in 5 seconds...
+2025-02-13 10:07:21,209 - get_images - INFO - Received metadata from node_4: {'filename': 'capture_20250213_100716_4.dng', 'timestamp': '20250213_100716', 'node_id': '4', 'size': 24028630, 'chunk_size': 1048576}
+2025-02-13 10:07:21,398 - get_images - INFO - Received metadata from node_3: {'filename': 'capture_20250213_100716_3.dng', 'timestamp': '20250213_100716', 'node_id': '3', 'size': 24028630, 'chunk_size': 1048576}
+2025-02-13 10:07:25,177 - get_images - WARNING - Failed to connect to node_1 (http://192.168.195.57:5001): Cannot connect to host 192.168.195.57:5001 ssl:default [The remote computer refused the network connection]. Retrying in 5 seconds...
+2025-02-13 10:07:27,960 - get_images - WARNING - Failed to connect to node_2 (http://192.168.195.73:5001): Connection refused by the server. Retrying in 5 seconds...
+2025-02-13 10:07:32,595 - get_images - WARNING - Failed to connect to node_1 (http://192.168.195.57:5001): Cannot connect to host 192.168.195.57:5001 ssl:default [The remote computer refused the network connection]. Retrying in 5 seconds...
+2025-02-13 10:07:32,645 - get_images - INFO - Received complete image from node_3
+2025-02-13 10:07:32,652 - get_images - INFO - Image transfer time from node_3: 11.2534 seconds
+2025-02-13 10:07:32,653 - get_images - INFO - Total time elapsed: 16.9664 seconds
+2025-02-13 10:07:32,707 - get_images - INFO - Saved image from node_3 to received_images\node_3\capture_20250213_100716_3.dng
+2025-02-13 10:07:34,987 - get_images - INFO - Received complete image from node_4
+2025-02-13 10:07:34,987 - get_images - INFO - Image transfer time from node_4: 13.7774 seconds
+2025-02-13 10:07:34,987 - get_images - INFO - Total time elapsed: 19.3017 seconds
+2025-02-13 10:07:35,007 - get_images - INFO - Saved image from node_4 to received_images\node_4\capture_20250213_100716_4.dng
+2025-02-13 10:07:35,192 - get_images - WARNING - Failed to connect to node_2 (http://192.168.195.73:5001): Cannot connect to host 192.168.195.73:5001 ssl:default [The remote computer refused the network connection]. Retrying in 5 seconds...
+2025-02-13 10:10:33,777 - get_images - INFO - Connected to node_3 at http://192.168.195.70:5001
+2025-02-13 10:10:33,796 - get_images - INFO - Connected to node_1 at http://192.168.195.57:5001
+2025-02-13 10:10:33,800 - get_images - INFO - Connected to node_4 at http://192.168.195.56:5001
+2025-02-13 10:10:35,811 - get_images - WARNING - Failed to connect to node_2 (http://192.168.195.73:5001): Cannot connect to host 192.168.195.73:5001 ssl:default [The remote computer refused the network connection]. Retrying in 5 seconds...
+2025-02-13 10:10:37,863 - get_images - INFO - Received metadata from node_3: {'filename': 'capture_20250213_101034_3.dng', 'timestamp': '20250213_101034', 'node_id': '3', 'size': 24028630, 'chunk_size': 1048576}
+2025-02-13 10:10:38,477 - get_images - INFO - Received metadata from node_4: {'filename': 'capture_20250213_101034_4.dng', 'timestamp': '20250213_101034', 'node_id': '4', 'size': 24028630, 'chunk_size': 1048576}
+2025-02-13 10:10:39,678 - get_images - INFO - Received metadata from node_1: {'filename': 'capture_20250213_101034_1.dng', 'timestamp': '20250213_101034', 'node_id': '1', 'size': 24028620, 'chunk_size': 1048576}
+2025-02-13 10:10:43,288 - get_images - WARNING - Failed to connect to node_2 (http://192.168.195.73:5001): Cannot connect to host 192.168.195.73:5001 ssl:default [The remote computer refused the network connection]. Retrying in 5 seconds...
+2025-02-13 10:13:21,098 - get_images - INFO - Connected to node_1 at http://192.168.195.57:5001
+2025-02-13 10:13:21,104 - get_images - INFO - Connected to node_4 at http://192.168.195.56:5001
+2025-02-13 10:13:21,105 - get_images - INFO - Connected to node_3 at http://192.168.195.70:5001
+2025-02-13 10:13:21,473 - get_images - INFO - Connected to node_2 at http://192.168.195.73:5001
+2025-02-13 10:13:24,845 - get_images - INFO - Received metadata from node_3: {'filename': 'capture_20250213_101321_3.dng', 'timestamp': '20250213_101321', 'node_id': '3', 'size': 24028630, 'chunk_size': 1048576}
+2025-02-13 10:13:25,082 - get_images - INFO - Received metadata from node_4: {'filename': 'capture_20250213_101321_4.dng', 'timestamp': '20250213_101321', 'node_id': '4', 'size': 24028630, 'chunk_size': 1048576}
+2025-02-13 10:13:27,205 - get_images - INFO - Received metadata from node_2: {'filename': 'capture_20250213_101321_1.dng', 'timestamp': '20250213_101321', 'node_id': '1', 'size': 24028630, 'chunk_size': 1048576}
+2025-02-13 10:13:27,306 - get_images - INFO - Received metadata from node_1: {'filename': 'capture_20250213_101321_1.dng', 'timestamp': '20250213_101321', 'node_id': '1', 'size': 24028620, 'chunk_size': 1048576}
+2025-02-13 10:13:43,368 - get_images - INFO - Received complete image from node_3
+2025-02-13 10:13:43,369 - get_images - INFO - Image transfer time from node_3: 18.5239 seconds
+2025-02-13 10:13:43,370 - get_images - INFO - Total time elapsed: 22.5460 seconds
+2025-02-13 10:13:43,412 - get_images - INFO - Saved image from node_3 to received_images\node_3\capture_20250213_101321_3.dng
+2025-02-13 10:13:47,408 - get_images - INFO - Received metadata from node_3: {'filename': 'capture_20250213_101343_3.dng', 'timestamp': '20250213_101343', 'node_id': '3', 'size': 24028630, 'chunk_size': 1048576}
+2025-02-13 10:13:50,055 - get_images - INFO - Received complete image from node_2
+2025-02-13 10:13:50,057 - get_images - INFO - Image transfer time from node_2: 22.8514 seconds
+2025-02-13 10:13:50,058 - get_images - INFO - Total time elapsed: 29.2335 seconds
+2025-02-13 10:13:50,080 - get_images - INFO - Saved image from node_2 to received_images\node_2\capture_20250213_101321_1.dng
+2025-02-13 10:13:51,463 - get_images - INFO - Received complete image from node_1
+2025-02-13 10:13:51,463 - get_images - INFO - Image transfer time from node_1: 24.1572 seconds
+2025-02-13 10:13:51,465 - get_images - INFO - Total time elapsed: 30.6397 seconds
+2025-02-13 10:13:51,480 - get_images - INFO - Saved image from node_1 to received_images\node_1\capture_20250213_101321_1.dng
+2025-02-13 10:15:37,569 - get_images - INFO - Connected to node_3 at http://192.168.195.70:5001
+2025-02-13 10:15:37,569 - get_images - INFO - Connected to node_1 at http://192.168.195.57:5001
+2025-02-13 10:15:37,578 - get_images - INFO - Connected to node_4 at http://192.168.195.56:5001
+2025-02-13 10:15:37,589 - get_images - INFO - Connected to node_2 at http://192.168.195.73:5001
+2025-02-13 10:15:41,455 - get_images - INFO - Received metadata from node_3: {'filename': 'capture_20250213_101537_3.dng', 'timestamp': '20250213_101537', 'node_id': '3', 'size': 24028630, 'chunk_size': 1048576}
+2025-02-13 10:15:41,659 - get_images - INFO - Received metadata from node_4: {'filename': 'capture_20250213_101537_4.dng', 'timestamp': '20250213_101537', 'node_id': '4', 'size': 24028630, 'chunk_size': 1048576}
+2025-02-13 10:15:43,054 - get_images - INFO - Received metadata from node_1: {'filename': 'capture_20250213_101537_1.dng', 'timestamp': '20250213_101537', 'node_id': '1', 'size': 24028620, 'chunk_size': 1048576}
+2025-02-13 10:15:44,064 - get_images - INFO - Received metadata from node_2: {'filename': 'capture_20250213_101537_1.dng', 'timestamp': '20250213_101537', 'node_id': '1', 'size': 24028630, 'chunk_size': 1048576}
+2025-02-13 10:16:03,629 - get_images - INFO - Received complete image from node_4
+2025-02-13 10:16:03,630 - get_images - INFO - Image transfer time from node_4: 21.9702 seconds
+2025-02-13 10:16:03,630 - get_images - INFO - Total time elapsed: 26.1219 seconds
+2025-02-13 10:16:03,651 - get_images - INFO - Saved image from node_4 to received_images\node_4\capture_20250213_101537_4.dng
+2025-02-13 10:16:06,756 - get_images - INFO - Received complete image from node_3
+2025-02-13 10:16:06,756 - get_images - INFO - Image transfer time from node_3: 25.3015 seconds
+2025-02-13 10:16:06,756 - get_images - INFO - Total time elapsed: 29.2484 seconds
+2025-02-13 10:16:06,802 - get_images - INFO - Saved image from node_3 to received_images\node_3\capture_20250213_101537_3.dng
+2025-02-13 10:16:07,352 - get_images - INFO - Received complete image from node_1
+2025-02-13 10:16:07,352 - get_images - INFO - Image transfer time from node_1: 24.2988 seconds
+2025-02-13 10:16:07,352 - get_images - INFO - Total time elapsed: 29.8456 seconds
+2025-02-13 10:16:07,370 - get_images - INFO - Saved image from node_1 to received_images\node_1\capture_20250213_101537_1.dng
+2025-02-13 10:16:07,501 - get_images - INFO - Received complete image from node_2
+2025-02-13 10:16:07,501 - get_images - INFO - Image transfer time from node_2: 23.4371 seconds
+2025-02-13 10:16:07,501 - get_images - INFO - Total time elapsed: 29.9935 seconds
+2025-02-13 10:16:07,517 - get_images - INFO - Saved image from node_2 to received_images\node_2\capture_20250213_101537_1.dng
+2025-02-13 10:16:07,559 - get_images - INFO - Received metadata from node_4: {'filename': 'capture_20250213_101604_4.dng', 'timestamp': '20250213_101604', 'node_id': '4', 'size': 24028630, 'chunk_size': 1048576}
+2025-02-13 10:16:10,872 - get_images - INFO - Received metadata from node_3: {'filename': 'capture_20250213_101607_3.dng', 'timestamp': '20250213_101607', 'node_id': '3', 'size': 24028630, 'chunk_size': 1048576}
+2025-02-13 10:16:12,520 - get_images - INFO - Received metadata from node_1: {'filename': 'capture_20250213_101607_1.dng', 'timestamp': '20250213_101607', 'node_id': '1', 'size': 24028620, 'chunk_size': 1048576}
+2025-02-13 10:16:15,623 - get_images - INFO - Received metadata from node_2: {'filename': 'capture_20250213_101607_1.dng', 'timestamp': '20250213_101607', 'node_id': '1', 'size': 24028630, 'chunk_size': 1048576}
+2025-02-13 10:16:21,034 - get_images - INFO - Received complete image from node_4
+2025-02-13 10:16:21,034 - get_images - INFO - Image transfer time from node_4: 13.4757 seconds
+2025-02-13 10:16:21,036 - get_images - INFO - Total time elapsed: 17.3828 seconds
+2025-02-13 10:16:21,051 - get_images - INFO - Saved image from node_4 to received_images\node_4\capture_20250213_101604_4.dng
+2025-02-13 10:16:24,926 - get_images - INFO - Received metadata from node_4: {'filename': 'capture_20250213_101621_4.dng', 'timestamp': '20250213_101621', 'node_id': '4', 'size': 24028630, 'chunk_size': 1048576}
+2025-02-13 10:16:34,798 - get_images - INFO - Received complete image from node_1
+2025-02-13 10:16:34,799 - get_images - INFO - Image transfer time from node_1: 22.2792 seconds
+2025-02-13 10:16:34,799 - get_images - INFO - Total time elapsed: 27.4272 seconds
+2025-02-13 10:16:34,814 - get_images - INFO - Saved image from node_1 to received_images\node_1\capture_20250213_101607_1.dng
+2025-02-13 10:16:35,347 - get_images - INFO - Received complete image from node_3
+2025-02-13 10:16:35,348 - get_images - INFO - Image transfer time from node_3: 24.4760 seconds
+2025-02-13 10:16:35,348 - get_images - INFO - Total time elapsed: 28.5449 seconds
+2025-02-13 10:16:35,363 - get_images - INFO - Saved image from node_3 to received_images\node_3\capture_20250213_101607_3.dng
+2025-02-13 10:16:37,157 - get_images - INFO - Received complete image from node_2
+2025-02-13 10:16:37,158 - get_images - INFO - Image transfer time from node_2: 21.5356 seconds
+2025-02-13 10:16:37,159 - get_images - INFO - Total time elapsed: 29.6395 seconds
+2025-02-13 10:16:37,201 - get_images - INFO - Saved image from node_2 to received_images\node_2\capture_20250213_101607_1.dng
+2025-02-13 10:16:39,415 - get_images - INFO - Received metadata from node_3: {'filename': 'capture_20250213_101635_3.dng', 'timestamp': '20250213_101635', 'node_id': '3', 'size': 24028630, 'chunk_size': 1048576}
+2025-02-13 10:16:40,434 - get_images - INFO - Received complete image from node_4
+2025-02-13 10:16:40,435 - get_images - INFO - Image transfer time from node_4: 15.5092 seconds
+2025-02-13 10:16:40,436 - get_images - INFO - Total time elapsed: 19.3833 seconds
+2025-02-13 10:16:40,472 - get_images - INFO - Saved image from node_4 to received_images\node_4\capture_20250213_101621_4.dng
+2025-02-13 10:16:41,662 - get_images - INFO - Received metadata from node_1: {'filename': 'capture_20250213_101635_1.dng', 'timestamp': '20250213_101635', 'node_id': '1', 'size': 24028620, 'chunk_size': 1048576}
+2025-02-13 10:16:42,412 - get_images - INFO - Received metadata from node_2: {'filename': 'capture_20250213_101637_1.dng', 'timestamp': '20250213_101637', 'node_id': '1', 'size': 24028630, 'chunk_size': 1048576}
+2025-02-13 10:16:45,634 - get_images - INFO - Received metadata from node_4: {'filename': 'capture_20250213_101640_4.dng', 'timestamp': '20250213_101640', 'node_id': '4', 'size': 24028630, 'chunk_size': 1048576}
+2025-02-13 10:25:46,431 - get_images - INFO - Connected to node_4 at http://192.168.195.56:5001
+2025-02-13 10:25:46,440 - get_images - INFO - Connected to node_3 at http://192.168.195.70:5001
+2025-02-13 10:25:46,440 - get_images - INFO - Connected to node_1 at http://192.168.195.57:5001
+2025-02-13 10:25:46,455 - get_images - INFO - Connected to node_2 at http://192.168.195.73:5001
+2025-02-13 10:25:50,332 - get_images - INFO - Received metadata from node_4: {'filename': 'capture_20250213_102546_4.dng', 'timestamp': '20250213_102546', 'node_id': '4', 'size': 24028630, 'chunk_size': 1048576}
+2025-02-13 10:25:51,738 - get_images - INFO - Received metadata from node_1: {'filename': 'capture_20250213_102546_1.dng', 'timestamp': '20250213_102546', 'node_id': '1', 'size': 24028620, 'chunk_size': 1048576}
+2025-02-13 10:25:51,981 - get_images - INFO - Received metadata from node_2: {'filename': 'capture_20250213_102546_1.dng', 'timestamp': '20250213_102546', 'node_id': '1', 'size': 24028630, 'chunk_size': 1048576}
+2025-02-13 10:25:52,033 - get_images - INFO - Received metadata from node_3: {'filename': 'capture_20250213_102546_3.dng', 'timestamp': '20250213_102546', 'node_id': '3', 'size': 24028630, 'chunk_size': 1048576}

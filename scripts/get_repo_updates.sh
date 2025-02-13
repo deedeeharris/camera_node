@@ -29,6 +29,7 @@ fi
 # Copy the Python file from the temporary directory to the project directory
 # Overwrite the existing file
 cp "$TEMP_DIR/camera_node.py" "$PROJECT_DIR/camera_node.py"
+cp "$TEMP_DIR/requirements.txt" "$PROJECT_DIR/requirements.txt"
 
 # Check if copying was successful
 if [ $? -ne 0 ]; then

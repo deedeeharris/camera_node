@@ -1,4 +1,4 @@
-# get_images.py (Revised for Timestamped Directories)
+# get_images.py (Revised for Raw Bayer Data, Single-Channel NoIR, Timing, No WR Normalization)
 
 import asyncio
 import socketio
@@ -9,7 +9,7 @@ import csv
 from logging.handlers import RotatingFileHandler
 from datetime import datetime
 import numpy as np
-from typing import Dict, Any, List
+from typing import Dict, Any
 
 # --- Logging Setup ---
 LOG_DIR = "logs"
@@ -43,7 +43,7 @@ def write_to_csv(data: Dict[str, Any]):
     file_exists = os.path.isfile(CSV_FILE)
     try:
         with open(CSV_FILE, 'a', newline='') as csvfile:
-            fieldnames = ['timestamp', 'node_id', 'transfer_time', 'processing_time', 'total_time', 'capture_group']
+            fieldnames = ['timestamp', 'node_id', 'transfer_time', 'processing_time', 'total_time']
             writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
 
             if not file_exists:
@@ -53,8 +53,8 @@ def write_to_csv(data: Dict[str, Any]):
         logger.exception(f"Error writing to CSV: {e}")
 
 
-async def receive_images(node_address: str, node_id: str, base_save_dir: str, capture_group: List[str]) -> None:
-    """Connects to a single node, receives, processes, and saves images."""
+async def receive_images(node_address: str, node_id: str) -> None:
+    """Connects to a single node, receives raw images, and processes them."""
     sio = socketio.AsyncClient()
     uri = f"http://{node_address}:{5001}"
     received_data = bytearray()
@@ -93,13 +93,9 @@ async def receive_images(node_address: str, node_id: str, base_save_dir: str, ca
             processing_start_time = time.time()
 
             try:
-                # Process and save in the timestamped directory
-                save_dir = process_and_save(received_data, metadata, node_id, base_save_dir)
-                if save_dir: # Check if save_dir is not None
-                    capture_group.append(save_dir) # Add to the capture group
-
+                process_raw_data(received_data, metadata, node_id)
             except Exception as e:
-                logger.exception(f"Error processing/saving data from {node_id}: {e}")
+                logger.exception(f"Error processing raw data from {node_id}: {e}")
 
             processing_time = time.time() - processing_start_time
             total_time = time.time() - total_start_time
@@ -113,19 +109,14 @@ async def receive_images(node_address: str, node_id: str, base_save_dir: str, ca
                 'node_id': node_id,
                 'transfer_time': f"{transfer_time:.4f}",
                 'processing_time': f"{processing_time:.4f}",
-                'total_time': f"{total_time:.4f}",
-                'capture_group': os.path.basename(save_dir) if save_dir else "N/A" # Log the directory name
+                'total_time': f"{total_time:.4f}"
             })
 
             received_data.clear()
             metadata = None
             start_time = None
             total_start_time = time.time()
-
-            # Only request another image if we have a full set from all nodes
-            if len(set(capture_group)) >= 1: # Use set to avoid duplicates
-                capture_group.clear()  # Reset for the next group
-                await sio.emit('capture', {'resolution': '1280x720'})
+            await sio.emit('capture', {'resolution': '1280x720'})
 
         else:
             logger.warning("Received image_complete without metadata!")
@@ -133,9 +124,6 @@ async def receive_images(node_address: str, node_id: str, base_save_dir: str, ca
     @sio.on('capture_error')
     async def on_capture_error(data: Dict[str, str]):
         logger.error(f"Capture error from {node_id}: {data['error']}")
-        # Consider *not* requesting another image immediately on error
-        # to avoid a potential error loop.  Maybe retry after a delay.
-        await asyncio.sleep(1)  # Short delay before retrying
         await sio.emit('capture', {'resolution': '1280x720'})
 
     while True:
@@ -149,8 +137,8 @@ async def receive_images(node_address: str, node_id: str, base_save_dir: str, ca
             logger.exception(f"An unexpected error: {e}")
             await asyncio.sleep(5)
 
-def process_and_save(data: bytearray, metadata: Dict[str, Any], node_id: str, base_save_dir: str) -> str | None:
-    """Processes raw data, creates timestamped dir, and saves the image."""
+def process_raw_data(data: bytearray, metadata: Dict[str, Any], node_id: str):
+    """Processes raw data (demosaics RGB, prepares NoIR), saves without WR."""
 
     width = metadata['width']
     height = metadata['height']
@@ -177,12 +165,8 @@ def process_and_save(data: bytearray, metadata: Dict[str, Any], node_id: str, ba
     else:
         raw_image = raw_array.reshape((height, width))
 
-    # --- Create Timestamped Directory ---
-    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-    save_dir = os.path.join(base_save_dir, timestamp)
-    os.makedirs(save_dir, exist_ok=True)  # Create the directory if it doesn't exist
 
-    if node_id == "node_1":
+    if node_id == "node_1":  # RGB Camera
         if bayer_pattern == "RGGB":
             rgb_image = np.zeros((height, width, 3), dtype=np.uint8)
             rgb_image[:, :, 0] = raw_image[0::2, 0::2]
@@ -193,17 +177,40 @@ def process_and_save(data: bytearray, metadata: Dict[str, Any], node_id: str, ba
         else:
             raise ValueError(f"Unsupported Bayer pattern: {bayer_pattern}")
 
+        # --- White Reference Normalization (COMMENTED OUT) ---
+        # white_ref_x1, white_ref_y1 = 100, 100  # Example coordinates
+        # white_ref_x2, white_ref_y2 = 200, 200  # Example coordinates
+        # white_ref_region = rgb_image[white_ref_y1:white_ref_y2, white_ref_x1:white_ref_x2]
+        # white_ref_avg = np.mean(white_ref_region, axis=(0, 1))
+        # reflectance_image = np.zeros_like(rgb_image, dtype=np.float32)
+        # for i in range(3):
+        #     if white_ref_avg[i] > 0:
+        #         reflectance_image[:, :, i] = rgb_image[:, :, i].astype(np.float32) / white_ref_avg[i]
+        #     else:
+        #         logger.warning(f"White reference average for channel {i} is zero or negative.")
+        # ----------------------------------------------------
+
         logger.info(f"Processed RGB data from {node_id}. Image shape: {rgb_image.shape}")
-        filepath = os.path.join(save_dir, f"raw_rgb_{node_id}.npy")
-        np.save(filepath, rgb_image)
-        return save_dir
+        np.save(f"raw_rgb_{node_id}.npy", rgb_image)  # Save the demosaiced RGB data
 
     else:  # NoIR Cameras
+        # No channel extraction needed - already done on the camera node
         noir_channel = raw_image
+
+        # --- White Reference Normalization (COMMENTED OUT) ---
+        # white_ref_x1, white_ref_y1 = 100, 100  # Example coordinates
+        # white_ref_x2, white_ref_y2 = 200, 200  # Example coordinates
+        # white_ref_region = noir_channel[white_ref_y1:white_ref_y2, white_ref_x1:white_ref_x2]
+        # white_ref_avg = np.mean(white_ref_region)
+        # if white_ref_avg > 0:
+        #     reflectance_channel = noir_channel.astype(np.float32) / white_ref_avg
+        # else:
+        #     reflectance_channel = np.zeros_like(noir_channel, dtype=np.float32)
+        #     logger.warning(f"White reference average for {node_id} is zero.")
+        # ----------------------------------------------------
+
         logger.info(f"Processed NoIR data from {node_id}. Channel shape: {noir_channel.shape}")
-        filepath = os.path.join(save_dir, f"raw_noir_{node_id}.npy")
-        np.save(filepath, noir_channel)
-        return save_dir
+        np.save(f"raw_noir_{node_id}.npy", noir_channel)  # Save the single-channel NoIR data
 
 async def main():
     """Connects to multiple nodes concurrently."""
@@ -213,12 +220,8 @@ async def main():
         "node_3": "192.168.195.70",
         "node_4": "192.168.195.56",
     }
-    base_save_dir = "received_images"  # Base directory for all captures
-    os.makedirs(base_save_dir, exist_ok=True)
-
-    capture_group: List[str] = [] # List to track captured directories
-
-    tasks = [receive_images(address, node_id, base_save_dir, capture_group) for node_id, address in nodes.items()]
+    os.makedirs("received_images", exist_ok=True)
+    tasks = [receive_images(address, node_id) for node_id, address in nodes.items()]
     await asyncio.gather(*tasks)
 
 if __name__ == "__main__":

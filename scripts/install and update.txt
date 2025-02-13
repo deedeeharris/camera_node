@@ -17,7 +17,7 @@ journalctl -u camera_node.service -f
 ## update
 
 chmod +x get_repo_updates.sh
-sudo ./get_repo_updates.sh
+sudo get_repo_updates.sh
 
 
 # activate env
