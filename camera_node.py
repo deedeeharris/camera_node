@@ -157,7 +157,7 @@ def get_camera_info() -> Tuple[int, int, str]:
             raise Exception("No active camera found.")
 
         # Find the mode lines *after* the active camera line.  This is crucial.
-        mode_lines = [line for line in output_lines[active_camera_line_index + 1:] if "Modes" not in line and any(x in line for x in ["RGGB", "BGGR", "GRBG", "GBRG"])]
+        mode_lines = [line for line in output_lines[active_camera_line_index + 1:] if any(x in line for x in ["RGGB", "BGGR", "GRBG", "GBRG"])]
 
         if not mode_lines:
             logger.error("No camera modes found in output.")
