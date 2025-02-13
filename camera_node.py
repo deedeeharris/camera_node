@@ -1,5 +1,4 @@
-# camera_node.py (Revised for Single-Channel NoIR Transfer)
-# type: ws version: 2
+# camera_node.py (Revised for Single-Channel NoIR Transfer, Get Info Once)
 
 from fastapi import FastAPI, HTTPException
 import uvicorn
@@ -17,7 +16,7 @@ import json
 from fastapi.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
 import socketio
-import numpy as np  # Import NumPy
+import numpy as np
 
 load_dotenv()
 
@@ -35,18 +34,18 @@ app.add_middleware(
 )
 
 # --- Configuration ---
-CAPTURE_DIR = "captured_photos"  # We'll still use this for temporary storage
+CAPTURE_DIR = "captured_photos"
 LOG_DIR = "logs"
 STORAGE_LIMIT_MB = 1000
 MAX_LOG_SIZE_MB = 10
 MAX_LOG_FILES = 5
 PORT = int(os.getenv("PORT", 5001))
 NODE_ID = os.getenv("NODE_ID", f"camera_node_{os.getpid()}")
-CHUNK_SIZE = 64 * 1024  # 64KB chunks
-DEFAULT_RESOLUTION = "1280x720"  # Start with a moderate resolution
+CHUNK_SIZE = 64 * 1024
+DEFAULT_RESOLUTION = "1280x720"
 #DEFAULT_RESOLUTION = "640x480"
 
-# --- Logging Setup (same as before) ---
+# --- Logging Setup ---
 os.makedirs(LOG_DIR, exist_ok=True)
 log_file = os.path.join(LOG_DIR, "camera_node.log")
 formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
@@ -58,6 +57,9 @@ logger = logging.getLogger("camera_node")
 logger.setLevel(logging.INFO)
 logger.addHandler(file_handler)
 logger.addHandler(console_handler)
+
+# --- Global Variable to Store Camera Info ---
+camera_info: Tuple[int, int, str] | None = None
 
 def get_system_info() -> Dict:
     """(Same as before)"""
@@ -85,7 +87,7 @@ def get_directory_size_mb(directory: str) -> float:
     return total / (1024 * 1024)
 
 def cleanup_old_files():
-    """(Same as before, but now looks for .raw files)"""
+    """(Same as before)"""
     if not os.path.exists(CAPTURE_DIR): return
     while get_directory_size_mb(CAPTURE_DIR) > STORAGE_LIMIT_MB:
         files = sorted(Path(CAPTURE_DIR).glob('*.raw'), key=os.path.getctime)
@@ -97,7 +99,7 @@ def cleanup_old_files():
 def check_camera():
     """(Same as before)"""
     try:
-        cmd = "libcamera-still --list-cameras"  # Use still to list cameras
+        cmd = "libcamera-still --list-cameras"
         result = subprocess.run(cmd, shell=True, capture_output=True, text=True)
         if result.returncode != 0: raise Exception("No cameras detected")
         cameras = result.stdout.strip().split('\n')
@@ -114,7 +116,7 @@ def ensure_capture_dir():
     cleanup_old_files()
 
 def get_camera_info() -> Tuple[int, int, str]:
-    """(Same as before)"""
+    """Gets camera resolution and Bayer pattern (called only once)."""
     try:
         cmd = "libcamera-still --list-cameras"
         result = subprocess.run(cmd, shell=True, capture_output=True, text=True)
@@ -140,6 +142,10 @@ def get_camera_info() -> Tuple[int, int, str]:
 
 def capture_image(resolution: str = DEFAULT_RESOLUTION) -> Dict:
     """Capture raw Bayer data, extract red channel if NoIR, and save."""
+    global camera_info  # Access the global camera_info variable
+    if camera_info is None:
+        raise Exception("Camera info not initialized!")
+
     ensure_capture_dir()
     timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
     filename = f"capture_{timestamp}_{NODE_ID}.raw"
@@ -147,20 +153,21 @@ def capture_image(resolution: str = DEFAULT_RESOLUTION) -> Dict:
     width, height = map(int, resolution.split('x'))
 
     try:
-        # Corrected command: Use --width and --height
         cmd = (
             f"libcamera-raw -t 1000 --nopreview --width {width} --height {height} -o {filepath}"
         )
         logger.info(f"Executing capture command: {cmd}")
         result = subprocess.run(cmd, shell=True, capture_output=True, text=True)
-        if result.returncode != 0: raise Exception(f"Capture failed: {result.stderr}")
+        if result.returncode != 0:
+            raise Exception(f"Capture failed: {result.stderr}")
 
         file_size = os.path.getsize(filepath)
         logger.info(f"Image captured: {filename} (Size: {file_size/1024:.2f}KB)")
-        camera_width, camera_height, bayer_pattern = get_camera_info()
 
-        # --- Extract Red Channel (if NoIR) ---
-        if NODE_ID != "1":  # Assuming "1" is still your RGB camera.
+        # Use the stored camera info
+        camera_width, camera_height, bayer_pattern = camera_info
+
+        if NODE_ID != "1":
             with open(filepath, "rb") as f:
                 raw_data = np.fromfile(f, dtype=np.uint8)
             raw_image = raw_data.reshape((height, width))
@@ -176,14 +183,11 @@ def capture_image(resolution: str = DEFAULT_RESOLUTION) -> Dict:
             else:
                 raise ValueError(f"Unsupported Bayer pattern: {bayer_pattern}")
 
-            # Overwrite the original file with ONLY the red channel data
             with open(filepath, "wb") as f:
                 red_channel.tofile(f)
-            file_size = os.path.getsize(filepath)  # Update file_size
-            logger.info(f"Extracted red channel.  New size: {file_size/1024:.2f}KB")
-            # Update width and height for the red channel
-            width = red_channel.shape[1]
-            height = red_channel.shape[0]
+            file_size = os.path.getsize(filepath)
+            logger.info(f"Extracted red channel. New size: {file_size/1024:.2f}KB")
+            width, height = red_channel.shape[1], red_channel.shape[0]
 
         return {
             "filename": filename,
@@ -202,7 +206,7 @@ def capture_image(resolution: str = DEFAULT_RESOLUTION) -> Dict:
             os.remove(filepath)
         raise HTTPException(status_code=500, detail=str(e))
 
-# --- Socket.IO Event Handlers (No changes needed) ---
+# --- Socket.IO Event Handlers ---
 @sio.event
 async def connect(sid, environ):
     logger.info(f"Client connected: {sid}")
@@ -247,8 +251,7 @@ async def send_image(sid, file_info):
         await sio.emit('image_complete', room=sid)
         logger.info(f"Sent image {file_info['filename']} to client: {sid}")
 
-# --- REST Endpoints (Simplified - Remove image serving) ---
-
+# --- REST Endpoints ---
 @app.get("/status")
 async def status():
     """(Same as before)"""
@@ -289,4 +292,8 @@ if __name__ == "__main__":
         logger.error("No camera detected.  Please connect a camera and restart.")
         sys.exit(1)
     logger.info("Camera detected, starting server...")
+
+    # --- Get Camera Info at Startup ---
+    camera_info = get_camera_info()
+
     uvicorn.run(socket_app, host="0.0.0.0", port=PORT)
