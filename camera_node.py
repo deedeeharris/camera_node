@@ -131,8 +131,12 @@ def check_camera():
 
 def ensure_capture_dir():
     """Ensures the capture directory exists and performs cleanup."""
-    os.makedirs(CAPTURE_DIR, exist_ok=True)
-    cleanup_old_files()
+    try:
+        # Create the directory with explicit permissions (read/write/execute for everyone)
+        os.makedirs(CAPTURE_DIR, exist_ok=True, mode=0o777)
+        cleanup_old_files()
+    except Exception as e:
+        logger.exception(f"Error creating or cleaning capture directory: {e}")
 
 
 def get_camera_info() -> Tuple[int, int, str]:
@@ -257,7 +261,7 @@ def capture_image(resolution: str = DEFAULT_RESOLUTION) -> Dict:
             os.remove(filepath)
         raise HTTPException(status_code=500, detail=str(e))
 
-        
+
 # --- Socket.IO Event Handlers ---
 @sio.event
 async def connect(sid, environ):
