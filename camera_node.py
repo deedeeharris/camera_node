@@ -203,10 +203,12 @@ def get_camera_info() -> Tuple[int, int, str]:
         logger.error(f"Error getting camera info: {e}")
         raise
 
+
+
 def capture_image(resolution: str = DEFAULT_RESOLUTION) -> Dict:
     """Capture raw Bayer data, extract red channel if NoIR, and save."""
     global camera_info
-    if camera_info is None:
+    if camera_info is not None:
         camera_info = get_camera_info()  # Ensure camera_info is initialized
 
     ensure_capture_dir()
@@ -226,17 +228,29 @@ def capture_image(resolution: str = DEFAULT_RESOLUTION) -> Dict:
         )
         logger.info(f"Executing capture command: {cmd}")
         result = subprocess.run(cmd, shell=True, capture_output=True, text=True, timeout=15)
+
+        # IMPORTANT: Check for errors *before* getting the file size.
         if result.returncode != 0:
             raise Exception(f"Capture failed: {result.stderr}")
 
-        # Force synchronization with the filesystem!
-        with open(filepath, "rb") as f:
-            f.flush()
-            os.fsync(f.fileno())
+        # Wait for the file to be fully written.  libcamera-raw might
+        # still be writing in the background even after subprocess.run
+        # returns.  We'll check the file size repeatedly until it
+        # stabilizes.
+        previous_size = -1
+        current_size = 0
+        while current_size != previous_size:
+            previous_size = current_size
+            time.sleep(0.1)  # Wait a short time
+            with open(filepath, "rb") as f:
+                f.flush()
+                os.fsync(f.fileno())  # Force synchronization
+            current_size = os.path.getsize(filepath)
 
-        file_size = os.path.getsize(filepath)
+        file_size = current_size # Use the final, stable size
+
         logger.info(f"Image captured: {filename} (Size: {file_size/1024:.2f}KB)")
-        logger.info(f"File size immediately after capture: {os.path.getsize(filepath)}")
+        logger.info(f"File size immediately after capture: {file_size}")
 
         # No channel extraction needed for node_1
 
@@ -362,7 +376,7 @@ async def get_logs(lines: int = 100):
 
 if __name__ == "__main__":
     logger.info(f"Starting camera node {NODE_ID}")
-    ensure_capture_dir()
+    ensure_capture_dir()  # Call with explicit permissions
     if not check_camera():
         logger.error("No camera detected.  Please connect a camera and restart.")
         sys.exit(1)
