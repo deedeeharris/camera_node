@@ -84,3 +84,35 @@ KeyError: 'width'
 2025-02-13 11:02:55,046 - get_images - INFO - Received metadata from node_4: {'filename': 'capture_20250213_110249_4.dng', 'timestamp': '20250213_110249', 'node_id': '4', 'size': 24028630, 'chunk_size': 1048576}
 2025-02-13 11:02:55,333 - get_images - WARNING - Failed to connect to node_3 (http://192.168.195.70:5001): Cannot connect to host 192.168.195.70:5001 ssl:default [The remote computer refused the network connection]. Retrying...
 2025-02-13 11:02:55,334 - get_images - WARNING - Failed to connect to node_2 (http://192.168.195.73:5001): Cannot connect to host 192.168.195.73:5001 ssl:default [The remote computer refused the network connection]. Retrying...
+2025-02-13 11:08:10,136 - get_images - INFO - Connected to node_4 at http://192.168.195.56:5001
+2025-02-13 11:08:10,145 - get_images - INFO - Connected to node_1 at http://192.168.195.57:5001
+2025-02-13 11:08:12,125 - get_images - WARNING - Failed to connect to node_2 (http://192.168.195.73:5001): Cannot connect to host 192.168.195.73:5001 ssl:default [The remote computer refused the network connection]. Retrying...
+2025-02-13 11:08:12,126 - get_images - WARNING - Failed to connect to node_3 (http://192.168.195.70:5001): Cannot connect to host 192.168.195.70:5001 ssl:default [The remote computer refused the network connection]. Retrying...
+2025-02-13 11:08:14,208 - get_images - INFO - Received metadata from node_4: {'filename': 'capture_20250213_110810_4.dng', 'timestamp': '20250213_110810', 'node_id': '4', 'size': 24028630, 'chunk_size': 1048576}
+2025-02-13 11:08:14,320 - get_images - ERROR - Capture error from node_1: 500: No camera modes found
+2025-02-13 11:08:19,177 - get_images - ERROR - Capture error from node_1: 500: No camera modes found
+2025-02-13 11:08:19,350 - get_images - WARNING - Failed to connect to node_2 (http://192.168.195.73:5001): Cannot connect to host 192.168.195.73:5001 ssl:default [The remote computer refused the network connection]. Retrying...
+2025-02-13 11:08:19,547 - get_images - WARNING - Failed to connect to node_3 (http://192.168.195.70:5001): Cannot connect to host 192.168.195.70:5001 ssl:default [The remote computer refused the network connection]. Retrying...
+2025-02-13 11:08:22,087 - get_images - INFO - Received complete image from node_4
+2025-02-13 11:08:22,088 - get_images - ERROR - Error processing raw data from node_4: 'width'
+Traceback (most recent call last):
+  File "C:\ai\TomAISense\camera_node\testing\get_images-fast.py", line 96, in on_image_complete
+    process_raw_data(received_data, metadata, node_id)
+  File "C:\ai\TomAISense\camera_node\testing\get_images-fast.py", line 143, in process_raw_data
+    width = metadata['width']
+            ~~~~~~~~^^^^^^^^^
+KeyError: 'width'
+2025-02-13 11:08:22,089 - get_images - INFO - Image transfer time from node_4: 7.8789 seconds
+2025-02-13 11:08:22,089 - get_images - INFO - Image processing time from node_4: 0.0015 seconds
+2025-02-13 11:08:22,090 - get_images - INFO - Total time elapsed: 12.0295 seconds
+2025-02-13 11:08:23,369 - get_images - ERROR - Capture error from node_1: 500: No camera modes found
+2025-02-13 11:08:26,016 - get_images - INFO - Received metadata from node_4: {'filename': 'capture_20250213_110822_4.dng', 'timestamp': '20250213_110822', 'node_id': '4', 'size': 24028630, 'chunk_size': 1048576}
+2025-02-13 11:08:26,619 - get_images - WARNING - Failed to connect to node_3 (http://192.168.195.70:5001): Cannot connect to host 192.168.195.70:5001 ssl:default [The remote computer refused the network connection]. Retrying...
+2025-02-13 11:08:26,709 - get_images - WARNING - Failed to connect to node_2 (http://192.168.195.73:5001): Cannot connect to host 192.168.195.73:5001 ssl:default [The remote computer refused the network connection]. Retrying...
+2025-02-13 11:08:27,458 - get_images - ERROR - Capture error from node_1: 500: No camera modes found
+2025-02-13 11:22:46,544 - get_images - INFO - Connected to node_4 at http://192.168.195.56:5001
+2025-02-13 11:22:46,573 - get_images - INFO - Connected to node_1 at http://192.168.195.57:5001
+2025-02-13 11:22:48,503 - get_images - WARNING - Failed to connect to node_3 (http://192.168.195.70:5001): Cannot connect to host 192.168.195.70:5001 ssl:default [The remote computer refused the network connection]. Retrying...
+2025-02-13 11:22:48,507 - get_images - WARNING - Failed to connect to node_2 (http://192.168.195.73:5001): Cannot connect to host 192.168.195.73:5001 ssl:default [The remote computer refused the network connection]. Retrying...
+2025-02-13 11:22:50,468 - get_images - INFO - Received metadata from node_4: {'filename': 'capture_20250213_112246_4.dng', 'timestamp': '20250213_112246', 'node_id': '4', 'size': 24028630, 'chunk_size': 1048576}
+2025-02-13 11:22:52,202 - get_images - ERROR - Capture error from node_1: 500: No camera modes found

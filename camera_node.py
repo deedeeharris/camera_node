@@ -119,14 +119,21 @@ def get_camera_info() -> Tuple[int, int, str]:
     """Gets camera resolution and Bayer pattern (called only once)."""
     try:
         cmd = "libcamera-still --list-cameras"
+        logger.info(f"Running command: {cmd}")  # Log the command
         result = subprocess.run(cmd, shell=True, capture_output=True, text=True)
+        logger.info(f"Command output: {result.stdout}")  # Log the output
+        logger.info(f"Command return code: {result.returncode}") # Log the return code
         result.check_returncode()
 
         output_lines = result.stdout.strip().split('\n')
         active_camera_line = next((line for line in output_lines if line.startswith('Available cameras')), None)
-        if not active_camera_line: raise Exception("No active camera found.")
+        if not active_camera_line:
+            logger.error("No active camera found in output.") # More specific error
+            raise Exception("No active camera found.")
         mode_lines = [line for line in output_lines if "modes" in line]
-        if not mode_lines: raise Exception("No camera modes found")
+        if not mode_lines:
+            logger.error("No camera modes found in output.") # More specific error
+            raise Exception("No camera modes found")
         current_mode_line = mode_lines[0]
         parts = current_mode_line.split()
         resolution_str = parts[2]
@@ -136,6 +143,11 @@ def get_camera_info() -> Tuple[int, int, str]:
         logger.info(f"Camera Info: Resolution={width}x{height}, Bayer Pattern={bayer_order}")
         return width, height, bayer_order
 
+    except subprocess.CalledProcessError as e:
+        logger.error(f"Error running libcamera-still: {e}")
+        logger.error(f"Return code: {e.returncode}")
+        logger.error(f"Output: {e.output}")
+        raise
     except Exception as e:
         logger.error(f"Error getting camera info: {e}")
         raise
