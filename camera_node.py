@@ -17,6 +17,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
 import socketio
 import numpy as np
+import re  # Import the regular expression module
+
 
 load_dotenv()
 
@@ -134,6 +136,7 @@ def ensure_capture_dir():
     cleanup_old_files()
 
 
+
 def get_camera_info() -> Tuple[int, int, str]:
     """Gets camera resolution and Bayer pattern (called only once)."""
     global camera_info
@@ -144,51 +147,46 @@ def get_camera_info() -> Tuple[int, int, str]:
         cmd = "libcamera-still --list-cameras"
         logger.info(f"Running command: {cmd}")
         result = subprocess.run(cmd, shell=True, capture_output=True, text=True, timeout=10)
-        logger.debug(f"Command output: {result.stdout}")  # Debug level for full output
+        logger.debug(f"Command output: {result.stdout}")
         logger.info(f"Command return code: {result.returncode}")
         result.check_returncode()
 
-        output_lines = result.stdout.strip().split('\n')
-        # Find the line indicating the available camera (should be the first non-empty line)
-        active_camera_line_index = next((i for i, line in enumerate(output_lines) if line.startswith('0')), None)
+        output_text = result.stdout
 
-        if active_camera_line_index is None:
-            logger.error("No active camera found in output.")
-            raise Exception("No active camera found.")
+        # Regular expressions to match the resolution and Bayer pattern
+        resolution_regex = re.compile(r"(\d+)x(\d+)")  # Matches "1234x5678"
+        bayer_regex = re.compile(r"(RGGB|BGGR|GRBG|GBRG)")  # Matches Bayer patterns
 
-        # --- CORRECTED MODE LINE PARSING ---
+        # Find the camera mode lines.  We'll look for lines that contain *both*
+        # a resolution *and* a Bayer pattern.
         mode_lines = []
-        for line in output_lines[active_camera_line_index + 1:]:
-            if any(x in line for x in ["x64", "x1296", "x2592"]):  # Look for resolution strings
-                if any(bp in line for bp in ["RGGB", "BGGR", "GRBG", "GBRG"]):
-                    mode_lines.append(line)
+        for line in output_text.splitlines():
+            if resolution_regex.search(line) and bayer_regex.search(line):
+                mode_lines.append(line)
 
         if not mode_lines:
             logger.error("No camera modes found in output.")
             raise Exception("No camera modes found")
 
-        # Use the *first* mode line to get the resolution and Bayer pattern
-        current_mode_line = mode_lines[0].strip()
+        # Use the *first* mode line
+        current_mode_line = mode_lines[0]
         logger.info(f"current_mode_line: {current_mode_line}")
 
-        parts = current_mode_line.split()
-
         # Extract resolution
-        resolution_str = next((part for part in parts if 'x' in part and part.split('x')[0].isdigit() and part.split('x')[1].isdigit()), None)
-        if not resolution_str:
-            raise Exception("Could not find resolution string in mode line.")
-        width, height = map(int, resolution_str.split('x'))
+        resolution_match = resolution_regex.search(current_mode_line)
+        if not resolution_match:
+            raise Exception("Could not find resolution in mode line.")
+        width = int(resolution_match.group(1))
+        height = int(resolution_match.group(2))
 
         # Extract Bayer pattern
-        bayer_pattern_full = next((part for part in parts if any(bp in part for bp in ["RGGB", "BGGR", "GRBG", "GBRG"])), None)
-
-        if not bayer_pattern_full:
-            raise Exception("Could not find Bayer pattern string in mode line.")
-
-        bayer_order = ''.join(filter(str.isalpha, bayer_pattern_full))
+        bayer_match = bayer_regex.search(current_mode_line)
+        if not bayer_match:
+            raise Exception("Could not find Bayer pattern in mode line.")
+        bayer_order = bayer_match.group(1)
 
         logger.info(f"Camera Info: Resolution={width}x{height}, Bayer Pattern={bayer_order}")
-        camera_info = (width, height, bayer_order) # Store globally
+        camera_info = (width, height, bayer_order)
         return camera_info
 
     except subprocess.CalledProcessError as e:
@@ -278,7 +276,7 @@ def capture_image(resolution: str = DEFAULT_RESOLUTION) -> Dict:
             os.remove(filepath)
         raise HTTPException(status_code=500, detail=str(e))
 
-        
+
 # --- Socket.IO Event Handlers ---
 @sio.event
 async def connect(sid, environ):
