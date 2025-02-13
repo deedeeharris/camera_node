@@ -20,6 +20,10 @@ else
   echo "Git is already installed."
 fi
 
+# Install libopenblas-dev
+echo "Installing libopenblas-dev..."
+sudo apt install libopenblas-dev -y
+
 # Check if a Node ID is provided as an argument
 if [ -z "$1" ]; then
   echo "Error: Please provide a Node ID as an argument."
@@ -73,6 +77,7 @@ sudo chmod -R 755 "$PROJECT_DIR"
 # Install libcamera-apps
 echo "Installing libcamera-apps..."
 sudo apt-get install libcamera-apps -y
+
 
 # Create systemd service file
 echo "Creating systemd service file..."

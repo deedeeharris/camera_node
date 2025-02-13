@@ -147,7 +147,10 @@ def capture_image(resolution: str = DEFAULT_RESOLUTION) -> Dict:
     width, height = map(int, resolution.split('x'))
 
     try:
-        cmd = (f"libcamera-raw -t 1000 --nopreview -r {width}x{height} -o {filepath}")
+        # Corrected command: Use --width and --height
+        cmd = (
+            f"libcamera-raw -t 1000 --nopreview --width {width} --height {height} -o {filepath}"
+        )
         logger.info(f"Executing capture command: {cmd}")
         result = subprocess.run(cmd, shell=True, capture_output=True, text=True)
         if result.returncode != 0: raise Exception(f"Capture failed: {result.stderr}")
@@ -157,7 +160,7 @@ def capture_image(resolution: str = DEFAULT_RESOLUTION) -> Dict:
         camera_width, camera_height, bayer_pattern = get_camera_info()
 
         # --- Extract Red Channel (if NoIR) ---
-        if NODE_ID != "1":  # Since "1" is the RGB camera
+        if NODE_ID != "1":  # Assuming "1" is still your RGB camera.
             with open(filepath, "rb") as f:
                 raw_data = np.fromfile(f, dtype=np.uint8)
             raw_image = raw_data.reshape((height, width))
@@ -176,8 +179,8 @@ def capture_image(resolution: str = DEFAULT_RESOLUTION) -> Dict:
             # Overwrite the original file with ONLY the red channel data
             with open(filepath, "wb") as f:
                 red_channel.tofile(f)
-            file_size = os.path.getsize(filepath) # Update file_size
-            logger.info(f"Extracted red channel. New size: {file_size/1024:.2f}KB")
+            file_size = os.path.getsize(filepath)  # Update file_size
+            logger.info(f"Extracted red channel.  New size: {file_size/1024:.2f}KB")
             # Update width and height for the red channel
             width = red_channel.shape[1]
             height = red_channel.shape[0]
@@ -191,7 +194,7 @@ def capture_image(resolution: str = DEFAULT_RESOLUTION) -> Dict:
             "height": height,
             "camera_width": camera_width,
             "camera_height": camera_height,
-            "bayer_pattern": bayer_pattern,  # Still send the original pattern
+            "bayer_pattern": bayer_pattern,
         }
     except Exception as e:
         logger.error(f"Capture failed: {str(e)}")

@@ -6,3 +6,73 @@
 2025-02-13 10:46:58,053 - get_images - WARNING - Failed to connect to node_2 (http://192.168.195.73:5001): Cannot connect to host 192.168.195.73:5001 ssl:default [The remote computer refused the network connection]. Retrying...
 2025-02-13 10:46:58,067 - get_images - WARNING - Failed to connect to node_3 (http://192.168.195.70:5001): Cannot connect to host 192.168.195.70:5001 ssl:default [The remote computer refused the network connection]. Retrying...
 2025-02-13 10:46:58,096 - get_images - WARNING - Failed to connect to node_1 (http://192.168.195.57:5001): Cannot connect to host 192.168.195.57:5001 ssl:default [The remote computer refused the network connection]. Retrying...
+2025-02-13 10:49:05,108 - get_images - INFO - Connected to node_4 at http://192.168.195.56:5001
+2025-02-13 10:49:07,127 - get_images - WARNING - Failed to connect to node_3 (http://192.168.195.70:5001): Cannot connect to host 192.168.195.70:5001 ssl:default [The remote computer refused the network connection]. Retrying...
+2025-02-13 10:49:07,130 - get_images - WARNING - Failed to connect to node_1 (http://192.168.195.57:5001): Cannot connect to host 192.168.195.57:5001 ssl:default [The remote computer refused the network connection]. Retrying...
+2025-02-13 10:49:07,133 - get_images - WARNING - Failed to connect to node_2 (http://192.168.195.73:5001): Cannot connect to host 192.168.195.73:5001 ssl:default [The remote computer refused the network connection]. Retrying...
+2025-02-13 10:49:10,850 - get_images - INFO - Received metadata from node_4: {'filename': 'capture_20250213_104905_4.dng', 'timestamp': '20250213_104905', 'node_id': '4', 'size': 24028630, 'chunk_size': 1048576}
+2025-02-13 10:54:29,690 - get_images - INFO - Connected to node_4 at http://192.168.195.56:5001
+2025-02-13 10:54:29,720 - get_images - INFO - Connected to node_1 at http://192.168.195.57:5001
+2025-02-13 10:54:31,049 - get_images - ERROR - Capture error from node_1: 500: Capture failed: ERROR: *** unrecognised option '-r' ***
+
+2025-02-13 10:54:31,700 - get_images - WARNING - Failed to connect to node_3 (http://192.168.195.70:5001): Cannot connect to host 192.168.195.70:5001 ssl:default [The remote computer refused the network connection]. Retrying...
+2025-02-13 10:54:31,708 - get_images - WARNING - Failed to connect to node_2 (http://192.168.195.73:5001): Cannot connect to host 192.168.195.73:5001 ssl:default [The remote computer refused the network connection]. Retrying...
+2025-02-13 10:54:32,158 - get_images - ERROR - Capture error from node_1: 500: Capture failed: ERROR: *** unrecognised option '-r' ***
+
+2025-02-13 10:54:33,277 - get_images - ERROR - Capture error from node_1: 500: Capture failed: ERROR: *** unrecognised option '-r' ***
+
+2025-02-13 10:54:34,417 - get_images - ERROR - Capture error from node_1: 500: Capture failed: ERROR: *** unrecognised option '-r' ***
+
+2025-02-13 10:54:35,517 - get_images - INFO - Received metadata from node_4: {'filename': 'capture_20250213_105430_4.dng', 'timestamp': '20250213_105430', 'node_id': '4', 'size': 24028630, 'chunk_size': 1048576}
+2025-02-13 10:54:35,525 - get_images - ERROR - Capture error from node_1: 500: Capture failed: ERROR: *** unrecognised option '-r' ***
+
+2025-02-13 10:54:36,627 - get_images - ERROR - Capture error from node_1: 500: Capture failed: ERROR: *** unrecognised option '-r' ***
+
+2025-02-13 10:54:37,734 - get_images - ERROR - Capture error from node_1: 500: Capture failed: ERROR: *** unrecognised option '-r' ***
+
+2025-02-13 10:54:38,858 - get_images - ERROR - Capture error from node_1: 500: Capture failed: ERROR: *** unrecognised option '-r' ***
+
+2025-02-13 10:54:38,919 - get_images - WARNING - Failed to connect to node_3 (http://192.168.195.70:5001): Cannot connect to host 192.168.195.70:5001 ssl:default [The remote computer refused the network connection]. Retrying...
+2025-02-13 10:54:38,964 - get_images - WARNING - Failed to connect to node_2 (http://192.168.195.73:5001): Cannot connect to host 192.168.195.73:5001 ssl:default [The remote computer refused the network connection]. Retrying...
+2025-02-13 10:54:39,977 - get_images - ERROR - Capture error from node_1: 500: Capture failed: ERROR: *** unrecognised option '-r' ***
+
+2025-02-13 10:54:41,109 - get_images - ERROR - Capture error from node_1: 500: Capture failed: ERROR: *** unrecognised option '-r' ***
+
+2025-02-13 10:54:41,697 - get_images - INFO - Received complete image from node_4
+2025-02-13 10:54:41,697 - get_images - ERROR - Error processing raw data from node_4: 'width'
+Traceback (most recent call last):
+  File "C:\ai\TomAISense\camera_node\testing\get_images-fast.py", line 96, in on_image_complete
+    process_raw_data(received_data, metadata, node_id)
+  File "C:\ai\TomAISense\camera_node\testing\get_images-fast.py", line 143, in process_raw_data
+    width = metadata['width']
+            ~~~~~~~~^^^^^^^^^
+KeyError: 'width'
+2025-02-13 10:54:41,700 - get_images - INFO - Image transfer time from node_4: 6.1801 seconds
+2025-02-13 10:54:41,701 - get_images - INFO - Image processing time from node_4: 0.0028 seconds
+2025-02-13 10:54:41,701 - get_images - INFO - Total time elapsed: 12.1013 seconds
+2025-02-13 10:54:42,200 - get_images - ERROR - Capture error from node_1: 500: Capture failed: ERROR: *** unrecognised option '-r' ***
+
+2025-02-13 10:54:43,285 - get_images - ERROR - Capture error from node_1: 500: Capture failed: ERROR: *** unrecognised option '-r' ***
+
+2025-02-13 10:54:44,417 - get_images - ERROR - Capture error from node_1: 500: Capture failed: ERROR: *** unrecognised option '-r' ***
+
+2025-02-13 10:54:45,534 - get_images - ERROR - Capture error from node_1: 500: Capture failed: ERROR: *** unrecognised option '-r' ***
+
+2025-02-13 10:54:45,809 - get_images - INFO - Received metadata from node_4: {'filename': 'capture_20250213_105442_4.dng', 'timestamp': '20250213_105442', 'node_id': '4', 'size': 24028630, 'chunk_size': 1048576}
+2025-02-13 10:54:46,047 - get_images - WARNING - Failed to connect to node_3 (http://192.168.195.70:5001): Cannot connect to host 192.168.195.70:5001 ssl:default [The remote computer refused the network connection]. Retrying...
+2025-02-13 10:54:46,082 - get_images - WARNING - Failed to connect to node_2 (http://192.168.195.73:5001): Cannot connect to host 192.168.195.73:5001 ssl:default [The remote computer refused the network connection]. Retrying...
+2025-02-13 10:54:46,641 - get_images - ERROR - Capture error from node_1: 500: Capture failed: ERROR: *** unrecognised option '-r' ***
+
+2025-02-13 10:55:05,452 - get_images - INFO - Connected to node_4 at http://192.168.195.56:5001
+2025-02-13 10:55:07,010 - get_images - INFO - Connected to node_1 at http://192.168.195.57:5001
+2025-02-13 10:55:07,542 - get_images - WARNING - Failed to connect to node_3 (http://192.168.195.70:5001): Cannot connect to host 192.168.195.70:5001 ssl:default [The remote computer refused the network connection]. Retrying...
+2025-02-13 10:55:07,542 - get_images - WARNING - Failed to connect to node_2 (http://192.168.195.73:5001): Cannot connect to host 192.168.195.73:5001 ssl:default [The remote computer refused the network connection]. Retrying...
+2025-02-13 10:55:08,187 - get_images - ERROR - Capture error from node_1: 500: Capture failed: ERROR: *** unrecognised option '-r' ***
+
+2025-02-13 10:55:09,340 - get_images - ERROR - Capture error from node_1: 500: Capture failed: ERROR: *** unrecognised option '-r' ***
+
+2025-02-13 10:55:10,452 - get_images - ERROR - Capture error from node_1: 500: Capture failed: ERROR: *** unrecognised option '-r' ***
+
+2025-02-13 10:55:10,693 - get_images - INFO - Received metadata from node_4: {'filename': 'capture_20250213_105505_4.dng', 'timestamp': '20250213_105505', 'node_id': '4', 'size': 24028630, 'chunk_size': 1048576}
+2025-02-13 10:55:11,627 - get_images - ERROR - Capture error from node_1: 500: Capture failed: ERROR: *** unrecognised option '-r' ***
+
