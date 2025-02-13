@@ -115,31 +115,44 @@ def ensure_capture_dir():
     os.makedirs(CAPTURE_DIR, exist_ok=True)
     cleanup_old_files()
 
+
 def get_camera_info() -> Tuple[int, int, str]:
     """Gets camera resolution and Bayer pattern (called only once)."""
     try:
         cmd = "libcamera-still --list-cameras"
-        logger.info(f"Running command: {cmd}")  # Log the command
+        logger.info(f"Running command: {cmd}")
         result = subprocess.run(cmd, shell=True, capture_output=True, text=True)
-        logger.info(f"Command output: {result.stdout}")  # Log the output
-        logger.info(f"Command return code: {result.returncode}") # Log the return code
+        logger.info(f"Command output: {result.stdout}")
+        logger.info(f"Command return code: {result.returncode}")
         result.check_returncode()
 
         output_lines = result.stdout.strip().split('\n')
         active_camera_line = next((line for line in output_lines if line.startswith('Available cameras')), None)
         if not active_camera_line:
-            logger.error("No active camera found in output.") # More specific error
+            logger.error("No active camera found in output.")
             raise Exception("No active camera found.")
-        mode_lines = [line for line in output_lines if "modes" in line]
+
+        # Corrected mode line detection: Check for 'SRGGB10_CSI2P' (or similar)
+        mode_lines = [line for line in output_lines if "'SRGGB10_CSI2P'" in line]
         if not mode_lines:
-            logger.error("No camera modes found in output.") # More specific error
+            logger.error("No camera modes found in output.")
             raise Exception("No camera modes found")
+
+        # Use the *first* mode line to get the resolution and Bayer pattern
         current_mode_line = mode_lines[0]
         parts = current_mode_line.split()
-        resolution_str = parts[2]
-        bayer_pattern = parts[-1]
+        # Find the resolution part (e.g., '1536x864')
+        resolution_str = next((part for part in parts if 'x' in part and part.split('x')[0].isdigit() and part.split('x')[1].isdigit()), None)
+        if not resolution_str:
+            raise Exception("Could not find resolution string in mode line.")
         width, height = map(int, resolution_str.split('x'))
-        bayer_order = ''.join(filter(str.isalpha, bayer_pattern))
+
+        # Find the Bayer pattern part (e.g., 'SRGGB10_CSI2P') and extract the Bayer order
+        bayer_pattern_full = next((part for part in parts if "RGGB" in part or "BGGR" in part or "GRBG" in part or "GBRG" in part), None)
+        if not bayer_pattern_full:
+             raise Exception("Could not find Bayer pattern string in mode line.")
+        bayer_order = ''.join(filter(str.isalpha, bayer_pattern_full))
+
         logger.info(f"Camera Info: Resolution={width}x{height}, Bayer Pattern={bayer_order}")
         return width, height, bayer_order
 
