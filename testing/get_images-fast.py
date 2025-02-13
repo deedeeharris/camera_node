@@ -65,7 +65,7 @@ async def receive_images(node_address: str, node_id: str) -> None:
     @sio.event
     async def connect():
         logger.info(f"Connected to {node_id} at {uri}")
-        await sio.emit('capture', {'resolution': '1280x720'})
+        await sio.emit('capture', {'resolution': '1280x720'}) #Keep sending 1280x720
 
     @sio.event
     async def disconnect():
@@ -137,47 +137,46 @@ async def receive_images(node_address: str, node_id: str) -> None:
             logger.exception(f"An unexpected error: {e}")
             await asyncio.sleep(5)
 
+
 def process_raw_data(data: bytearray, metadata: Dict[str, Any], node_id: str):
     """Processes raw data (demosaics RGB, prepares NoIR), saves without WR."""
 
-    width = metadata['width']
-    height = metadata['height']
+    width = metadata['width']  # Use REQUESTED width
+    height = metadata['height'] # Use REQUESTED height
     bayer_pattern = metadata['bayer_pattern']
-    camera_width = metadata['camera_width']  # Use camera_width
-    camera_height = metadata['camera_height'] # Use camera_height
+    camera_width = metadata['camera_width']
+    camera_height = metadata['camera_height']
     file_size = metadata['size']
 
     raw_array = np.frombuffer(data, dtype=np.uint8)
 
     # --- 10-bit Unpacking (for ALL nodes) ---
-    # Calculate expected size based on 10-bit packing and CAMERA dimensions
-    expected_size = (camera_width * camera_height * 5) // 4  # Use camera dimensions
+    # Calculate expected size based on 10-bit packing and REQUESTED dimensions
+    expected_size = (width * height * 5) // 4  # Use REQUESTED dimensions
 
     if len(raw_array) != expected_size:
       logger.error(f"Incorrect data size. Expected: {expected_size}, got: {len(raw_array)}")
       raise ValueError("Incorrect data size received from camera node.")
 
-    # Reshape to 5 bytes for every 4 pixels, using CAMERA dimensions
-    reshaped_data = raw_array.reshape((camera_height * camera_width // 4, 5)) # Use camera dimensions
+    # Reshape to 5 bytes for every 4 pixels, using REQUESTED dimensions
+    reshaped_data = raw_array.reshape((height * width // 4, 5)) # Use REQUESTED dimensions
 
     # Unpack the 10-bit data
-    unpacked_data = np.zeros((camera_height * camera_width,), dtype=np.uint16) # Use camera dimensions
+    unpacked_data = np.zeros((height * width,), dtype=np.uint16) # Use REQUESTED dimensions
     unpacked_data[0::4] = ((reshaped_data[:, 0] << 2) | (reshaped_data[:, 1] >> 6)) & 0x3FF
     unpacked_data[1::4] = ((reshaped_data[:, 1] << 4) | (reshaped_data[:, 2] >> 4)) & 0x3FF
     unpacked_data[2::4] = ((reshaped_data[:, 2] << 6) | (reshaped_data[:, 3] >> 2)) & 0x3FF
     unpacked_data[3::4] = ((reshaped_data[:, 3] << 8) | reshaped_data[:, 4]) & 0x3FF
 
-    # Reshape to image dimensions using CAMERA dimensions
-    raw_image = unpacked_data.reshape((camera_height, camera_width))
+    # Reshape to image dimensions using REQUESTED dimensions
+    raw_image = unpacked_data.reshape((height, width)) # Use REQUESTED dimensions
 
-    # Now, crop the image to the requested dimensions AFTER unpacking
-    raw_image = raw_image[:height, :width]
-
+    # No cropping needed here - libcamera-raw has already done it
 
     if node_id == "node_1":  # RGB Camera
         # Correct Bayer Pattern Handling
         if bayer_pattern.startswith("RGGB"):
-            rgb_image = np.zeros((height, width, 3), dtype=np.uint16) # Use REQUESTED dimensions
+            rgb_image = np.zeros((height, width, 3), dtype=np.uint16)
             rgb_image[:, :, 0] = raw_image[0::2, 0::2]  # Red
             rgb_image[:, :, 1] = (raw_image[0::2, 1::2] + raw_image[1::2, 0::2]) // 2  # Green (average)
             rgb_image[:, :, 2] = raw_image[1::2, 1::2]  # Blue
@@ -192,13 +191,13 @@ def process_raw_data(data: bytearray, metadata: Dict[str, Any], node_id: str):
             rgb_image[:, :, 1] = raw_image[0::2, 0::2]  # Green
             rgb_image[:, :, 0] = raw_image[0::2, 1::2]  # Red
             rgb_image[:, :, 2] = raw_image[1::2, 0::2]  # Blue
-            rgb_image[:, :, 1] = (rgb_image[:,:,1] + raw_image[1::2, 1::2])//2 # Green
+            rgb_image[:, :, 1] = (rgb_image[:,:,1] + raw_image[1::2, 1::2])//2 # Average greens
         elif bayer_pattern.startswith("GBRG"):
             rgb_image = np.zeros((height, width, 3), dtype=np.uint16)
             rgb_image[:, :, 1] = raw_image[0::2, 0::2]  # Green
             rgb_image[:, :, 2] = raw_image[0::2, 1::2]  # Blue
             rgb_image[:, :, 0] = raw_image[1::2, 0::2]  # Red
-            rgb_image[:, :, 1] = (rgb_image[:,:,1] + raw_image[1::2, 1::2])//2 # Green
+            rgb_image[:, :, 1] = (rgb_image[:,:,1] + raw_image[1::2, 1::2])//2 # Average greens
 
         else:
             raise ValueError(f"Unsupported Bayer pattern: {bayer_pattern}")

@@ -200,6 +200,7 @@ def get_camera_info() -> Tuple[int, int, str]:
         logger.error(f"Error getting camera info: {e}")
         raise
 
+
 def capture_image(resolution: str = DEFAULT_RESOLUTION) -> Dict:
     """Capture raw Bayer data, extract red channel if NoIR, and save."""
     global camera_info
@@ -255,6 +256,7 @@ def capture_image(resolution: str = DEFAULT_RESOLUTION) -> Dict:
             logger.info(f"Extracted red channel. New size: {file_size/1024:.2f}KB")
             width, height = red_channel.shape[1], red_channel.shape[0] # Update width/height
 
+        # NO ELSE CLAUSE NEEDED.  The width, height, and file_size are already correct for node_1
 
         return {
             "filename": filename,
@@ -277,7 +279,7 @@ def capture_image(resolution: str = DEFAULT_RESOLUTION) -> Dict:
         if os.path.exists(filepath):
             os.remove(filepath)
         raise HTTPException(status_code=500, detail=str(e))
-        
+
 # --- Socket.IO Event Handlers ---
 @sio.event
 async def connect(sid, environ):
