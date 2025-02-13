@@ -1,5 +1,3 @@
-# camera_node.py (Final Optimized Version)
-
 from fastapi import FastAPI, HTTPException
 import uvicorn
 import os
@@ -17,7 +15,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
 import socketio
 import numpy as np
-import re  # Import the regular expression module
+import re
 
 
 load_dotenv()
@@ -44,8 +42,9 @@ MAX_LOG_FILES = 5
 PORT = int(os.getenv("PORT", 5001))
 NODE_ID = os.getenv("NODE_ID", f"camera_node_{os.getpid()}")
 CHUNK_SIZE = 64 * 1024
-DEFAULT_RESOLUTION = "1280x720"
-# DEFAULT_RESOLUTION = "640x480"  # Lower resolution option
+DEFAULT_RESOLUTION = "2304x1296"  # Changed to 2304x1296
+SUPPORTED_RESOLUTIONS = ["2304x1296", "1536x864", "1152x648"]  # Add others as needed
+
 
 # --- Logging Setup ---
 os.makedirs(LOG_DIR, exist_ok=True)
@@ -185,7 +184,7 @@ def get_camera_info() -> Tuple[int, int, str]:
         bayer_order = bayer_match.group(1)
 
         logger.info(f"Camera Info: Resolution={width}x{height}, Bayer Pattern={bayer_order}")
-        camera_info = (width, height, bayer_order)
+        camera_info = (width, height, bayer_order)  # Assign to the global variable
         return camera_info
 
     except subprocess.CalledProcessError as e:
@@ -212,6 +211,7 @@ def capture_image(resolution: str = DEFAULT_RESOLUTION) -> Dict:
     timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
     filename = f"capture_{timestamp}_{NODE_ID}.raw"
     filepath = os.path.join(CAPTURE_DIR, filename)
+    logger.info(f"Camera info: {camera_info}") # Added to check camera info
     width, height = map(int, resolution.split('x'))  # Requested width/height
     camera_width, camera_height, bayer_pattern = camera_info
 
@@ -227,35 +227,40 @@ def capture_image(resolution: str = DEFAULT_RESOLUTION) -> Dict:
         if result.returncode != 0:
             raise Exception(f"Capture failed: {result.stderr}")
 
-        # NO channel extraction on node_1.  Leave file as is.
-        if NODE_ID != "1":  # NoIR cameras - extract red channel
-            with open(filepath, "rb") as f:
-                # Read as 8-bit initially. We'll handle unpacking in get_images.py
-                raw_data = np.fromfile(f, dtype=np.uint8)
-
-            # Reshape using REQUESTED width/height (libcamera-raw has already cropped)
-            raw_image = raw_data.reshape((height, width))
-
-            if bayer_pattern.startswith("RGGB"):
-                red_channel = raw_image[0::2, 0::2]
-            elif bayer_pattern.startswith("BGGR"):
-                red_channel = raw_image[1::2, 1::2]
-            elif bayer_pattern.startswith("GRBG"):
-                red_channel = raw_image[1::2, 0::2]
-            elif bayer_pattern.startswith("GBRG"):
-                red_channel = raw_image[0::2, 1::2]
-            else:
-                raise ValueError(f"Unsupported Bayer pattern: {bayer_pattern}")
-
-            with open(filepath, "wb") as f:
-                red_channel.tofile(f)
-            # file_size = os.path.getsize(filepath)  # Update file_size AFTER extraction # THIS IS MOVED DOWN
-            logger.info(f"Extracted red channel. New size: {file_size/1024:.2f}KB")
-            width, height = red_channel.shape[1], red_channel.shape[0] # Update width/height
-
-        # Get the ACTUAL file size AFTER capture and potential channel extraction
-        file_size = os.path.getsize(filepath) # Moved here!
+        # Get the file size *BEFORE* any channel extraction
+        file_size = os.path.getsize(filepath)
         logger.info(f"Image captured: {filename} (Size: {file_size/1024:.2f}KB)")
+        logger.info(f"File size immediately after capture: {os.path.getsize(filepath)}") # ADDED LOGGING
+
+        # Temporarily comment out the entire channel extraction block
+        # if NODE_ID != "1":  # NoIR cameras - extract red channel
+        #     with open(filepath, "rb") as f:
+        #         # Read as 8-bit initially. We'll handle unpacking in get_images.py
+        #         raw_data = np.fromfile(f, dtype=np.uint8)
+
+        #     # Reshape using REQUESTED width/height (libcamera-raw has already cropped)
+        #     raw_image = raw_data.reshape((height, width))
+
+        #     if bayer_pattern.startswith("RGGB"):
+        #         red_channel = raw_image[0::2, 0::2]
+        #     elif bayer_pattern.startswith("BGGR"):
+        #         red_channel = raw_image[1::2, 1::2]
+        #     elif bayer_pattern.startswith("GRBG"):
+        #         red_channel = raw_image[1::2, 0::2]
+        #     elif bayer_pattern.startswith("GBRG"):
+        #         red_channel = raw_image[0::2, 1::2]
+        #     else:
+        #         raise ValueError(f"Unsupported Bayer pattern: {bayer_pattern}")
+
+        #     with open(filepath, "wb") as f:
+        #         red_channel.tofile(f)
+        #     logger.info(f"Extracted red channel. New size: {file_size/1024:.2f}KB") #This log might be misleading now.
+
+        #     logger.info(f"File size after channel extraction: {os.path.getsize(filepath)}") # ADDED LOGGING
+
+
+        #     width, height = red_channel.shape[1], red_channel.shape[0] # Update width/height
+        logger.info(f"Final file size before return: {file_size}") # ADDED LOGGING
 
         return {
             "filename": filename,
@@ -293,7 +298,15 @@ async def disconnect(sid):
 @sio.on('capture')
 async def handle_capture(sid, data):
     logger.info(f"Received capture request from {sid}")
-    resolution = data.get('resolution', DEFAULT_RESOLUTION) if isinstance(data, dict) else DEFAULT_RESOLUTION
+    requested_resolution = data.get('resolution', DEFAULT_RESOLUTION) if isinstance(data, dict) else DEFAULT_RESOLUTION
+
+    # Validate the resolution
+    if requested_resolution not in SUPPORTED_RESOLUTIONS:
+        logger.warning(f"Unsupported resolution requested: {requested_resolution}. Using default: {DEFAULT_RESOLUTION}")
+        resolution = DEFAULT_RESOLUTION
+    else:
+        resolution = requested_resolution
+
     try:
         file_info = capture_image(resolution=resolution)
         await send_image(sid, file_info)

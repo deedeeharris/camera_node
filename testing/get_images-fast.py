@@ -1,5 +1,3 @@
-# get_images.py (Final Optimized Version)
-
 import asyncio
 import socketio
 import os
@@ -65,7 +63,7 @@ async def receive_images(node_address: str, node_id: str) -> None:
     @sio.event
     async def connect():
         logger.info(f"Connected to {node_id} at {uri}")
-        await sio.emit('capture', {'resolution': '1280x720'}) #Keep sending 1280x720
+        await sio.emit('capture', {'resolution': '2304x1296'}) #  Use 2304x1296
 
     @sio.event
     async def disconnect():
@@ -116,7 +114,7 @@ async def receive_images(node_address: str, node_id: str) -> None:
             metadata = None
             start_time = None
             total_start_time = time.time()
-            await sio.emit('capture', {'resolution': '1280x720'})
+            await sio.emit('capture', {'resolution': '2304x1296'}) #  Use 2304x1296
 
         else:
             logger.warning("Received image_complete without metadata!")
@@ -124,7 +122,7 @@ async def receive_images(node_address: str, node_id: str) -> None:
     @sio.on('capture_error')
     async def on_capture_error(data: Dict[str, str]):
         logger.error(f"Capture error from {node_id}: {data['error']}")
-        await sio.emit('capture', {'resolution': '1280x720'})
+        await sio.emit('capture', {'resolution': '2304x1296'}) #  Use 2304x1296
 
     while True:
         try:
@@ -209,7 +207,7 @@ def process_raw_data(data: bytearray, metadata: Dict[str, Any], node_id: str):
         noir_channel = raw_image
         logger.info(f"Processed NoIR data from {node_id}. Channel shape: {noir_channel.shape}")
         np.save(f"received_images/raw_noir_{node_id}.npy", noir_channel)  # Save in received_images
-        
+
 
 async def main():
     """Connects to multiple nodes concurrently."""
