@@ -44,7 +44,7 @@ MAX_LOG_FILES = 5
 PORT = int(os.getenv("PORT", 5001))
 NODE_ID = os.getenv("NODE_ID", f"camera_node_{os.getpid()}")
 CHUNK_SIZE = 64 * 1024
-DEFAULT_RESOLUTION = "1280x720"
+DEFAULT_RESOLUTION = "1152x648"
 # DEFAULT_RESOLUTION = "640x480"  # Lower resolution option
 
 # --- Logging Setup ---

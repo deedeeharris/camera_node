@@ -7,3 +7,10 @@ todo
 with set static ip addresses, and automaticly connect to the main rasberry pi 4. 
 * create the main server, to handle the concurrent imaging like in get_images.py,
 and also a queue for uploading the images, etc. 
+
+
+# 13/02
+
+worked on node 1
+still having errors. 
+didn't succeed to capture yet in the current setup.

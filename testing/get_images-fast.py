@@ -137,37 +137,47 @@ async def receive_images(node_address: str, node_id: str) -> None:
             logger.exception(f"An unexpected error: {e}")
             await asyncio.sleep(5)
 
-
 def process_raw_data(data: bytearray, metadata: Dict[str, Any], node_id: str):
     """Processes raw data (demosaics RGB, prepares NoIR), saves without WR."""
 
     width = metadata['width']
     height = metadata['height']
     bayer_pattern = metadata['bayer_pattern']
-    camera_width = metadata['camera_width']
-    camera_height = metadata['camera_height']
+    camera_width = metadata['camera_width']  # Use camera_width
+    camera_height = metadata['camera_height'] # Use camera_height
+    file_size = metadata['size']
 
     raw_array = np.frombuffer(data, dtype=np.uint8)
 
     # --- 10-bit Unpacking (for ALL nodes) ---
-    # Reshape to 5 bytes for every 4 pixels
-    reshaped_data = raw_array.reshape((height * width // 4, 5))
+    # Calculate expected size based on 10-bit packing and CAMERA dimensions
+    expected_size = (camera_width * camera_height * 5) // 4  # Use camera dimensions
+
+    if len(raw_array) != expected_size:
+      logger.error(f"Incorrect data size. Expected: {expected_size}, got: {len(raw_array)}")
+      raise ValueError("Incorrect data size received from camera node.")
+
+    # Reshape to 5 bytes for every 4 pixels, using CAMERA dimensions
+    reshaped_data = raw_array.reshape((camera_height * camera_width // 4, 5)) # Use camera dimensions
 
     # Unpack the 10-bit data
-    unpacked_data = np.zeros((height * width,), dtype=np.uint16)
+    unpacked_data = np.zeros((camera_height * camera_width,), dtype=np.uint16) # Use camera dimensions
     unpacked_data[0::4] = ((reshaped_data[:, 0] << 2) | (reshaped_data[:, 1] >> 6)) & 0x3FF
     unpacked_data[1::4] = ((reshaped_data[:, 1] << 4) | (reshaped_data[:, 2] >> 4)) & 0x3FF
     unpacked_data[2::4] = ((reshaped_data[:, 2] << 6) | (reshaped_data[:, 3] >> 2)) & 0x3FF
     unpacked_data[3::4] = ((reshaped_data[:, 3] << 8) | reshaped_data[:, 4]) & 0x3FF
 
-    # Reshape to image dimensions
-    raw_image = unpacked_data.reshape((height, width))
+    # Reshape to image dimensions using CAMERA dimensions
+    raw_image = unpacked_data.reshape((camera_height, camera_width))
+
+    # Now, crop the image to the requested dimensions AFTER unpacking
+    raw_image = raw_image[:height, :width]
 
 
     if node_id == "node_1":  # RGB Camera
         # Correct Bayer Pattern Handling
         if bayer_pattern.startswith("RGGB"):
-            rgb_image = np.zeros((height, width, 3), dtype=np.uint16) # Use uint16 for 10-bit
+            rgb_image = np.zeros((height, width, 3), dtype=np.uint16) # Use REQUESTED dimensions
             rgb_image[:, :, 0] = raw_image[0::2, 0::2]  # Red
             rgb_image[:, :, 1] = (raw_image[0::2, 1::2] + raw_image[1::2, 0::2]) // 2  # Green (average)
             rgb_image[:, :, 2] = raw_image[1::2, 1::2]  # Blue
@@ -202,10 +212,11 @@ def process_raw_data(data: bytearray, metadata: Dict[str, Any], node_id: str):
         logger.info(f"Processed NoIR data from {node_id}. Channel shape: {noir_channel.shape}")
         np.save(f"received_images/raw_noir_{node_id}.npy", noir_channel)  # Save in received_images
 
+
 async def main():
     """Connects to multiple nodes concurrently."""
     nodes = {
-        "node_1": "192.168.195.57",
+        "node_1": "192.168.47.56",
         "node_2": "192.168.195.73",
         "node_3": "192.168.195.70",
         "node_4": "192.168.195.56",
