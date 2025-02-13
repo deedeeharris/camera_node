@@ -211,13 +211,13 @@ def capture_image(resolution: str = DEFAULT_RESOLUTION) -> Dict:
     timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
     filename = f"capture_{timestamp}_{NODE_ID}.raw"
     filepath = os.path.join(CAPTURE_DIR, filename)
-    logger.info(f"Camera info: {camera_info}") # Added to check camera info
+    logger.info(f"Camera info: {camera_info}")
     width, height = map(int, resolution.split('x'))  # Requested width/height
     camera_width, camera_height, bayer_pattern = camera_info
 
     try:
-        # Construct the --mode string.  Assume 10-bit packed data ("P").
-        mode_string = f"{width}:{height}:10:P"
+        # Use the FULL sensor resolution in --mode, and crop with --width/--height
+        mode_string = f"{camera_width}:{camera_height}:10:P"  # Full resolution
 
         cmd = (
             f"libcamera-raw -t 1000 --nopreview --width {width} --height {height} -o {filepath} --mode {mode_string}"
@@ -227,50 +227,23 @@ def capture_image(resolution: str = DEFAULT_RESOLUTION) -> Dict:
         if result.returncode != 0:
             raise Exception(f"Capture failed: {result.stderr}")
 
-        # Get the file size *BEFORE* any channel extraction
         file_size = os.path.getsize(filepath)
         logger.info(f"Image captured: {filename} (Size: {file_size/1024:.2f}KB)")
-        logger.info(f"File size immediately after capture: {os.path.getsize(filepath)}") # ADDED LOGGING
+        logger.info(f"File size immediately after capture: {os.path.getsize(filepath)}")
 
-        # Temporarily comment out the entire channel extraction block
-        # if NODE_ID != "1":  # NoIR cameras - extract red channel
-        #     with open(filepath, "rb") as f:
-        #         # Read as 8-bit initially. We'll handle unpacking in get_images.py
-        #         raw_data = np.fromfile(f, dtype=np.uint8)
+        # No channel extraction needed for node_1 (and it's commented out anyway)
 
-        #     # Reshape using REQUESTED width/height (libcamera-raw has already cropped)
-        #     raw_image = raw_data.reshape((height, width))
-
-        #     if bayer_pattern.startswith("RGGB"):
-        #         red_channel = raw_image[0::2, 0::2]
-        #     elif bayer_pattern.startswith("BGGR"):
-        #         red_channel = raw_image[1::2, 1::2]
-        #     elif bayer_pattern.startswith("GRBG"):
-        #         red_channel = raw_image[1::2, 0::2]
-        #     elif bayer_pattern.startswith("GBRG"):
-        #         red_channel = raw_image[0::2, 1::2]
-        #     else:
-        #         raise ValueError(f"Unsupported Bayer pattern: {bayer_pattern}")
-
-        #     with open(filepath, "wb") as f:
-        #         red_channel.tofile(f)
-        #     logger.info(f"Extracted red channel. New size: {file_size/1024:.2f}KB") #This log might be misleading now.
-
-        #     logger.info(f"File size after channel extraction: {os.path.getsize(filepath)}") # ADDED LOGGING
-
-
-        #     width, height = red_channel.shape[1], red_channel.shape[0] # Update width/height
-        logger.info(f"Final file size before return: {file_size}") # ADDED LOGGING
+        logger.info(f"Final file size before return: {file_size}")
 
         return {
             "filename": filename,
             "filepath": filepath,
             "timestamp": timestamp,
-            "size": file_size,  # Correct file size
-            "width": width,     # Report REQUESTED width
-            "height": height,    # Report REQUESTED height
-            "camera_width": camera_width,  # Still include for completeness
-            "camera_height": camera_height, # Still include
+            "size": file_size,
+            "width": width,
+            "height": height,
+            "camera_width": camera_width,
+            "camera_height": camera_height,
             "bayer_pattern": bayer_pattern,
         }
     except subprocess.TimeoutExpired:
@@ -284,6 +257,7 @@ def capture_image(resolution: str = DEFAULT_RESOLUTION) -> Dict:
             os.remove(filepath)
         raise HTTPException(status_code=500, detail=str(e))
 
+        
 # --- Socket.IO Event Handlers ---
 @sio.event
 async def connect(sid, environ):
