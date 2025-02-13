@@ -156,8 +156,12 @@ def get_camera_info() -> Tuple[int, int, str]:
             logger.error("No active camera found in output.")
             raise Exception("No active camera found.")
 
-        # Find the mode lines *after* the active camera line.  This is crucial.
-        mode_lines = [line for line in output_lines[active_camera_line_index + 1:] if any(x in line for x in ["RGGB", "BGGR", "GRBG", "GBRG"])]
+        # --- CORRECTED MODE LINE PARSING ---
+        mode_lines = []
+        for line in output_lines[active_camera_line_index + 1:]:
+            if any(x in line for x in ["x64", "x1296", "x2592"]):  # Look for resolution strings
+                if any(bp in line for bp in ["RGGB", "BGGR", "GRBG", "GBRG"]):
+                    mode_lines.append(line)
 
         if not mode_lines:
             logger.error("No camera modes found in output.")
@@ -198,7 +202,6 @@ def get_camera_info() -> Tuple[int, int, str]:
     except Exception as e:
         logger.error(f"Error getting camera info: {e}")
         raise
-
 
 def capture_image(resolution: str = DEFAULT_RESOLUTION) -> Dict:
     """Capture raw Bayer data, extract red channel if NoIR, and save."""
