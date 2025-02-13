@@ -1,4 +1,4 @@
-# camera_node.py (Revised for Single-Channel NoIR Transfer, Get Info Once)
+# camera_node.py (Final Optimized Version)
 
 from fastapi import FastAPI, HTTPException
 import uvicorn
@@ -43,7 +43,7 @@ PORT = int(os.getenv("PORT", 5001))
 NODE_ID = os.getenv("NODE_ID", f"camera_node_{os.getpid()}")
 CHUNK_SIZE = 64 * 1024
 DEFAULT_RESOLUTION = "1280x720"
-#DEFAULT_RESOLUTION = "640x480"
+# DEFAULT_RESOLUTION = "640x480"  # Lower resolution option
 
 # --- Logging Setup ---
 os.makedirs(LOG_DIR, exist_ok=True)
@@ -61,14 +61,15 @@ logger.addHandler(console_handler)
 # --- Global Variable to Store Camera Info ---
 camera_info: Tuple[int, int, str] | None = None
 
+
 def get_system_info() -> Dict:
-    """(Same as before)"""
+    """Gets system information (CPU, memory, disk, temperature, uptime)."""
     cpu_temp = None
     try:
         with open('/sys/class/thermal/thermal_zone0/temp', 'r') as f:
             cpu_temp = float(f.read().strip()) / 1000
-    except:
-        pass
+    except Exception:
+        logger.exception("Failed to read CPU temperature.")  # Log but don't raise
     return {
         "cpu_percent": psutil.cpu_percent(),
         "memory_percent": psutil.virtual_memory().percent,
@@ -77,125 +78,161 @@ def get_system_info() -> Dict:
         "uptime": datetime.datetime.now().timestamp() - psutil.boot_time()
     }
 
+
 def get_directory_size_mb(directory: str) -> float:
-    """(Same as before)"""
+    """Calculates the total size of a directory in megabytes."""
     total = 0
-    for dirpath, _, filenames in os.walk(directory):
-        for f in filenames:
-            fp = os.path.join(dirpath, f)
-            total += os.path.getsize(fp)
+    try:
+        for dirpath, _, filenames in os.walk(directory):
+            for f in filenames:
+                fp = os.path.join(dirpath, f)
+                total += os.path.getsize(fp)
+    except Exception:
+        logger.exception(f"Error calculating directory size for {directory}") # Log but don't raise
+        return 0  # Return 0 if there's an error
     return total / (1024 * 1024)
 
+
 def cleanup_old_files():
-    """(Same as before)"""
-    if not os.path.exists(CAPTURE_DIR): return
-    while get_directory_size_mb(CAPTURE_DIR) > STORAGE_LIMIT_MB:
-        files = sorted(Path(CAPTURE_DIR).glob('*.raw'), key=os.path.getctime)
-        if files:
-            oldest_file = files[0]
-            logger.info(f"Removing old file: {oldest_file}")
-            os.remove(oldest_file)
+    """Removes oldest files in CAPTURE_DIR if storage exceeds limit."""
+    if not os.path.exists(CAPTURE_DIR):
+        return
+    try:
+        while get_directory_size_mb(CAPTURE_DIR) > STORAGE_LIMIT_MB:
+            files = sorted(Path(CAPTURE_DIR).glob('*.raw'), key=os.path.getctime)
+            if files:
+                oldest_file = files[0]
+                logger.info(f"Removing old file: {oldest_file}")
+                os.remove(oldest_file)
+    except Exception:
+        logger.exception("Error during file cleanup.") # Log but don't raise
+
 
 def check_camera():
-    """(Same as before)"""
+    """Checks if the camera is connected and available."""
     try:
         cmd = "libcamera-still --list-cameras"
-        result = subprocess.run(cmd, shell=True, capture_output=True, text=True)
-        if result.returncode != 0: raise Exception("No cameras detected")
+        result = subprocess.run(cmd, shell=True, capture_output=True, text=True, timeout=10)
+        if result.returncode != 0:
+            raise Exception(f"libcamera-still command failed: {result.stderr}")
         cameras = result.stdout.strip().split('\n')
-        if not cameras: raise Exception("No cameras found")
+        if not cameras or "Available cameras" not in result.stdout:
+            raise Exception("No cameras found")
         logger.info(f"Detected cameras: {cameras}")
         return True
+    except subprocess.TimeoutExpired:
+        logger.error("Camera check timed out.")
+        return False
     except Exception as e:
-        logger.error(f"Camera check failed: {str(e)}")
+        logger.error(f"Camera check failed: {e}")
         return False
 
+
 def ensure_capture_dir():
-    """(Same as before)"""
+    """Ensures the capture directory exists and performs cleanup."""
     os.makedirs(CAPTURE_DIR, exist_ok=True)
     cleanup_old_files()
 
 
 def get_camera_info() -> Tuple[int, int, str]:
     """Gets camera resolution and Bayer pattern (called only once)."""
+    global camera_info
+    if camera_info is not None:
+        return camera_info
+
     try:
         cmd = "libcamera-still --list-cameras"
         logger.info(f"Running command: {cmd}")
-        result = subprocess.run(cmd, shell=True, capture_output=True, text=True)
-        logger.info(f"Command output: {result.stdout}")
+        result = subprocess.run(cmd, shell=True, capture_output=True, text=True, timeout=10)
+        logger.debug(f"Command output: {result.stdout}")  # Debug level for full output
         logger.info(f"Command return code: {result.returncode}")
         result.check_returncode()
 
         output_lines = result.stdout.strip().split('\n')
-        active_camera_line = next((line for line in output_lines if line.startswith('Available cameras')), None)
-        if not active_camera_line:
+        # Find the line indicating the available camera (should be the first non-empty line)
+        active_camera_line_index = next((i for i, line in enumerate(output_lines) if line.startswith('0')), None)
+
+        if active_camera_line_index is None:
             logger.error("No active camera found in output.")
             raise Exception("No active camera found.")
 
-        # Corrected mode line detection: Check for 'SRGGB10_CSI2P' (or similar)
-        mode_lines = [line for line in output_lines if "'SRGGB10_CSI2P'" in line]
+        # Find the mode lines *after* the active camera line.  This is crucial.
+        mode_lines = [line for line in output_lines[active_camera_line_index + 1:] if "Modes" not in line and any(x in line for x in ["RGGB", "BGGR", "GRBG", "GBRG"])]
+
         if not mode_lines:
             logger.error("No camera modes found in output.")
             raise Exception("No camera modes found")
 
         # Use the *first* mode line to get the resolution and Bayer pattern
-        current_mode_line = mode_lines[0]
+        current_mode_line = mode_lines[0].strip()
+        logger.info(f"current_mode_line: {current_mode_line}")
+
         parts = current_mode_line.split()
-        # Find the resolution part (e.g., '1536x864')
+
+        # Extract resolution
         resolution_str = next((part for part in parts if 'x' in part and part.split('x')[0].isdigit() and part.split('x')[1].isdigit()), None)
         if not resolution_str:
             raise Exception("Could not find resolution string in mode line.")
         width, height = map(int, resolution_str.split('x'))
 
-        # Find the Bayer pattern part (e.g., 'SRGGB10_CSI2P') and extract the Bayer order
-        bayer_pattern_full = next((part for part in parts if "RGGB" in part or "BGGR" in part or "GRBG" in part or "GBRG" in part), None)
+        # Extract Bayer pattern
+        bayer_pattern_full = next((part for part in parts if any(bp in part for bp in ["RGGB", "BGGR", "GRBG", "GBRG"])), None)
+
         if not bayer_pattern_full:
-             raise Exception("Could not find Bayer pattern string in mode line.")
+            raise Exception("Could not find Bayer pattern string in mode line.")
+
         bayer_order = ''.join(filter(str.isalpha, bayer_pattern_full))
 
         logger.info(f"Camera Info: Resolution={width}x{height}, Bayer Pattern={bayer_order}")
-        return width, height, bayer_order
+        camera_info = (width, height, bayer_order) # Store globally
+        return camera_info
 
     except subprocess.CalledProcessError as e:
         logger.error(f"Error running libcamera-still: {e}")
         logger.error(f"Return code: {e.returncode}")
         logger.error(f"Output: {e.output}")
         raise
+    except subprocess.TimeoutExpired:
+        logger.error("libcamera-still command timed out.")
+        raise
     except Exception as e:
         logger.error(f"Error getting camera info: {e}")
         raise
 
+
 def capture_image(resolution: str = DEFAULT_RESOLUTION) -> Dict:
     """Capture raw Bayer data, extract red channel if NoIR, and save."""
-    global camera_info  # Access the global camera_info variable
+    global camera_info
     if camera_info is None:
-        raise Exception("Camera info not initialized!")
+        camera_info = get_camera_info()  # Ensure camera_info is initialized
 
     ensure_capture_dir()
     timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
     filename = f"capture_{timestamp}_{NODE_ID}.raw"
     filepath = os.path.join(CAPTURE_DIR, filename)
     width, height = map(int, resolution.split('x'))
+    camera_width, camera_height, bayer_pattern = camera_info
 
     try:
         cmd = (
-            f"libcamera-raw -t 1000 --nopreview --width {width} --height {height} -o {filepath}"
+            f"libcamera-raw -t 1000 --nopreview --width {width} --height {height} -o {filepath} --raw-format {bayer_pattern.lower()}10" #added raw format
         )
         logger.info(f"Executing capture command: {cmd}")
-        result = subprocess.run(cmd, shell=True, capture_output=True, text=True)
+        result = subprocess.run(cmd, shell=True, capture_output=True, text=True, timeout=15) # Increased timeout
         if result.returncode != 0:
             raise Exception(f"Capture failed: {result.stderr}")
 
         file_size = os.path.getsize(filepath)
         logger.info(f"Image captured: {filename} (Size: {file_size/1024:.2f}KB)")
 
-        # Use the stored camera info
-        camera_width, camera_height, bayer_pattern = camera_info
 
-        if NODE_ID != "1":
+        if NODE_ID != "1":  # NoIR cameras - extract red channel
             with open(filepath, "rb") as f:
-                raw_data = np.fromfile(f, dtype=np.uint8)
-            raw_image = raw_data.reshape((height, width))
+                # Read as 16-bit, then convert to 8-bit by taking the high byte
+                raw_data = np.fromfile(f, dtype=np.uint16)
+                raw_data_8bit = (raw_data >> 2).astype(np.uint8)  # Correct bit shift for 10-bit to 8-bit
+
+            raw_image = raw_data_8bit.reshape((height, width))
 
             if bayer_pattern == "RGGB":
                 red_channel = raw_image[0::2, 0::2]
@@ -225,20 +262,28 @@ def capture_image(resolution: str = DEFAULT_RESOLUTION) -> Dict:
             "camera_height": camera_height,
             "bayer_pattern": bayer_pattern,
         }
+    except subprocess.TimeoutExpired:
+        logger.error("Image capture timed out.")
+        if os.path.exists(filepath):
+            os.remove(filepath)
+        raise HTTPException(status_code=504, detail="Capture timed out")  # 504 Gateway Timeout
     except Exception as e:
-        logger.error(f"Capture failed: {str(e)}")
+        logger.error(f"Capture failed: {e}")
         if os.path.exists(filepath):
             os.remove(filepath)
         raise HTTPException(status_code=500, detail=str(e))
+
 
 # --- Socket.IO Event Handlers ---
 @sio.event
 async def connect(sid, environ):
     logger.info(f"Client connected: {sid}")
 
+
 @sio.event
 async def disconnect(sid):
     logger.info(f"Client disconnected: {sid}")
+
 
 @sio.on('capture')
 async def handle_capture(sid, data):
@@ -251,35 +296,40 @@ async def handle_capture(sid, data):
         logger.error(f"Capture failed: {e}")
         await sio.emit('capture_error', {'error': str(e)}, room=sid)
 
+
 async def send_image(sid, file_info):
     """Send raw image data in chunks."""
-    with open(file_info["filepath"], "rb") as image_file:
-        metadata = {
-            "filename": file_info["filename"],
-            "timestamp": file_info["timestamp"],
-            "node_id": NODE_ID,
-            "size": file_info["size"],
-            "chunk_size": CHUNK_SIZE,
-            "width": file_info["width"],
-            "height": file_info["height"],
-            "camera_width": file_info["camera_width"],
-            "camera_height": file_info["camera_height"],
-            "bayer_pattern": file_info["bayer_pattern"],
-        }
-        await sio.emit('image_metadata', metadata, room=sid)
+    try:
+        with open(file_info["filepath"], "rb") as image_file:
+            metadata = {
+                "filename": file_info["filename"],
+                "timestamp": file_info["timestamp"],
+                "node_id": NODE_ID,
+                "size": file_info["size"],
+                "chunk_size": CHUNK_SIZE,
+                "width": file_info["width"],
+                "height": file_info["height"],
+                "camera_width": file_info["camera_width"],
+                "camera_height": file_info["camera_height"],
+                "bayer_pattern": file_info["bayer_pattern"],
+            }
+            await sio.emit('image_metadata', metadata, room=sid)
 
-        while True:
-            chunk = image_file.read(CHUNK_SIZE)
-            if not chunk:
-                break
-            await sio.emit('image_chunk', chunk, room=sid)
-        await sio.emit('image_complete', room=sid)
-        logger.info(f"Sent image {file_info['filename']} to client: {sid}")
+            while True:
+                chunk = image_file.read(CHUNK_SIZE)
+                if not chunk:
+                    break
+                await sio.emit('image_chunk', chunk, room=sid)
+            await sio.emit('image_complete', room=sid)
+            logger.info(f"Sent image {file_info['filename']} to client: {sid}")
+    except Exception as e:
+        logger.exception(f"Error sending image to client: {sid}")
+        await sio.emit('capture_error', {'error': str(e)}, room=sid)
 
 # --- REST Endpoints ---
 @app.get("/status")
 async def status():
-    """(Same as before)"""
+    """Returns the current status of the camera node."""
     try:
         storage_used = get_directory_size_mb(CAPTURE_DIR) if os.path.exists(CAPTURE_DIR) else 0
         connected_clients = len(sio.manager.rooms.get('/', {}))
@@ -296,12 +346,13 @@ async def status():
             "connected_clients": connected_clients
         }
     except Exception as e:
-        logger.error(f"Error getting status: {str(e)}")
+        logger.error(f"Error getting status: {e}")
         raise HTTPException(status_code=500, detail=str(e))
+
 
 @app.get("/logs")
 async def get_logs(lines: int = 100):
-    """(Same as before)"""
+    """Retrieves the last 'lines' lines from the log file."""
     try:
         if os.path.exists(log_file):
             with open(log_file, 'r') as f:
@@ -309,6 +360,7 @@ async def get_logs(lines: int = 100):
         return {"logs": []}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
 
 if __name__ == "__main__":
     logger.info(f"Starting camera node {NODE_ID}")
@@ -319,6 +371,6 @@ if __name__ == "__main__":
     logger.info("Camera detected, starting server...")
 
     # --- Get Camera Info at Startup ---
-    camera_info = get_camera_info()
+    camera_info = get_camera_info()  # Initialize camera_info
 
     uvicorn.run(socket_app, host="0.0.0.0", port=PORT)

@@ -1,4 +1,4 @@
-# get_images.py (Revised for Raw Bayer Data, Single-Channel NoIR, Timing, No WR Normalization)
+# get_images.py (Final Optimized Version)
 
 import asyncio
 import socketio
@@ -148,69 +148,38 @@ def process_raw_data(data: bytearray, metadata: Dict[str, Any], node_id: str):
 
     raw_array = np.frombuffer(data, dtype=np.uint8)
 
+    # Efficient Reshape and Crop
     if width != camera_width or height != camera_height:
         logger.warning(f"Captured dimensions ({width}x{height}) differ from camera dimensions ({camera_width}x{camera_height}).")
-        raw_array = raw_array[:camera_width * camera_height]
-        raw_image = raw_array.reshape((camera_height, camera_width))
-        if height < camera_height:
-            raw_image = raw_image[:height, :]
-        elif height > camera_height:
-            padding = np.zeros((height - camera_height, raw_image.shape[1]), dtype=np.uint8)
-            raw_image = np.vstack((raw_image, padding))
-        if width < camera_width:
-            raw_image = raw_image[:, :width]
-        elif width > camera_width:
-            padding = np.zeros((raw_image.shape[0], width - camera_width), dtype=np.uint8)
-            raw_image = np.hstack((raw_image, padding))
+        expected_size = width * height
+        if len(raw_array) > expected_size:
+            raw_array = raw_array[:expected_size]  # Truncate if larger
+        raw_image = raw_array.reshape((height, width))
+
     else:
         raw_image = raw_array.reshape((height, width))
 
 
     if node_id == "node_1":  # RGB Camera
-        if bayer_pattern == "RGGB":
+        # Correct Bayer Pattern Handling
+        if bayer_pattern.startswith("RGGB"):  # Handle variations like "RGGB10"
             rgb_image = np.zeros((height, width, 3), dtype=np.uint8)
-            rgb_image[:, :, 0] = raw_image[0::2, 0::2]
-            rgb_image[:, :, 1] = raw_image[0::2, 1::2]
-            rgb_image[:, :, 1] += raw_image[1::2, 0::2]
-            rgb_image[:, :, 1] //= 2
-            rgb_image[:, :, 2] = raw_image[1::2, 1::2]
+            rgb_image[:, :, 0] = raw_image[0::2, 0::2]  # Red
+            rgb_image[:, :, 1] = (raw_image[0::2, 1::2] + raw_image[1::2, 0::2]) // 2  # Green (average)
+            rgb_image[:, :, 2] = raw_image[1::2, 1::2]  # Blue
+        # Add other Bayer patterns as needed (BGGR, GRBG, GBRG)
         else:
             raise ValueError(f"Unsupported Bayer pattern: {bayer_pattern}")
 
-        # --- White Reference Normalization (COMMENTED OUT) ---
-        # white_ref_x1, white_ref_y1 = 100, 100  # Example coordinates
-        # white_ref_x2, white_ref_y2 = 200, 200  # Example coordinates
-        # white_ref_region = rgb_image[white_ref_y1:white_ref_y2, white_ref_x1:white_ref_x2]
-        # white_ref_avg = np.mean(white_ref_region, axis=(0, 1))
-        # reflectance_image = np.zeros_like(rgb_image, dtype=np.float32)
-        # for i in range(3):
-        #     if white_ref_avg[i] > 0:
-        #         reflectance_image[:, :, i] = rgb_image[:, :, i].astype(np.float32) / white_ref_avg[i]
-        #     else:
-        #         logger.warning(f"White reference average for channel {i} is zero or negative.")
-        # ----------------------------------------------------
-
         logger.info(f"Processed RGB data from {node_id}. Image shape: {rgb_image.shape}")
-        np.save(f"raw_rgb_{node_id}.npy", rgb_image)  # Save the demosaiced RGB data
+        np.save(f"received_images/raw_rgb_{node_id}.npy", rgb_image)  # Save in received_images
 
     else:  # NoIR Cameras
         # No channel extraction needed - already done on the camera node
         noir_channel = raw_image
-
-        # --- White Reference Normalization (COMMENTED OUT) ---
-        # white_ref_x1, white_ref_y1 = 100, 100  # Example coordinates
-        # white_ref_x2, white_ref_y2 = 200, 200  # Example coordinates
-        # white_ref_region = noir_channel[white_ref_y1:white_ref_y2, white_ref_x1:white_ref_x2]
-        # white_ref_avg = np.mean(white_ref_region)
-        # if white_ref_avg > 0:
-        #     reflectance_channel = noir_channel.astype(np.float32) / white_ref_avg
-        # else:
-        #     reflectance_channel = np.zeros_like(noir_channel, dtype=np.float32)
-        #     logger.warning(f"White reference average for {node_id} is zero.")
-        # ----------------------------------------------------
-
         logger.info(f"Processed NoIR data from {node_id}. Channel shape: {noir_channel.shape}")
-        np.save(f"raw_noir_{node_id}.npy", noir_channel)  # Save the single-channel NoIR data
+        np.save(f"received_images/raw_noir_{node_id}.npy", noir_channel)  # Save in received_images
+
 
 async def main():
     """Connects to multiple nodes concurrently."""
@@ -220,7 +189,7 @@ async def main():
         "node_3": "192.168.195.70",
         "node_4": "192.168.195.56",
     }
-    os.makedirs("received_images", exist_ok=True)
+    os.makedirs("received_images", exist_ok=True)  # Create received_images directory
     tasks = [receive_images(address, node_id) for node_id, address in nodes.items()]
     await asyncio.gather(*tasks)
 
