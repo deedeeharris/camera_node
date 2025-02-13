@@ -197,7 +197,7 @@ def capture_image(resolution: str = DEFAULT_RESOLUTION) -> Dict:
         logger.error(f"Capture failed: {str(e)}")
         if os.path.exists(filepath):
             os.remove(filepath)
-        raise HTTPException(status_code=500, detail=str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
 
 # --- Socket.IO Event Handlers (No changes needed) ---
 @sio.event

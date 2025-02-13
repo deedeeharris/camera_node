@@ -17,9 +17,13 @@ journalctl -u camera_node.service -f
 ## update
 
 chmod +x get_repo_updates.sh
-sudo get_repo_updates.sh
+sudo ./get_repo_updates.sh
 
 
 # activate env
 
 source venv/bin/activate
+
+
+# activate env and install a library
+cd camera_node && source venv/bin/activate && pip install numpy
