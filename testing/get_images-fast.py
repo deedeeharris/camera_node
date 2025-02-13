@@ -134,7 +134,6 @@ async def receive_images(node_address: str, node_id: str) -> None:
         except Exception as e:
             logger.exception(f"An unexpected error: {e}")
             await asyncio.sleep(5)
-
 def process_raw_data(data: bytearray, metadata: Dict[str, Any], node_id: str):
     """Processes raw data (demosaics RGB, prepares NoIR), saves without WR."""
 
@@ -145,30 +144,28 @@ def process_raw_data(data: bytearray, metadata: Dict[str, Any], node_id: str):
     camera_height = metadata['camera_height']
     file_size = metadata['size']
 
+    # Read as uint8 initially
     raw_array = np.frombuffer(data, dtype=np.uint8)
 
-    # --- 10-bit Unpacking (for ALL nodes) ---
-    # Calculate expected size based on 10-bit packing and REQUESTED dimensions
-    expected_size = (width * height * 5) // 4  # Use REQUESTED dimensions
+    # Calculate the expected size based on the STRIDE and HEIGHT
+    stride = (camera_width // 4) * 5
+    expected_size = stride * height
 
     if len(raw_array) != expected_size:
-      logger.error(f"Incorrect data size. Expected: {expected_size}, got: {len(raw_array)}")
-      raise ValueError("Incorrect data size received from camera node.")
+        logger.error(f"Incorrect data size. Expected: {expected_size}, got: {len(raw_array)}")
+        raise ValueError("Incorrect data size received from camera node.")
 
-    # Reshape to 5 bytes for every 4 pixels, using REQUESTED dimensions
-    reshaped_data = raw_array.reshape((height * width // 4, 5)) # Use REQUESTED dimensions
+    # Reshape based on stride and height
+    reshaped_data = raw_array.reshape((height, stride))
 
     # Unpack the 10-bit data
-    unpacked_data = np.zeros((height * width,), dtype=np.uint16) # Use REQUESTED dimensions
-    unpacked_data[0::4] = ((reshaped_data[:, 0] << 2) | (reshaped_data[:, 1] >> 6)) & 0x3FF
-    unpacked_data[1::4] = ((reshaped_data[:, 1] << 4) | (reshaped_data[:, 2] >> 4)) & 0x3FF
-    unpacked_data[2::4] = ((reshaped_data[:, 2] << 6) | (reshaped_data[:, 3] >> 2)) & 0x3FF
-    unpacked_data[3::4] = ((reshaped_data[:, 3] << 8) | reshaped_data[:, 4]) & 0x3FF
+    unpacked_data = np.zeros((height, width), dtype=np.uint16)
+    unpacked_data[:, 0::4] = ((reshaped_data[:, 0::5] << 2) | (reshaped_data[:, 1::5] >> 6)) & 0x3FF
+    unpacked_data[:, 1::4] = ((reshaped_data[:, 1::5] << 4) | (reshaped_data[:, 2::5] >> 4)) & 0x3FF
+    unpacked_data[:, 2::4] = ((reshaped_data[:, 2::5] << 6) | (reshaped_data[:, 3::5] >> 2)) & 0x3FF
+    unpacked_data[:, 3::4] = ((reshaped_data[:, 3::5] << 8) | reshaped_data[:, 4::5]) & 0x3FF
 
-    # Reshape to image dimensions using REQUESTED dimensions
-    raw_image = unpacked_data.reshape((height, width)) # Use REQUESTED dimensions
-
-    # No cropping needed here - libcamera-raw has already done it
+    raw_image = unpacked_data
 
     if node_id == "node_1":  # RGB Camera
         # Correct Bayer Pattern Handling
@@ -207,7 +204,6 @@ def process_raw_data(data: bytearray, metadata: Dict[str, Any], node_id: str):
         noir_channel = raw_image
         logger.info(f"Processed NoIR data from {node_id}. Channel shape: {noir_channel.shape}")
         np.save(f"received_images/raw_noir_{node_id}.npy", noir_channel)  # Save in received_images
-
 
 async def main():
     """Connects to multiple nodes concurrently."""

@@ -203,8 +203,6 @@ def get_camera_info() -> Tuple[int, int, str]:
         logger.error(f"Error getting camera info: {e}")
         raise
 
-
-
 def capture_image(resolution: str = DEFAULT_RESOLUTION) -> Dict:
     """Capture raw Bayer data, extract red channel if NoIR, and save."""
     global camera_info
@@ -231,11 +229,16 @@ def capture_image(resolution: str = DEFAULT_RESOLUTION) -> Dict:
         if result.returncode != 0:
             raise Exception(f"Capture failed: {result.stderr}")
 
+        # Force synchronization with the filesystem!
+        with open(filepath, "rb") as f:
+            f.flush()
+            os.fsync(f.fileno())
+
         file_size = os.path.getsize(filepath)
         logger.info(f"Image captured: {filename} (Size: {file_size/1024:.2f}KB)")
         logger.info(f"File size immediately after capture: {os.path.getsize(filepath)}")
 
-        # No channel extraction needed for node_1 (and it's commented out anyway)
+        # No channel extraction needed for node_1
 
         logger.info(f"Final file size before return: {file_size}")
 
@@ -260,7 +263,6 @@ def capture_image(resolution: str = DEFAULT_RESOLUTION) -> Dict:
         if os.path.exists(filepath):
             os.remove(filepath)
         raise HTTPException(status_code=500, detail=str(e))
-
 
 # --- Socket.IO Event Handlers ---
 @sio.event
