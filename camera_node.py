@@ -209,9 +209,6 @@ def get_camera_info() -> Tuple[int, int, str]:
 
 def capture_image(resolution: str = DEFAULT_RESOLUTION, format: str = DEFAULT_FORMAT) -> Dict:
     """Capture image in specified format (jpg or dng) and save."""
-    if camera_info is None:
-        camera_info = get_camera_info()  # Ensure camera_info is initialized
-
     ensure_capture_dir()
     timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
     filename = f"capture_{timestamp}_{NODE_ID}.{format}"
@@ -245,9 +242,7 @@ def capture_image(resolution: str = DEFAULT_RESOLUTION, format: str = DEFAULT_FO
             "size": file_size,
             "width": width,
             "height": height,
-            "format": format,
-            "camera_width": camera_info[0],
-            "camera_height": camera_info[1],
+            "format": format
         }
 
     except subprocess.TimeoutExpired:
@@ -316,8 +311,6 @@ async def send_image(sid, file_info):
                 "chunk_size": CHUNK_SIZE,
                 "width": file_info["width"],
                 "height": file_info["height"],
-                "camera_width": file_info["camera_width"],
-                "camera_height": file_info["camera_height"],
                 "format": file_info["format"]
             }
             await sio.emit('image_metadata', metadata, room=sid)

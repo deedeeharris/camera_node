@@ -1,134 +1,38 @@
-2025-02-14 00:44:27,784 - get_images - INFO - Connected to node_1 at http://192.168.47.56:5001
-2025-02-14 00:44:32,367 - get_images - WARNING - Failed to connect to node_3 (http://192.168.195.70:5001): Connection refused by the server. Retrying...
-2025-02-14 00:44:32,369 - get_images - WARNING - Failed to connect to node_2 (http://192.168.195.73:5001): Connection refused by the server. Retrying...
-2025-02-14 00:44:32,369 - get_images - WARNING - Failed to connect to node_4 (http://192.168.195.56:5001): Connection refused by the server. Retrying...
-2025-02-14 00:44:33,604 - get_images - INFO - Received metadata from node_1: {'filename': 'capture_20250214_004427_1.raw', 'timestamp': '20250214_004427', 'node_id': '1', 'size': 7464960, 'chunk_size': 65536, 'width': 2304, 'height': 1296, 'camera_width': 4608, 'camera_height': 2592, 'bayer_pattern': 'RGGB'}
-2025-02-14 00:44:36,249 - get_images - INFO - Received complete image from node_1
-2025-02-14 00:44:36,249 - get_images - INFO - Stride: 5760, Expected size: 7464960, Received: 7464960
-2025-02-14 00:44:36,251 - get_images - INFO - Reshaped data shape: (1296, 1152, 5)
-2025-02-14 00:44:36,264 - get_images - ERROR - Failed to unpack 10-bit data: could not broadcast input array from shape (1296,1152) into shape (1296,576)
-2025-02-14 00:44:36,264 - get_images - ERROR - Error processing raw data from node_1: could not broadcast input array from shape (1296,1152) into shape (1296,576)
-Traceback (most recent call last):
-  File "C:\ai\TomAISense\camera_node\testing\get_images-fast.py", line 98, in on_image_complete
-    process_raw_data(received_data, metadata, node_id)
-  File "C:\ai\TomAISense\camera_node\testing\get_images-fast.py", line 178, in process_raw_data
-    unpacked_data[:, 0::4] = ((reshaped_data[:, :, 0] << 2) | (reshaped_data[:, :, 1] >> 6)) & 0x3FF
-    ~~~~~~~~~~~~~^^^^^^^^^
-ValueError: could not broadcast input array from shape (1296,1152) into shape (1296,576)
-2025-02-14 00:44:36,267 - get_images - INFO - Image transfer time from node_1: 2.6451 seconds
-2025-02-14 00:44:36,268 - get_images - INFO - Image processing time from node_1: 0.0184 seconds
-2025-02-14 00:44:36,268 - get_images - INFO - Total time elapsed: 9.5490 seconds
-2025-02-14 00:44:42,135 - get_images - INFO - Received metadata from node_1: {'filename': 'capture_20250214_004436_1.raw', 'timestamp': '20250214_004436', 'node_id': '1', 'size': 7464960, 'chunk_size': 65536, 'width': 2304, 'height': 1296, 'camera_width': 4608, 'camera_height': 2592, 'bayer_pattern': 'RGGB'}
-2025-02-14 00:44:43,371 - get_images - WARNING - Failed to connect to node_4 (http://192.168.195.56:5001): Connection refused by the server. Retrying...
-2025-02-14 00:44:43,371 - get_images - WARNING - Failed to connect to node_2 (http://192.168.195.73:5001): Connection refused by the server. Retrying...
-2025-02-14 00:44:43,371 - get_images - WARNING - Failed to connect to node_3 (http://192.168.195.70:5001): Connection refused by the server. Retrying...
-2025-02-14 00:44:44,901 - get_images - INFO - Received complete image from node_1
-2025-02-14 00:44:44,901 - get_images - INFO - Stride: 5760, Expected size: 7464960, Received: 7464960
-2025-02-14 00:44:44,912 - get_images - INFO - Reshaped data shape: (1296, 1152, 5)
-2025-02-14 00:44:44,921 - get_images - ERROR - Failed to unpack 10-bit data: could not broadcast input array from shape (1296,1152) into shape (1296,576)
-2025-02-14 00:44:44,921 - get_images - ERROR - Error processing raw data from node_1: could not broadcast input array from shape (1296,1152) into shape (1296,576)
-Traceback (most recent call last):
-  File "C:\ai\TomAISense\camera_node\testing\get_images-fast.py", line 98, in on_image_complete
-    process_raw_data(received_data, metadata, node_id)
-  File "C:\ai\TomAISense\camera_node\testing\get_images-fast.py", line 178, in process_raw_data
-    unpacked_data[:, 0::4] = ((reshaped_data[:, :, 0] << 2) | (reshaped_data[:, :, 1] >> 6)) & 0x3FF
-    ~~~~~~~~~~~~~^^^^^^^^^
-ValueError: could not broadcast input array from shape (1296,1152) into shape (1296,576)
-2025-02-14 00:44:44,926 - get_images - INFO - Image transfer time from node_1: 2.7667 seconds
-2025-02-14 00:44:44,926 - get_images - INFO - Image processing time from node_1: 0.0244 seconds
-2025-02-14 00:44:44,927 - get_images - INFO - Total time elapsed: 8.6565 seconds
-2025-02-14 00:44:51,801 - get_images - INFO - Received metadata from node_1: {'filename': 'capture_20250214_004445_1.raw', 'timestamp': '20250214_004445', 'node_id': '1', 'size': 7464960, 'chunk_size': 65536, 'width': 2304, 'height': 1296, 'camera_width': 4608, 'camera_height': 2592, 'bayer_pattern': 'RGGB'}
-2025-02-14 00:44:54,159 - get_images - INFO - Received complete image from node_1
-2025-02-14 00:44:54,159 - get_images - INFO - Stride: 5760, Expected size: 7464960, Received: 7464960
-2025-02-14 00:44:54,179 - get_images - INFO - Reshaped data shape: (1296, 1152, 5)
-2025-02-14 00:44:54,193 - get_images - ERROR - Failed to unpack 10-bit data: could not broadcast input array from shape (1296,1152) into shape (1296,576)
-2025-02-14 00:44:54,194 - get_images - ERROR - Error processing raw data from node_1: could not broadcast input array from shape (1296,1152) into shape (1296,576)
-Traceback (most recent call last):
-  File "C:\ai\TomAISense\camera_node\testing\get_images-fast.py", line 98, in on_image_complete
-    process_raw_data(received_data, metadata, node_id)
-  File "C:\ai\TomAISense\camera_node\testing\get_images-fast.py", line 178, in process_raw_data
-    unpacked_data[:, 0::4] = ((reshaped_data[:, :, 0] << 2) | (reshaped_data[:, :, 1] >> 6)) & 0x3FF
-    ~~~~~~~~~~~~~^^^^^^^^^
-ValueError: could not broadcast input array from shape (1296,1152) into shape (1296,576)
-2025-02-14 00:44:54,196 - get_images - INFO - Image transfer time from node_1: 2.3583 seconds
-2025-02-14 00:44:54,196 - get_images - INFO - Image processing time from node_1: 0.0370 seconds
-2025-02-14 00:44:54,196 - get_images - INFO - Total time elapsed: 9.2680 seconds
-2025-02-14 00:44:54,367 - get_images - WARNING - Failed to connect to node_4 (http://192.168.195.56:5001): Connection refused by the server. Retrying...
-2025-02-14 00:44:54,368 - get_images - WARNING - Failed to connect to node_3 (http://192.168.195.70:5001): Connection refused by the server. Retrying...
-2025-02-14 00:44:54,369 - get_images - WARNING - Failed to connect to node_2 (http://192.168.195.73:5001): Connection refused by the server. Retrying...
-2025-02-14 00:45:00,627 - get_images - INFO - Received metadata from node_1: {'filename': 'capture_20250214_004454_1.raw', 'timestamp': '20250214_004454', 'node_id': '1', 'size': 7464960, 'chunk_size': 65536, 'width': 2304, 'height': 1296, 'camera_width': 4608, 'camera_height': 2592, 'bayer_pattern': 'RGGB'}
-2025-02-14 00:45:03,471 - get_images - INFO - Received complete image from node_1
-2025-02-14 00:45:03,471 - get_images - INFO - Stride: 5760, Expected size: 7464960, Received: 7464960
-2025-02-14 00:45:03,476 - get_images - INFO - Reshaped data shape: (1296, 1152, 5)
-2025-02-14 00:45:03,488 - get_images - ERROR - Failed to unpack 10-bit data: could not broadcast input array from shape (1296,1152) into shape (1296,576)
-2025-02-14 00:45:03,489 - get_images - ERROR - Error processing raw data from node_1: could not broadcast input array from shape (1296,1152) into shape (1296,576)
-Traceback (most recent call last):
-  File "C:\ai\TomAISense\camera_node\testing\get_images-fast.py", line 98, in on_image_complete
-    process_raw_data(received_data, metadata, node_id)
-  File "C:\ai\TomAISense\camera_node\testing\get_images-fast.py", line 178, in process_raw_data
-    unpacked_data[:, 0::4] = ((reshaped_data[:, :, 0] << 2) | (reshaped_data[:, :, 1] >> 6)) & 0x3FF
-    ~~~~~~~~~~~~~^^^^^^^^^
-ValueError: could not broadcast input array from shape (1296,1152) into shape (1296,576)
-2025-02-14 00:45:03,491 - get_images - INFO - Image transfer time from node_1: 2.8437 seconds
-2025-02-14 00:45:03,491 - get_images - INFO - Image processing time from node_1: 0.0197 seconds
-2025-02-14 00:45:03,492 - get_images - INFO - Total time elapsed: 9.2930 seconds
-2025-02-14 00:45:05,364 - get_images - WARNING - Failed to connect to node_4 (http://192.168.195.56:5001): Connection refused by the server. Retrying...
-2025-02-14 00:45:05,366 - get_images - WARNING - Failed to connect to node_2 (http://192.168.195.73:5001): Connection refused by the server. Retrying...
-2025-02-14 00:45:05,368 - get_images - WARNING - Failed to connect to node_3 (http://192.168.195.70:5001): Connection refused by the server. Retrying...
-2025-02-14 00:45:10,211 - get_images - INFO - Received metadata from node_1: {'filename': 'capture_20250214_004503_1.raw', 'timestamp': '20250214_004503', 'node_id': '1', 'size': 7464960, 'chunk_size': 65536, 'width': 2304, 'height': 1296, 'camera_width': 4608, 'camera_height': 2592, 'bayer_pattern': 'RGGB'}
-2025-02-14 00:45:12,835 - get_images - INFO - Received complete image from node_1
-2025-02-14 00:45:12,835 - get_images - INFO - Stride: 5760, Expected size: 7464960, Received: 7464960
-2025-02-14 00:45:12,841 - get_images - INFO - Reshaped data shape: (1296, 1152, 5)
-2025-02-14 00:45:12,854 - get_images - ERROR - Failed to unpack 10-bit data: could not broadcast input array from shape (1296,1152) into shape (1296,576)
-2025-02-14 00:45:12,856 - get_images - ERROR - Error processing raw data from node_1: could not broadcast input array from shape (1296,1152) into shape (1296,576)
-Traceback (most recent call last):
-  File "C:\ai\TomAISense\camera_node\testing\get_images-fast.py", line 98, in on_image_complete
-    process_raw_data(received_data, metadata, node_id)
-  File "C:\ai\TomAISense\camera_node\testing\get_images-fast.py", line 178, in process_raw_data
-    unpacked_data[:, 0::4] = ((reshaped_data[:, :, 0] << 2) | (reshaped_data[:, :, 1] >> 6)) & 0x3FF
-    ~~~~~~~~~~~~~^^^^^^^^^
-ValueError: could not broadcast input array from shape (1296,1152) into shape (1296,576)
-2025-02-14 00:45:12,857 - get_images - INFO - Image transfer time from node_1: 2.6236 seconds
-2025-02-14 00:45:12,858 - get_images - INFO - Image processing time from node_1: 0.0221 seconds
-2025-02-14 00:45:12,858 - get_images - INFO - Total time elapsed: 9.3640 seconds
-2025-02-14 00:45:15,365 - get_images - WARNING - Failed to connect to node_3 (http://192.168.195.70:5001): Connection refused by the server. Retrying...
-2025-02-14 00:45:15,365 - get_images - WARNING - Failed to connect to node_2 (http://192.168.195.73:5001): Connection refused by the server. Retrying...
-2025-02-14 00:45:15,366 - get_images - WARNING - Failed to connect to node_4 (http://192.168.195.56:5001): Connection refused by the server. Retrying...
-2025-02-14 00:45:19,001 - get_images - INFO - Received metadata from node_1: {'filename': 'capture_20250214_004512_1.raw', 'timestamp': '20250214_004512', 'node_id': '1', 'size': 7464960, 'chunk_size': 65536, 'width': 2304, 'height': 1296, 'camera_width': 4608, 'camera_height': 2592, 'bayer_pattern': 'RGGB'}
-2025-02-14 00:45:22,084 - get_images - INFO - Received complete image from node_1
-2025-02-14 00:45:22,087 - get_images - INFO - Stride: 5760, Expected size: 7464960, Received: 7464960
-2025-02-14 00:45:22,111 - get_images - INFO - Reshaped data shape: (1296, 1152, 5)
-2025-02-14 00:45:22,127 - get_images - ERROR - Failed to unpack 10-bit data: could not broadcast input array from shape (1296,1152) into shape (1296,576)
-2025-02-14 00:45:22,128 - get_images - ERROR - Error processing raw data from node_1: could not broadcast input array from shape (1296,1152) into shape (1296,576)
-Traceback (most recent call last):
-  File "C:\ai\TomAISense\camera_node\testing\get_images-fast.py", line 98, in on_image_complete
-    process_raw_data(received_data, metadata, node_id)
-  File "C:\ai\TomAISense\camera_node\testing\get_images-fast.py", line 178, in process_raw_data
-    unpacked_data[:, 0::4] = ((reshaped_data[:, :, 0] << 2) | (reshaped_data[:, :, 1] >> 6)) & 0x3FF
-    ~~~~~~~~~~~~~^^^^^^^^^
-ValueError: could not broadcast input array from shape (1296,1152) into shape (1296,576)
-2025-02-14 00:45:22,131 - get_images - INFO - Image transfer time from node_1: 3.0853 seconds
-2025-02-14 00:45:22,132 - get_images - INFO - Image processing time from node_1: 0.0441 seconds
-2025-02-14 00:45:22,133 - get_images - INFO - Total time elapsed: 9.2700 seconds
-2025-02-14 00:45:26,369 - get_images - WARNING - Failed to connect to node_4 (http://192.168.195.56:5001): Connection refused by the server. Retrying...
-2025-02-14 00:45:26,369 - get_images - WARNING - Failed to connect to node_2 (http://192.168.195.73:5001): Connection refused by the server. Retrying...
-2025-02-14 00:45:26,372 - get_images - WARNING - Failed to connect to node_3 (http://192.168.195.70:5001): Connection refused by the server. Retrying...
-2025-02-14 00:45:28,867 - get_images - INFO - Received metadata from node_1: {'filename': 'capture_20250214_004522_1.raw', 'timestamp': '20250214_004522', 'node_id': '1', 'size': 7464960, 'chunk_size': 65536, 'width': 2304, 'height': 1296, 'camera_width': 4608, 'camera_height': 2592, 'bayer_pattern': 'RGGB'}
-2025-02-14 00:45:31,772 - get_images - INFO - Received complete image from node_1
-2025-02-14 00:45:31,773 - get_images - INFO - Stride: 5760, Expected size: 7464960, Received: 7464960
-2025-02-14 00:45:31,783 - get_images - INFO - Reshaped data shape: (1296, 1152, 5)
-2025-02-14 00:45:31,791 - get_images - ERROR - Failed to unpack 10-bit data: could not broadcast input array from shape (1296,1152) into shape (1296,576)
-2025-02-14 00:45:31,792 - get_images - ERROR - Error processing raw data from node_1: could not broadcast input array from shape (1296,1152) into shape (1296,576)
-Traceback (most recent call last):
-  File "C:\ai\TomAISense\camera_node\testing\get_images-fast.py", line 98, in on_image_complete
-    process_raw_data(received_data, metadata, node_id)
-  File "C:\ai\TomAISense\camera_node\testing\get_images-fast.py", line 178, in process_raw_data
-    unpacked_data[:, 0::4] = ((reshaped_data[:, :, 0] << 2) | (reshaped_data[:, :, 1] >> 6)) & 0x3FF
-    ~~~~~~~~~~~~~^^^^^^^^^
-ValueError: could not broadcast input array from shape (1296,1152) into shape (1296,576)
-2025-02-14 00:45:31,793 - get_images - INFO - Image transfer time from node_1: 2.9054 seconds
-2025-02-14 00:45:31,793 - get_images - INFO - Image processing time from node_1: 0.0208 seconds
-2025-02-14 00:45:31,794 - get_images - INFO - Total time elapsed: 9.6586 seconds
-2025-02-14 00:45:36,364 - get_images - WARNING - Failed to connect to node_4 (http://192.168.195.56:5001): Connection refused by the server. Retrying...
-2025-02-14 00:45:36,366 - get_images - WARNING - Failed to connect to node_2 (http://192.168.195.73:5001): Connection refused by the server. Retrying...
-2025-02-14 00:45:36,366 - get_images - WARNING - Failed to connect to node_3 (http://192.168.195.70:5001): Connection refused by the server. Retrying...
+2025-02-23 23:18:52,013 - get_images - INFO - Connected to node_1 at http://192.168.166.56:5001
+2025-02-23 23:18:52,035 - get_images - ERROR - Capture error from node_1: cannot access local variable 'camera_info' where it is not associated with a value
+2025-02-23 23:18:52,055 - get_images - ERROR - Capture error from node_1: cannot access local variable 'camera_info' where it is not associated with a value
+2025-02-23 23:18:52,074 - get_images - ERROR - Capture error from node_1: cannot access local variable 'camera_info' where it is not associated with a value
+2025-02-23 23:18:52,095 - get_images - ERROR - Capture error from node_1: cannot access local variable 'camera_info' where it is not associated with a value
+2025-02-23 23:18:52,113 - get_images - ERROR - Capture error from node_1: cannot access local variable 'camera_info' where it is not associated with a value
+2025-02-23 23:18:52,125 - get_images - ERROR - Capture error from node_1: cannot access local variable 'camera_info' where it is not associated with a value
+2025-02-23 23:18:52,139 - get_images - ERROR - Capture error from node_1: cannot access local variable 'camera_info' where it is not associated with a value
+2025-02-23 23:18:52,154 - get_images - ERROR - Capture error from node_1: cannot access local variable 'camera_info' where it is not associated with a value
+2025-02-23 23:18:52,169 - get_images - ERROR - Capture error from node_1: cannot access local variable 'camera_info' where it is not associated with a value
+2025-02-23 23:18:52,181 - get_images - ERROR - Capture error from node_1: cannot access local variable 'camera_info' where it is not associated with a value
+2025-02-23 23:18:52,193 - get_images - ERROR - Capture error from node_1: cannot access local variable 'camera_info' where it is not associated with a value
+2025-02-23 23:18:52,210 - get_images - ERROR - Capture error from node_1: cannot access local variable 'camera_info' where it is not associated with a value
+2025-02-23 23:18:52,229 - get_images - ERROR - Capture error from node_1: cannot access local variable 'camera_info' where it is not associated with a value
+2025-02-23 23:18:52,249 - get_images - ERROR - Capture error from node_1: cannot access local variable 'camera_info' where it is not associated with a value
+2025-02-23 23:18:52,274 - get_images - ERROR - Capture error from node_1: cannot access local variable 'camera_info' where it is not associated with a value
+2025-02-23 23:18:52,293 - get_images - ERROR - Capture error from node_1: cannot access local variable 'camera_info' where it is not associated with a value
+2025-02-23 23:18:52,345 - get_images - ERROR - Capture error from node_1: cannot access local variable 'camera_info' where it is not associated with a value
+2025-02-23 23:18:52,401 - get_images - ERROR - Capture error from node_1: cannot access local variable 'camera_info' where it is not associated with a value
+2025-02-23 23:18:52,455 - get_images - ERROR - Capture error from node_1: cannot access local variable 'camera_info' where it is not associated with a value
+2025-02-23 23:18:52,473 - get_images - ERROR - Capture error from node_1: cannot access local variable 'camera_info' where it is not associated with a value
+2025-02-23 23:18:52,495 - get_images - ERROR - Capture error from node_1: cannot access local variable 'camera_info' where it is not associated with a value
+2025-02-23 23:18:52,514 - get_images - ERROR - Capture error from node_1: cannot access local variable 'camera_info' where it is not associated with a value
+2025-02-23 23:18:52,533 - get_images - ERROR - Capture error from node_1: cannot access local variable 'camera_info' where it is not associated with a value
+2025-02-23 23:18:52,553 - get_images - ERROR - Capture error from node_1: cannot access local variable 'camera_info' where it is not associated with a value
+2025-02-23 23:18:52,573 - get_images - ERROR - Capture error from node_1: cannot access local variable 'camera_info' where it is not associated with a value
+2025-02-23 23:18:52,593 - get_images - ERROR - Capture error from node_1: cannot access local variable 'camera_info' where it is not associated with a value
+2025-02-23 23:18:52,614 - get_images - ERROR - Capture error from node_1: cannot access local variable 'camera_info' where it is not associated with a value
+2025-02-23 23:18:52,634 - get_images - ERROR - Capture error from node_1: cannot access local variable 'camera_info' where it is not associated with a value
+2025-02-23 23:18:52,650 - get_images - ERROR - Capture error from node_1: cannot access local variable 'camera_info' where it is not associated with a value
+2025-02-23 23:18:52,670 - get_images - ERROR - Capture error from node_1: cannot access local variable 'camera_info' where it is not associated with a value
+2025-02-23 23:18:52,690 - get_images - ERROR - Capture error from node_1: cannot access local variable 'camera_info' where it is not associated with a value
+2025-02-23 23:18:52,709 - get_images - ERROR - Capture error from node_1: cannot access local variable 'camera_info' where it is not associated with a value
+2025-02-23 23:18:52,725 - get_images - ERROR - Capture error from node_1: cannot access local variable 'camera_info' where it is not associated with a value
+2025-02-23 23:18:52,748 - get_images - ERROR - Capture error from node_1: cannot access local variable 'camera_info' where it is not associated with a value
+2025-02-23 23:18:52,779 - get_images - ERROR - Capture error from node_1: cannot access local variable 'camera_info' where it is not associated with a value
+2025-02-23 23:18:52,801 - get_images - ERROR - Capture error from node_1: cannot access local variable 'camera_info' where it is not associated with a value
+2025-02-23 23:18:52,825 - get_images - ERROR - Capture error from node_1: cannot access local variable 'camera_info' where it is not associated with a value
