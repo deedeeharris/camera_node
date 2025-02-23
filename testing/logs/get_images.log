@@ -36,3 +36,87 @@
 2025-02-23 23:18:52,779 - get_images - ERROR - Capture error from node_1: cannot access local variable 'camera_info' where it is not associated with a value
 2025-02-23 23:18:52,801 - get_images - ERROR - Capture error from node_1: cannot access local variable 'camera_info' where it is not associated with a value
 2025-02-23 23:18:52,825 - get_images - ERROR - Capture error from node_1: cannot access local variable 'camera_info' where it is not associated with a value
+2025-02-23 23:20:02,064 - get_images - WARNING - Failed to connect to node_1 (http://192.168.166.56:5001): Cannot connect to host 192.168.166.56:5001 ssl:default [The remote computer refused the network connection]. Retrying...
+2025-02-23 23:20:05,423 - get_images - WARNING - Failed to connect to node_3 (http://192.168.195.70:5001): Connection refused by the server. Retrying...
+2025-02-23 23:20:05,424 - get_images - WARNING - Failed to connect to node_4 (http://192.168.195.56:5001): Connection refused by the server. Retrying...
+2025-02-23 23:20:05,426 - get_images - WARNING - Failed to connect to node_2 (http://192.168.195.73:5001): Connection refused by the server. Retrying...
+2025-02-23 23:20:07,278 - get_images - INFO - Connected to node_1 at http://192.168.166.56:5001
+2025-02-23 23:20:10,541 - get_images - INFO - Received metadata from node_1: {'filename': 'capture_20250223_232007_1.jpg', 'timestamp': '20250223_232007', 'node_id': '1', 'size': 1292578, 'chunk_size': 65536, 'width': 2304, 'height': 1296, 'format': 'jpg'}
+2025-02-23 23:20:10,991 - get_images - INFO - Received complete image from node_1
+2025-02-23 23:20:11,085 - get_images - INFO - Successfully verified JPG image: image_20250223_232010_node_1.jpg
+2025-02-23 23:20:11,086 - get_images - INFO - Saved JPG image: image_20250223_232010_node_1.jpg
+2025-02-23 23:20:11,086 - get_images - INFO - Image transfer time from node_1: 0.4518 seconds
+2025-02-23 23:20:11,087 - get_images - INFO - Image processing time from node_1: 0.0931 seconds
+2025-02-23 23:20:11,088 - get_images - INFO - Total time elapsed: 11.1303 seconds
+2025-02-23 23:20:14,343 - get_images - INFO - Received metadata from node_1: {'filename': 'capture_20250223_232011_1.jpg', 'timestamp': '20250223_232011', 'node_id': '1', 'size': 1292126, 'chunk_size': 65536, 'width': 2304, 'height': 1296, 'format': 'jpg'}
+2025-02-23 23:20:14,881 - get_images - INFO - Received complete image from node_1
+2025-02-23 23:20:14,889 - get_images - INFO - Successfully verified JPG image: image_20250223_232014_node_1.jpg
+2025-02-23 23:20:14,890 - get_images - INFO - Saved JPG image: image_20250223_232014_node_1.jpg
+2025-02-23 23:20:14,891 - get_images - INFO - Image transfer time from node_1: 0.5385 seconds
+2025-02-23 23:20:14,892 - get_images - INFO - Image processing time from node_1: 0.0100 seconds
+2025-02-23 23:20:14,892 - get_images - INFO - Total time elapsed: 3.8023 seconds
+2025-02-23 23:20:16,418 - get_images - WARNING - Failed to connect to node_4 (http://192.168.195.56:5001): Connection refused by the server. Retrying...
+2025-02-23 23:20:16,419 - get_images - WARNING - Failed to connect to node_2 (http://192.168.195.73:5001): Connection refused by the server. Retrying...
+2025-02-23 23:20:16,419 - get_images - WARNING - Failed to connect to node_3 (http://192.168.195.70:5001): Connection refused by the server. Retrying...
+2025-02-23 23:20:18,154 - get_images - INFO - Received metadata from node_1: {'filename': 'capture_20250223_232014_1.jpg', 'timestamp': '20250223_232014', 'node_id': '1', 'size': 1293136, 'chunk_size': 65536, 'width': 2304, 'height': 1296, 'format': 'jpg'}
+2025-02-23 23:20:18,569 - get_images - INFO - Received complete image from node_1
+2025-02-23 23:20:18,580 - get_images - INFO - Successfully verified JPG image: image_20250223_232018_node_1.jpg
+2025-02-23 23:20:18,580 - get_images - INFO - Saved JPG image: image_20250223_232018_node_1.jpg
+2025-02-23 23:20:18,581 - get_images - INFO - Image transfer time from node_1: 0.4161 seconds
+2025-02-23 23:20:18,582 - get_images - INFO - Image processing time from node_1: 0.0110 seconds
+2025-02-23 23:20:18,582 - get_images - INFO - Total time elapsed: 3.6871 seconds
+2025-02-23 23:20:21,725 - get_images - INFO - Received metadata from node_1: {'filename': 'capture_20250223_232018_1.jpg', 'timestamp': '20250223_232018', 'node_id': '1', 'size': 1296967, 'chunk_size': 65536, 'width': 2304, 'height': 1296, 'format': 'jpg'}
+2025-02-23 23:20:22,448 - get_images - INFO - Received complete image from node_1
+2025-02-23 23:20:22,465 - get_images - INFO - Successfully verified JPG image: image_20250223_232022_node_1.jpg
+2025-02-23 23:20:22,467 - get_images - INFO - Saved JPG image: image_20250223_232022_node_1.jpg
+2025-02-23 23:20:22,467 - get_images - INFO - Image transfer time from node_1: 0.7239 seconds
+2025-02-23 23:20:22,468 - get_images - INFO - Image processing time from node_1: 0.0180 seconds
+2025-02-23 23:20:22,469 - get_images - INFO - Total time elapsed: 3.8832 seconds
+2025-02-23 23:20:25,661 - get_images - INFO - Received metadata from node_1: {'filename': 'capture_20250223_232022_1.jpg', 'timestamp': '20250223_232022', 'node_id': '1', 'size': 1207020, 'chunk_size': 65536, 'width': 2304, 'height': 1296, 'format': 'jpg'}
+2025-02-23 23:20:26,192 - get_images - INFO - Received complete image from node_1
+2025-02-23 23:20:26,206 - get_images - INFO - Successfully verified JPG image: image_20250223_232026_node_1.jpg
+2025-02-23 23:20:26,207 - get_images - INFO - Saved JPG image: image_20250223_232026_node_1.jpg
+2025-02-23 23:20:26,208 - get_images - INFO - Image transfer time from node_1: 0.5321 seconds
+2025-02-23 23:20:26,208 - get_images - INFO - Image processing time from node_1: 0.0150 seconds
+2025-02-23 23:20:26,209 - get_images - INFO - Total time elapsed: 3.7375 seconds
+2025-02-23 23:20:27,430 - get_images - WARNING - Failed to connect to node_3 (http://192.168.195.70:5001): Connection refused by the server. Retrying...
+2025-02-23 23:20:27,431 - get_images - WARNING - Failed to connect to node_2 (http://192.168.195.73:5001): Connection refused by the server. Retrying...
+2025-02-23 23:20:27,432 - get_images - WARNING - Failed to connect to node_4 (http://192.168.195.56:5001): Connection refused by the server. Retrying...
+2025-02-23 23:20:29,392 - get_images - INFO - Received metadata from node_1: {'filename': 'capture_20250223_232026_1.jpg', 'timestamp': '20250223_232026', 'node_id': '1', 'size': 1274803, 'chunk_size': 65536, 'width': 2304, 'height': 1296, 'format': 'jpg'}
+2025-02-23 23:20:29,773 - get_images - INFO - Received complete image from node_1
+2025-02-23 23:20:29,785 - get_images - INFO - Successfully verified JPG image: image_20250223_232029_node_1.jpg
+2025-02-23 23:20:29,785 - get_images - INFO - Saved JPG image: image_20250223_232029_node_1.jpg
+2025-02-23 23:20:29,786 - get_images - INFO - Image transfer time from node_1: 0.3817 seconds
+2025-02-23 23:20:29,786 - get_images - INFO - Image processing time from node_1: 0.0120 seconds
+2025-02-23 23:20:29,787 - get_images - INFO - Total time elapsed: 3.5754 seconds
+2025-02-23 23:20:32,920 - get_images - INFO - Received metadata from node_1: {'filename': 'capture_20250223_232029_1.jpg', 'timestamp': '20250223_232029', 'node_id': '1', 'size': 1287565, 'chunk_size': 65536, 'width': 2304, 'height': 1296, 'format': 'jpg'}
+2025-02-23 23:20:33,316 - get_images - INFO - Received complete image from node_1
+2025-02-23 23:20:33,325 - get_images - INFO - Successfully verified JPG image: image_20250223_232033_node_1.jpg
+2025-02-23 23:20:33,326 - get_images - INFO - Saved JPG image: image_20250223_232033_node_1.jpg
+2025-02-23 23:20:33,326 - get_images - INFO - Image transfer time from node_1: 0.3968 seconds
+2025-02-23 23:20:33,327 - get_images - INFO - Image processing time from node_1: 0.0090 seconds
+2025-02-23 23:20:33,327 - get_images - INFO - Total time elapsed: 3.5385 seconds
+2025-02-23 23:20:36,589 - get_images - INFO - Received metadata from node_1: {'filename': 'capture_20250223_232033_1.jpg', 'timestamp': '20250223_232033', 'node_id': '1', 'size': 1317601, 'chunk_size': 65536, 'width': 2304, 'height': 1296, 'format': 'jpg'}
+2025-02-23 23:20:37,328 - get_images - INFO - Received complete image from node_1
+2025-02-23 23:20:37,340 - get_images - INFO - Successfully verified JPG image: image_20250223_232037_node_1.jpg
+2025-02-23 23:20:37,341 - get_images - INFO - Saved JPG image: image_20250223_232037_node_1.jpg
+2025-02-23 23:20:37,342 - get_images - INFO - Image transfer time from node_1: 0.7405 seconds
+2025-02-23 23:20:37,343 - get_images - INFO - Image processing time from node_1: 0.0130 seconds
+2025-02-23 23:20:37,344 - get_images - INFO - Total time elapsed: 4.0140 seconds
+2025-02-23 23:20:38,417 - get_images - WARNING - Failed to connect to node_4 (http://192.168.195.56:5001): Connection refused by the server. Retrying...
+2025-02-23 23:20:38,418 - get_images - WARNING - Failed to connect to node_3 (http://192.168.195.70:5001): Connection refused by the server. Retrying...
+2025-02-23 23:20:38,419 - get_images - WARNING - Failed to connect to node_2 (http://192.168.195.73:5001): Connection refused by the server. Retrying...
+2025-02-23 23:20:40,473 - get_images - INFO - Received metadata from node_1: {'filename': 'capture_20250223_232037_1.jpg', 'timestamp': '20250223_232037', 'node_id': '1', 'size': 1286239, 'chunk_size': 65536, 'width': 2304, 'height': 1296, 'format': 'jpg'}
+2025-02-23 23:20:41,121 - get_images - INFO - Received complete image from node_1
+2025-02-23 23:20:41,132 - get_images - INFO - Successfully verified JPG image: image_20250223_232041_node_1.jpg
+2025-02-23 23:20:41,132 - get_images - INFO - Saved JPG image: image_20250223_232041_node_1.jpg
+2025-02-23 23:20:41,133 - get_images - INFO - Image transfer time from node_1: 0.6481 seconds
+2025-02-23 23:20:41,133 - get_images - INFO - Image processing time from node_1: 0.0120 seconds
+2025-02-23 23:20:41,134 - get_images - INFO - Total time elapsed: 3.7877 seconds
+2025-02-23 23:20:44,301 - get_images - INFO - Received metadata from node_1: {'filename': 'capture_20250223_232041_1.jpg', 'timestamp': '20250223_232041', 'node_id': '1', 'size': 1295903, 'chunk_size': 65536, 'width': 2304, 'height': 1296, 'format': 'jpg'}
+2025-02-23 23:20:44,752 - get_images - INFO - Received complete image from node_1
+2025-02-23 23:20:44,764 - get_images - INFO - Successfully verified JPG image: image_20250223_232044_node_1.jpg
+2025-02-23 23:20:44,764 - get_images - INFO - Saved JPG image: image_20250223_232044_node_1.jpg
+2025-02-23 23:20:44,765 - get_images - INFO - Image transfer time from node_1: 0.4512 seconds
+2025-02-23 23:20:44,766 - get_images - INFO - Image processing time from node_1: 0.0130 seconds
+2025-02-23 23:20:44,766 - get_images - INFO - Total time elapsed: 3.6300 seconds

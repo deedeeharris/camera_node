@@ -172,9 +172,9 @@ async def main():
     """Connects to multiple nodes concurrently."""
     nodes = {
         "node_1": "192.168.166.56",
-        "node_2": "192.168.195.73",
-        "node_3": "192.168.195.70",
-        "node_4": "192.168.195.56",
+        "node_2": "192.168.166.73",
+        "node_3": "192.168.166.70",
+        "node_4": "192.168.166.50",
     }
     os.makedirs("received_images", exist_ok=True)  # Create received_images directory
     tasks = [receive_images(address, node_id) for node_id, address in nodes.items()]
