@@ -14,3 +14,12 @@ and also a queue for uploading the images, etc.
 worked on node 1
 still having errors. 
 didn't succeed to capture yet in the current setup.
+
+end of day - last update
+worked hours, trying to get the raw format from the camera_node
+to the client. always errors.
+checked online. maybe i dont need raw. maybe jpeg is enough.
+do another research online, to see if jpeg is enough.
+if enough, transform all do jpeg.
+or consider maybe tiff, or dng.
+looks like jpg is enough. make it dynamic, either jpg or dng.

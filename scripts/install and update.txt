@@ -5,6 +5,8 @@ sudo ./install_camera_node.sh 4
 sudo systemctl status camera_node.service
 
 
+sudo systemctl stop camera_node.service
+
 sudo systemctl restart camera_node.service
 
 journalctl -u camera_node.service

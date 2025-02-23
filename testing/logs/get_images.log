@@ -1,131 +1,134 @@
-2025-02-13 23:22:15,728 - get_images - INFO - Connected to node_1 at http://192.168.47.56:5001
-2025-02-13 23:22:21,357 - get_images - WARNING - Failed to connect to node_3 (http://192.168.195.70:5001): Connection refused by the server. Retrying...
-2025-02-13 23:22:21,358 - get_images - WARNING - Failed to connect to node_2 (http://192.168.195.73:5001): Connection refused by the server. Retrying...
-2025-02-13 23:22:21,358 - get_images - WARNING - Failed to connect to node_4 (http://192.168.195.56:5001): Connection refused by the server. Retrying...
-2025-02-13 23:22:27,519 - get_images - INFO - Received metadata from node_1: {'filename': 'capture_20250213_232215_1.raw', 'timestamp': '20250213_232215', 'node_id': '1', 'size': 44789760, 'chunk_size': 65536, 'width': 2304, 'height': 1296, 'camera_width': 4608, 'camera_height': 2592, 'bayer_pattern': 'RGGB'}
-2025-02-13 23:22:32,361 - get_images - WARNING - Failed to connect to node_3 (http://192.168.195.70:5001): Connection refused by the server. Retrying...
-2025-02-13 23:22:32,361 - get_images - WARNING - Failed to connect to node_4 (http://192.168.195.56:5001): Connection refused by the server. Retrying...
-2025-02-13 23:22:32,367 - get_images - WARNING - Failed to connect to node_2 (http://192.168.195.73:5001): Connection refused by the server. Retrying...
-2025-02-13 23:22:43,357 - get_images - WARNING - Failed to connect to node_3 (http://192.168.195.70:5001): Connection refused by the server. Retrying...
-2025-02-13 23:22:43,359 - get_images - WARNING - Failed to connect to node_4 (http://192.168.195.56:5001): Connection refused by the server. Retrying...
-2025-02-13 23:22:43,359 - get_images - WARNING - Failed to connect to node_2 (http://192.168.195.73:5001): Connection refused by the server. Retrying...
-2025-02-13 23:22:45,167 - get_images - INFO - Received complete image from node_1
-2025-02-13 23:22:45,168 - get_images - ERROR - Incorrect data size. Expected: 7464960, got: 44789760
-2025-02-13 23:22:45,168 - get_images - ERROR - Error processing raw data from node_1: Incorrect data size received from camera node.
+2025-02-14 00:44:27,784 - get_images - INFO - Connected to node_1 at http://192.168.47.56:5001
+2025-02-14 00:44:32,367 - get_images - WARNING - Failed to connect to node_3 (http://192.168.195.70:5001): Connection refused by the server. Retrying...
+2025-02-14 00:44:32,369 - get_images - WARNING - Failed to connect to node_2 (http://192.168.195.73:5001): Connection refused by the server. Retrying...
+2025-02-14 00:44:32,369 - get_images - WARNING - Failed to connect to node_4 (http://192.168.195.56:5001): Connection refused by the server. Retrying...
+2025-02-14 00:44:33,604 - get_images - INFO - Received metadata from node_1: {'filename': 'capture_20250214_004427_1.raw', 'timestamp': '20250214_004427', 'node_id': '1', 'size': 7464960, 'chunk_size': 65536, 'width': 2304, 'height': 1296, 'camera_width': 4608, 'camera_height': 2592, 'bayer_pattern': 'RGGB'}
+2025-02-14 00:44:36,249 - get_images - INFO - Received complete image from node_1
+2025-02-14 00:44:36,249 - get_images - INFO - Stride: 5760, Expected size: 7464960, Received: 7464960
+2025-02-14 00:44:36,251 - get_images - INFO - Reshaped data shape: (1296, 1152, 5)
+2025-02-14 00:44:36,264 - get_images - ERROR - Failed to unpack 10-bit data: could not broadcast input array from shape (1296,1152) into shape (1296,576)
+2025-02-14 00:44:36,264 - get_images - ERROR - Error processing raw data from node_1: could not broadcast input array from shape (1296,1152) into shape (1296,576)
 Traceback (most recent call last):
-  File "C:\ai\TomAISense\camera_node\testing\get_images-fast.py", line 94, in on_image_complete
+  File "C:\ai\TomAISense\camera_node\testing\get_images-fast.py", line 98, in on_image_complete
     process_raw_data(received_data, metadata, node_id)
-  File "C:\ai\TomAISense\camera_node\testing\get_images-fast.py", line 156, in process_raw_data
-    raise ValueError("Incorrect data size received from camera node.")
-ValueError: Incorrect data size received from camera node.
-2025-02-13 23:22:45,169 - get_images - INFO - Image transfer time from node_1: 17.6488 seconds
-2025-02-13 23:22:45,169 - get_images - INFO - Image processing time from node_1: 0.0012 seconds
-2025-02-13 23:22:45,171 - get_images - INFO - Total time elapsed: 29.6190 seconds
-2025-02-13 23:22:54,357 - get_images - WARNING - Failed to connect to node_2 (http://192.168.195.73:5001): Connection refused by the server. Retrying...
-2025-02-13 23:22:54,357 - get_images - WARNING - Failed to connect to node_3 (http://192.168.195.70:5001): Connection refused by the server. Retrying...
-2025-02-13 23:22:54,358 - get_images - WARNING - Failed to connect to node_4 (http://192.168.195.56:5001): Connection refused by the server. Retrying...
-2025-02-13 23:22:55,051 - get_images - INFO - Received metadata from node_1: {'filename': 'capture_20250213_232245_1.raw', 'timestamp': '20250213_232245', 'node_id': '1', 'size': 44789760, 'chunk_size': 65536, 'width': 2304, 'height': 1296, 'camera_width': 4608, 'camera_height': 2592, 'bayer_pattern': 'RGGB'}
-2025-02-13 23:23:04,351 - get_images - WARNING - Failed to connect to node_3 (http://192.168.195.70:5001): Connection refused by the server. Retrying...
-2025-02-13 23:23:04,351 - get_images - WARNING - Failed to connect to node_4 (http://192.168.195.56:5001): Connection refused by the server. Retrying...
-2025-02-13 23:23:04,351 - get_images - WARNING - Failed to connect to node_2 (http://192.168.195.73:5001): Connection refused by the server. Retrying...
-2025-02-13 23:23:11,584 - get_images - INFO - Received complete image from node_1
-2025-02-13 23:23:11,584 - get_images - ERROR - Incorrect data size. Expected: 7464960, got: 44789760
-2025-02-13 23:23:11,584 - get_images - ERROR - Error processing raw data from node_1: Incorrect data size received from camera node.
+  File "C:\ai\TomAISense\camera_node\testing\get_images-fast.py", line 178, in process_raw_data
+    unpacked_data[:, 0::4] = ((reshaped_data[:, :, 0] << 2) | (reshaped_data[:, :, 1] >> 6)) & 0x3FF
+    ~~~~~~~~~~~~~^^^^^^^^^
+ValueError: could not broadcast input array from shape (1296,1152) into shape (1296,576)
+2025-02-14 00:44:36,267 - get_images - INFO - Image transfer time from node_1: 2.6451 seconds
+2025-02-14 00:44:36,268 - get_images - INFO - Image processing time from node_1: 0.0184 seconds
+2025-02-14 00:44:36,268 - get_images - INFO - Total time elapsed: 9.5490 seconds
+2025-02-14 00:44:42,135 - get_images - INFO - Received metadata from node_1: {'filename': 'capture_20250214_004436_1.raw', 'timestamp': '20250214_004436', 'node_id': '1', 'size': 7464960, 'chunk_size': 65536, 'width': 2304, 'height': 1296, 'camera_width': 4608, 'camera_height': 2592, 'bayer_pattern': 'RGGB'}
+2025-02-14 00:44:43,371 - get_images - WARNING - Failed to connect to node_4 (http://192.168.195.56:5001): Connection refused by the server. Retrying...
+2025-02-14 00:44:43,371 - get_images - WARNING - Failed to connect to node_2 (http://192.168.195.73:5001): Connection refused by the server. Retrying...
+2025-02-14 00:44:43,371 - get_images - WARNING - Failed to connect to node_3 (http://192.168.195.70:5001): Connection refused by the server. Retrying...
+2025-02-14 00:44:44,901 - get_images - INFO - Received complete image from node_1
+2025-02-14 00:44:44,901 - get_images - INFO - Stride: 5760, Expected size: 7464960, Received: 7464960
+2025-02-14 00:44:44,912 - get_images - INFO - Reshaped data shape: (1296, 1152, 5)
+2025-02-14 00:44:44,921 - get_images - ERROR - Failed to unpack 10-bit data: could not broadcast input array from shape (1296,1152) into shape (1296,576)
+2025-02-14 00:44:44,921 - get_images - ERROR - Error processing raw data from node_1: could not broadcast input array from shape (1296,1152) into shape (1296,576)
 Traceback (most recent call last):
-  File "C:\ai\TomAISense\camera_node\testing\get_images-fast.py", line 94, in on_image_complete
+  File "C:\ai\TomAISense\camera_node\testing\get_images-fast.py", line 98, in on_image_complete
     process_raw_data(received_data, metadata, node_id)
-  File "C:\ai\TomAISense\camera_node\testing\get_images-fast.py", line 156, in process_raw_data
-    raise ValueError("Incorrect data size received from camera node.")
-ValueError: Incorrect data size received from camera node.
-2025-02-13 23:23:11,584 - get_images - INFO - Image transfer time from node_1: 16.5335 seconds
-2025-02-13 23:23:11,590 - get_images - INFO - Image processing time from node_1: 0.0000 seconds
-2025-02-13 23:23:11,590 - get_images - INFO - Total time elapsed: 26.4084 seconds
-2025-02-13 23:23:15,367 - get_images - WARNING - Failed to connect to node_2 (http://192.168.195.73:5001): Connection refused by the server. Retrying...
-2025-02-13 23:23:15,368 - get_images - WARNING - Failed to connect to node_3 (http://192.168.195.70:5001): Connection refused by the server. Retrying...
-2025-02-13 23:23:15,369 - get_images - WARNING - Failed to connect to node_4 (http://192.168.195.56:5001): Connection refused by the server. Retrying...
-2025-02-13 23:23:20,427 - get_images - INFO - Received metadata from node_1: {'filename': 'capture_20250213_232311_1.raw', 'timestamp': '20250213_232311', 'node_id': '1', 'size': 44789760, 'chunk_size': 65536, 'width': 2304, 'height': 1296, 'camera_width': 4608, 'camera_height': 2592, 'bayer_pattern': 'RGGB'}
-2025-02-13 23:23:26,351 - get_images - WARNING - Failed to connect to node_4 (http://192.168.195.56:5001): Connection refused by the server. Retrying...
-2025-02-13 23:23:26,351 - get_images - WARNING - Failed to connect to node_2 (http://192.168.195.73:5001): Connection refused by the server. Retrying...
-2025-02-13 23:23:26,351 - get_images - WARNING - Failed to connect to node_3 (http://192.168.195.70:5001): Connection refused by the server. Retrying...
-2025-02-13 23:23:36,367 - get_images - WARNING - Failed to connect to node_3 (http://192.168.195.70:5001): Connection refused by the server. Retrying...
-2025-02-13 23:23:36,369 - get_images - WARNING - Failed to connect to node_2 (http://192.168.195.73:5001): Connection refused by the server. Retrying...
-2025-02-13 23:23:36,369 - get_images - WARNING - Failed to connect to node_4 (http://192.168.195.56:5001): Connection refused by the server. Retrying...
-2025-02-13 23:23:37,301 - get_images - INFO - Received complete image from node_1
-2025-02-13 23:23:37,301 - get_images - ERROR - Incorrect data size. Expected: 7464960, got: 44789760
-2025-02-13 23:23:37,301 - get_images - ERROR - Error processing raw data from node_1: Incorrect data size received from camera node.
+  File "C:\ai\TomAISense\camera_node\testing\get_images-fast.py", line 178, in process_raw_data
+    unpacked_data[:, 0::4] = ((reshaped_data[:, :, 0] << 2) | (reshaped_data[:, :, 1] >> 6)) & 0x3FF
+    ~~~~~~~~~~~~~^^^^^^^^^
+ValueError: could not broadcast input array from shape (1296,1152) into shape (1296,576)
+2025-02-14 00:44:44,926 - get_images - INFO - Image transfer time from node_1: 2.7667 seconds
+2025-02-14 00:44:44,926 - get_images - INFO - Image processing time from node_1: 0.0244 seconds
+2025-02-14 00:44:44,927 - get_images - INFO - Total time elapsed: 8.6565 seconds
+2025-02-14 00:44:51,801 - get_images - INFO - Received metadata from node_1: {'filename': 'capture_20250214_004445_1.raw', 'timestamp': '20250214_004445', 'node_id': '1', 'size': 7464960, 'chunk_size': 65536, 'width': 2304, 'height': 1296, 'camera_width': 4608, 'camera_height': 2592, 'bayer_pattern': 'RGGB'}
+2025-02-14 00:44:54,159 - get_images - INFO - Received complete image from node_1
+2025-02-14 00:44:54,159 - get_images - INFO - Stride: 5760, Expected size: 7464960, Received: 7464960
+2025-02-14 00:44:54,179 - get_images - INFO - Reshaped data shape: (1296, 1152, 5)
+2025-02-14 00:44:54,193 - get_images - ERROR - Failed to unpack 10-bit data: could not broadcast input array from shape (1296,1152) into shape (1296,576)
+2025-02-14 00:44:54,194 - get_images - ERROR - Error processing raw data from node_1: could not broadcast input array from shape (1296,1152) into shape (1296,576)
 Traceback (most recent call last):
-  File "C:\ai\TomAISense\camera_node\testing\get_images-fast.py", line 94, in on_image_complete
+  File "C:\ai\TomAISense\camera_node\testing\get_images-fast.py", line 98, in on_image_complete
     process_raw_data(received_data, metadata, node_id)
-  File "C:\ai\TomAISense\camera_node\testing\get_images-fast.py", line 156, in process_raw_data
-    raise ValueError("Incorrect data size received from camera node.")
-ValueError: Incorrect data size received from camera node.
-2025-02-13 23:23:37,307 - get_images - INFO - Image transfer time from node_1: 16.8740 seconds
-2025-02-13 23:23:37,307 - get_images - INFO - Image processing time from node_1: 0.0061 seconds
-2025-02-13 23:23:37,308 - get_images - INFO - Total time elapsed: 25.7123 seconds
-2025-02-13 23:23:46,130 - get_images - INFO - Received metadata from node_1: {'filename': 'capture_20250213_232337_1.raw', 'timestamp': '20250213_232337', 'node_id': '1', 'size': 44789760, 'chunk_size': 65536, 'width': 2304, 'height': 1296, 'camera_width': 4608, 'camera_height': 2592, 'bayer_pattern': 'RGGB'}
-2025-02-13 23:23:47,359 - get_images - WARNING - Failed to connect to node_2 (http://192.168.195.73:5001): Connection refused by the server. Retrying...
-2025-02-13 23:23:47,360 - get_images - WARNING - Failed to connect to node_3 (http://192.168.195.70:5001): Connection refused by the server. Retrying...
-2025-02-13 23:23:47,360 - get_images - WARNING - Failed to connect to node_4 (http://192.168.195.56:5001): Connection refused by the server. Retrying...
-2025-02-13 23:23:57,351 - get_images - WARNING - Failed to connect to node_3 (http://192.168.195.70:5001): Connection refused by the server. Retrying...
-2025-02-13 23:23:57,351 - get_images - WARNING - Failed to connect to node_4 (http://192.168.195.56:5001): Connection refused by the server. Retrying...
-2025-02-13 23:23:57,351 - get_images - WARNING - Failed to connect to node_2 (http://192.168.195.73:5001): Connection refused by the server. Retrying...
-2025-02-13 23:24:05,742 - get_images - INFO - Received complete image from node_1
-2025-02-13 23:24:05,742 - get_images - ERROR - Incorrect data size. Expected: 7464960, got: 44789760
-2025-02-13 23:24:05,743 - get_images - ERROR - Error processing raw data from node_1: Incorrect data size received from camera node.
+  File "C:\ai\TomAISense\camera_node\testing\get_images-fast.py", line 178, in process_raw_data
+    unpacked_data[:, 0::4] = ((reshaped_data[:, :, 0] << 2) | (reshaped_data[:, :, 1] >> 6)) & 0x3FF
+    ~~~~~~~~~~~~~^^^^^^^^^
+ValueError: could not broadcast input array from shape (1296,1152) into shape (1296,576)
+2025-02-14 00:44:54,196 - get_images - INFO - Image transfer time from node_1: 2.3583 seconds
+2025-02-14 00:44:54,196 - get_images - INFO - Image processing time from node_1: 0.0370 seconds
+2025-02-14 00:44:54,196 - get_images - INFO - Total time elapsed: 9.2680 seconds
+2025-02-14 00:44:54,367 - get_images - WARNING - Failed to connect to node_4 (http://192.168.195.56:5001): Connection refused by the server. Retrying...
+2025-02-14 00:44:54,368 - get_images - WARNING - Failed to connect to node_3 (http://192.168.195.70:5001): Connection refused by the server. Retrying...
+2025-02-14 00:44:54,369 - get_images - WARNING - Failed to connect to node_2 (http://192.168.195.73:5001): Connection refused by the server. Retrying...
+2025-02-14 00:45:00,627 - get_images - INFO - Received metadata from node_1: {'filename': 'capture_20250214_004454_1.raw', 'timestamp': '20250214_004454', 'node_id': '1', 'size': 7464960, 'chunk_size': 65536, 'width': 2304, 'height': 1296, 'camera_width': 4608, 'camera_height': 2592, 'bayer_pattern': 'RGGB'}
+2025-02-14 00:45:03,471 - get_images - INFO - Received complete image from node_1
+2025-02-14 00:45:03,471 - get_images - INFO - Stride: 5760, Expected size: 7464960, Received: 7464960
+2025-02-14 00:45:03,476 - get_images - INFO - Reshaped data shape: (1296, 1152, 5)
+2025-02-14 00:45:03,488 - get_images - ERROR - Failed to unpack 10-bit data: could not broadcast input array from shape (1296,1152) into shape (1296,576)
+2025-02-14 00:45:03,489 - get_images - ERROR - Error processing raw data from node_1: could not broadcast input array from shape (1296,1152) into shape (1296,576)
 Traceback (most recent call last):
-  File "C:\ai\TomAISense\camera_node\testing\get_images-fast.py", line 94, in on_image_complete
+  File "C:\ai\TomAISense\camera_node\testing\get_images-fast.py", line 98, in on_image_complete
     process_raw_data(received_data, metadata, node_id)
-  File "C:\ai\TomAISense\camera_node\testing\get_images-fast.py", line 156, in process_raw_data
-    raise ValueError("Incorrect data size received from camera node.")
-ValueError: Incorrect data size received from camera node.
-2025-02-13 23:24:05,743 - get_images - INFO - Image transfer time from node_1: 19.6127 seconds
-2025-02-13 23:24:05,743 - get_images - INFO - Image processing time from node_1: 0.0011 seconds
-2025-02-13 23:24:05,743 - get_images - INFO - Total time elapsed: 28.4337 seconds
-2025-02-13 23:24:07,367 - get_images - WARNING - Failed to connect to node_3 (http://192.168.195.70:5001): Connection refused by the server. Retrying...
-2025-02-13 23:24:07,368 - get_images - WARNING - Failed to connect to node_4 (http://192.168.195.56:5001): Connection refused by the server. Retrying...
-2025-02-13 23:24:07,368 - get_images - WARNING - Failed to connect to node_2 (http://192.168.195.73:5001): Connection refused by the server. Retrying...
-2025-02-13 23:24:13,828 - get_images - INFO - Received metadata from node_1: {'filename': 'capture_20250213_232405_1.raw', 'timestamp': '20250213_232405', 'node_id': '1', 'size': 44789760, 'chunk_size': 65536, 'width': 2304, 'height': 1296, 'camera_width': 4608, 'camera_height': 2592, 'bayer_pattern': 'RGGB'}
-2025-02-13 23:24:18,358 - get_images - WARNING - Failed to connect to node_2 (http://192.168.195.73:5001): Connection refused by the server. Retrying...
-2025-02-13 23:24:18,359 - get_images - WARNING - Failed to connect to node_3 (http://192.168.195.70:5001): Connection refused by the server. Retrying...
-2025-02-13 23:24:18,360 - get_images - WARNING - Failed to connect to node_4 (http://192.168.195.56:5001): Connection refused by the server. Retrying...
-2025-02-13 23:24:28,351 - get_images - WARNING - Failed to connect to node_3 (http://192.168.195.70:5001): Connection refused by the server. Retrying...
-2025-02-13 23:24:28,351 - get_images - WARNING - Failed to connect to node_2 (http://192.168.195.73:5001): Connection refused by the server. Retrying...
-2025-02-13 23:24:28,351 - get_images - WARNING - Failed to connect to node_4 (http://192.168.195.56:5001): Connection refused by the server. Retrying...
-2025-02-13 23:24:33,369 - get_images - INFO - Received complete image from node_1
-2025-02-13 23:24:33,371 - get_images - ERROR - Incorrect data size. Expected: 7464960, got: 44789760
-2025-02-13 23:24:33,371 - get_images - ERROR - Error processing raw data from node_1: Incorrect data size received from camera node.
+  File "C:\ai\TomAISense\camera_node\testing\get_images-fast.py", line 178, in process_raw_data
+    unpacked_data[:, 0::4] = ((reshaped_data[:, :, 0] << 2) | (reshaped_data[:, :, 1] >> 6)) & 0x3FF
+    ~~~~~~~~~~~~~^^^^^^^^^
+ValueError: could not broadcast input array from shape (1296,1152) into shape (1296,576)
+2025-02-14 00:45:03,491 - get_images - INFO - Image transfer time from node_1: 2.8437 seconds
+2025-02-14 00:45:03,491 - get_images - INFO - Image processing time from node_1: 0.0197 seconds
+2025-02-14 00:45:03,492 - get_images - INFO - Total time elapsed: 9.2930 seconds
+2025-02-14 00:45:05,364 - get_images - WARNING - Failed to connect to node_4 (http://192.168.195.56:5001): Connection refused by the server. Retrying...
+2025-02-14 00:45:05,366 - get_images - WARNING - Failed to connect to node_2 (http://192.168.195.73:5001): Connection refused by the server. Retrying...
+2025-02-14 00:45:05,368 - get_images - WARNING - Failed to connect to node_3 (http://192.168.195.70:5001): Connection refused by the server. Retrying...
+2025-02-14 00:45:10,211 - get_images - INFO - Received metadata from node_1: {'filename': 'capture_20250214_004503_1.raw', 'timestamp': '20250214_004503', 'node_id': '1', 'size': 7464960, 'chunk_size': 65536, 'width': 2304, 'height': 1296, 'camera_width': 4608, 'camera_height': 2592, 'bayer_pattern': 'RGGB'}
+2025-02-14 00:45:12,835 - get_images - INFO - Received complete image from node_1
+2025-02-14 00:45:12,835 - get_images - INFO - Stride: 5760, Expected size: 7464960, Received: 7464960
+2025-02-14 00:45:12,841 - get_images - INFO - Reshaped data shape: (1296, 1152, 5)
+2025-02-14 00:45:12,854 - get_images - ERROR - Failed to unpack 10-bit data: could not broadcast input array from shape (1296,1152) into shape (1296,576)
+2025-02-14 00:45:12,856 - get_images - ERROR - Error processing raw data from node_1: could not broadcast input array from shape (1296,1152) into shape (1296,576)
 Traceback (most recent call last):
-  File "C:\ai\TomAISense\camera_node\testing\get_images-fast.py", line 94, in on_image_complete
+  File "C:\ai\TomAISense\camera_node\testing\get_images-fast.py", line 98, in on_image_complete
     process_raw_data(received_data, metadata, node_id)
-  File "C:\ai\TomAISense\camera_node\testing\get_images-fast.py", line 156, in process_raw_data
-    raise ValueError("Incorrect data size received from camera node.")
-ValueError: Incorrect data size received from camera node.
-2025-02-13 23:24:33,371 - get_images - INFO - Image transfer time from node_1: 19.5438 seconds
-2025-02-13 23:24:33,375 - get_images - INFO - Image processing time from node_1: 0.0000 seconds
-2025-02-13 23:24:33,375 - get_images - INFO - Total time elapsed: 27.6194 seconds
-2025-02-13 23:24:38,368 - get_images - WARNING - Failed to connect to node_3 (http://192.168.195.70:5001): Connection refused by the server. Retrying...
-2025-02-13 23:24:38,368 - get_images - WARNING - Failed to connect to node_4 (http://192.168.195.56:5001): Connection refused by the server. Retrying...
-2025-02-13 23:24:38,368 - get_images - WARNING - Failed to connect to node_2 (http://192.168.195.73:5001): Connection refused by the server. Retrying...
-2025-02-13 23:24:41,435 - get_images - INFO - Received metadata from node_1: {'filename': 'capture_20250213_232433_1.raw', 'timestamp': '20250213_232433', 'node_id': '1', 'size': 44789760, 'chunk_size': 65536, 'width': 2304, 'height': 1296, 'camera_width': 4608, 'camera_height': 2592, 'bayer_pattern': 'RGGB'}
-2025-02-13 23:24:49,349 - get_images - WARNING - Failed to connect to node_3 (http://192.168.195.70:5001): Connection refused by the server. Retrying...
-2025-02-13 23:24:49,350 - get_images - WARNING - Failed to connect to node_2 (http://192.168.195.73:5001): Connection refused by the server. Retrying...
-2025-02-13 23:24:49,351 - get_images - WARNING - Failed to connect to node_4 (http://192.168.195.56:5001): Connection refused by the server. Retrying...
-2025-02-13 23:24:59,351 - get_images - WARNING - Failed to connect to node_2 (http://192.168.195.73:5001): Connection refused by the server. Retrying...
-2025-02-13 23:24:59,351 - get_images - WARNING - Failed to connect to node_4 (http://192.168.195.56:5001): Connection refused by the server. Retrying...
-2025-02-13 23:24:59,351 - get_images - WARNING - Failed to connect to node_3 (http://192.168.195.70:5001): Connection refused by the server. Retrying...
-2025-02-13 23:25:01,076 - get_images - INFO - Received complete image from node_1
-2025-02-13 23:25:01,076 - get_images - ERROR - Incorrect data size. Expected: 7464960, got: 44789760
-2025-02-13 23:25:01,076 - get_images - ERROR - Error processing raw data from node_1: Incorrect data size received from camera node.
+  File "C:\ai\TomAISense\camera_node\testing\get_images-fast.py", line 178, in process_raw_data
+    unpacked_data[:, 0::4] = ((reshaped_data[:, :, 0] << 2) | (reshaped_data[:, :, 1] >> 6)) & 0x3FF
+    ~~~~~~~~~~~~~^^^^^^^^^
+ValueError: could not broadcast input array from shape (1296,1152) into shape (1296,576)
+2025-02-14 00:45:12,857 - get_images - INFO - Image transfer time from node_1: 2.6236 seconds
+2025-02-14 00:45:12,858 - get_images - INFO - Image processing time from node_1: 0.0221 seconds
+2025-02-14 00:45:12,858 - get_images - INFO - Total time elapsed: 9.3640 seconds
+2025-02-14 00:45:15,365 - get_images - WARNING - Failed to connect to node_3 (http://192.168.195.70:5001): Connection refused by the server. Retrying...
+2025-02-14 00:45:15,365 - get_images - WARNING - Failed to connect to node_2 (http://192.168.195.73:5001): Connection refused by the server. Retrying...
+2025-02-14 00:45:15,366 - get_images - WARNING - Failed to connect to node_4 (http://192.168.195.56:5001): Connection refused by the server. Retrying...
+2025-02-14 00:45:19,001 - get_images - INFO - Received metadata from node_1: {'filename': 'capture_20250214_004512_1.raw', 'timestamp': '20250214_004512', 'node_id': '1', 'size': 7464960, 'chunk_size': 65536, 'width': 2304, 'height': 1296, 'camera_width': 4608, 'camera_height': 2592, 'bayer_pattern': 'RGGB'}
+2025-02-14 00:45:22,084 - get_images - INFO - Received complete image from node_1
+2025-02-14 00:45:22,087 - get_images - INFO - Stride: 5760, Expected size: 7464960, Received: 7464960
+2025-02-14 00:45:22,111 - get_images - INFO - Reshaped data shape: (1296, 1152, 5)
+2025-02-14 00:45:22,127 - get_images - ERROR - Failed to unpack 10-bit data: could not broadcast input array from shape (1296,1152) into shape (1296,576)
+2025-02-14 00:45:22,128 - get_images - ERROR - Error processing raw data from node_1: could not broadcast input array from shape (1296,1152) into shape (1296,576)
 Traceback (most recent call last):
-  File "C:\ai\TomAISense\camera_node\testing\get_images-fast.py", line 94, in on_image_complete
+  File "C:\ai\TomAISense\camera_node\testing\get_images-fast.py", line 98, in on_image_complete
     process_raw_data(received_data, metadata, node_id)
-  File "C:\ai\TomAISense\camera_node\testing\get_images-fast.py", line 156, in process_raw_data
-    raise ValueError("Incorrect data size received from camera node.")
-ValueError: Incorrect data size received from camera node.
-2025-02-13 23:25:01,076 - get_images - INFO - Image transfer time from node_1: 19.6415 seconds
-2025-02-13 23:25:01,076 - get_images - INFO - Image processing time from node_1: 0.0000 seconds
-2025-02-13 23:25:01,076 - get_images - INFO - Total time elapsed: 27.6960 seconds
-2025-02-13 23:25:08,490 - get_images - INFO - Received metadata from node_1: {'filename': 'capture_20250213_232501_1.raw', 'timestamp': '20250213_232501', 'node_id': '1', 'size': 44789760, 'chunk_size': 65536, 'width': 2304, 'height': 1296, 'camera_width': 4608, 'camera_height': 2592, 'bayer_pattern': 'RGGB'}
-2025-02-13 23:25:09,374 - get_images - WARNING - Failed to connect to node_2 (http://192.168.195.73:5001): Connection refused by the server. Retrying...
-2025-02-13 23:25:09,376 - get_images - WARNING - Failed to connect to node_4 (http://192.168.195.56:5001): Connection refused by the server. Retrying...
-2025-02-13 23:25:09,376 - get_images - WARNING - Failed to connect to node_3 (http://192.168.195.70:5001): Connection refused by the server. Retrying...
+  File "C:\ai\TomAISense\camera_node\testing\get_images-fast.py", line 178, in process_raw_data
+    unpacked_data[:, 0::4] = ((reshaped_data[:, :, 0] << 2) | (reshaped_data[:, :, 1] >> 6)) & 0x3FF
+    ~~~~~~~~~~~~~^^^^^^^^^
+ValueError: could not broadcast input array from shape (1296,1152) into shape (1296,576)
+2025-02-14 00:45:22,131 - get_images - INFO - Image transfer time from node_1: 3.0853 seconds
+2025-02-14 00:45:22,132 - get_images - INFO - Image processing time from node_1: 0.0441 seconds
+2025-02-14 00:45:22,133 - get_images - INFO - Total time elapsed: 9.2700 seconds
+2025-02-14 00:45:26,369 - get_images - WARNING - Failed to connect to node_4 (http://192.168.195.56:5001): Connection refused by the server. Retrying...
+2025-02-14 00:45:26,369 - get_images - WARNING - Failed to connect to node_2 (http://192.168.195.73:5001): Connection refused by the server. Retrying...
+2025-02-14 00:45:26,372 - get_images - WARNING - Failed to connect to node_3 (http://192.168.195.70:5001): Connection refused by the server. Retrying...
+2025-02-14 00:45:28,867 - get_images - INFO - Received metadata from node_1: {'filename': 'capture_20250214_004522_1.raw', 'timestamp': '20250214_004522', 'node_id': '1', 'size': 7464960, 'chunk_size': 65536, 'width': 2304, 'height': 1296, 'camera_width': 4608, 'camera_height': 2592, 'bayer_pattern': 'RGGB'}
+2025-02-14 00:45:31,772 - get_images - INFO - Received complete image from node_1
+2025-02-14 00:45:31,773 - get_images - INFO - Stride: 5760, Expected size: 7464960, Received: 7464960
+2025-02-14 00:45:31,783 - get_images - INFO - Reshaped data shape: (1296, 1152, 5)
+2025-02-14 00:45:31,791 - get_images - ERROR - Failed to unpack 10-bit data: could not broadcast input array from shape (1296,1152) into shape (1296,576)
+2025-02-14 00:45:31,792 - get_images - ERROR - Error processing raw data from node_1: could not broadcast input array from shape (1296,1152) into shape (1296,576)
+Traceback (most recent call last):
+  File "C:\ai\TomAISense\camera_node\testing\get_images-fast.py", line 98, in on_image_complete
+    process_raw_data(received_data, metadata, node_id)
+  File "C:\ai\TomAISense\camera_node\testing\get_images-fast.py", line 178, in process_raw_data
+    unpacked_data[:, 0::4] = ((reshaped_data[:, :, 0] << 2) | (reshaped_data[:, :, 1] >> 6)) & 0x3FF
+    ~~~~~~~~~~~~~^^^^^^^^^
+ValueError: could not broadcast input array from shape (1296,1152) into shape (1296,576)
+2025-02-14 00:45:31,793 - get_images - INFO - Image transfer time from node_1: 2.9054 seconds
+2025-02-14 00:45:31,793 - get_images - INFO - Image processing time from node_1: 0.0208 seconds
+2025-02-14 00:45:31,794 - get_images - INFO - Total time elapsed: 9.6586 seconds
+2025-02-14 00:45:36,364 - get_images - WARNING - Failed to connect to node_4 (http://192.168.195.56:5001): Connection refused by the server. Retrying...
+2025-02-14 00:45:36,366 - get_images - WARNING - Failed to connect to node_2 (http://192.168.195.73:5001): Connection refused by the server. Retrying...
+2025-02-14 00:45:36,366 - get_images - WARNING - Failed to connect to node_3 (http://192.168.195.70:5001): Connection refused by the server. Retrying...

@@ -44,6 +44,8 @@ NODE_ID = os.getenv("NODE_ID", f"camera_node_{os.getpid()}")
 CHUNK_SIZE = 64 * 1024
 DEFAULT_RESOLUTION = "2304x1296"  # Changed to 2304x1296
 SUPPORTED_RESOLUTIONS = ["2304x1296", "1536x864", "1152x648"]  # Add others as needed
+SUPPORTED_FORMATS = ["jpg", "dng"]  # New supported formats
+DEFAULT_FORMAT = "jpg"  # Default format
 
 
 # --- Logging Setup ---
@@ -205,56 +207,36 @@ def get_camera_info() -> Tuple[int, int, str]:
 
 
 
-def capture_image(resolution: str = DEFAULT_RESOLUTION) -> Dict:
-    """Capture raw Bayer data, extract red channel if NoIR, and save."""
-    global camera_info
-    if camera_info is not None:
+def capture_image(resolution: str = DEFAULT_RESOLUTION, format: str = DEFAULT_FORMAT) -> Dict:
+    """Capture image in specified format (jpg or dng) and save."""
+    if camera_info is None:
         camera_info = get_camera_info()  # Ensure camera_info is initialized
 
     ensure_capture_dir()
     timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
-    filename = f"capture_{timestamp}_{NODE_ID}.raw"
+    filename = f"capture_{timestamp}_{NODE_ID}.{format}"
     filepath = os.path.join(CAPTURE_DIR, filename)
-    logger.info(f"Camera info: {camera_info}")
-    width, height = map(int, resolution.split('x'))  # Requested width/height
-    camera_width, camera_height, bayer_pattern = camera_info
+    width, height = map(int, resolution.split('x'))
 
     try:
-        # Use the FULL sensor resolution in --mode, and crop with --width/--height
-        mode_string = f"{camera_width}:{camera_height}:10:P"  # Full resolution
+        # Base command with common parameters
+        base_cmd = f"libcamera-still --nopreview --width {width} --height {height} -t 1000"
+        
+        if format == "jpg":
+            cmd = f"{base_cmd} -o {filepath} --encoding jpg --quality 100"
+        elif format == "dng":
+            cmd = f"{base_cmd} --raw -o {filepath}"
+        else:
+            raise ValueError(f"Unsupported format: {format}")
 
-        cmd = (
-            f"libcamera-raw -t 1000 --nopreview --width {width} --height {height} -o {filepath} --mode {mode_string}"
-        )
         logger.info(f"Executing capture command: {cmd}")
         result = subprocess.run(cmd, shell=True, capture_output=True, text=True, timeout=15)
 
-        # IMPORTANT: Check for errors *before* getting the file size.
         if result.returncode != 0:
             raise Exception(f"Capture failed: {result.stderr}")
 
-        # Wait for the file to be fully written.  libcamera-raw might
-        # still be writing in the background even after subprocess.run
-        # returns.  We'll check the file size repeatedly until it
-        # stabilizes.
-        previous_size = -1
-        current_size = 0
-        while current_size != previous_size:
-            previous_size = current_size
-            time.sleep(0.1)  # Wait a short time
-            with open(filepath, "rb") as f:
-                f.flush()
-                os.fsync(f.fileno())  # Force synchronization
-            current_size = os.path.getsize(filepath)
-
-        file_size = current_size # Use the final, stable size
-
-        logger.info(f"Image captured: {filename} (Size: {file_size/1024:.2f}KB)")
-        logger.info(f"File size immediately after capture: {file_size}")
-
-        # No channel extraction needed for node_1
-
-        logger.info(f"Final file size before return: {file_size}")
+        # Get actual file size
+        file_size = os.path.getsize(filepath)
 
         return {
             "filename": filename,
@@ -263,10 +245,11 @@ def capture_image(resolution: str = DEFAULT_RESOLUTION) -> Dict:
             "size": file_size,
             "width": width,
             "height": height,
-            "camera_width": camera_width,
-            "camera_height": camera_height,
-            "bayer_pattern": bayer_pattern,
+            "format": format,
+            "camera_width": camera_info[0],
+            "camera_height": camera_info[1],
         }
+
     except subprocess.TimeoutExpired:
         logger.error("Image capture timed out.")
         if os.path.exists(filepath):
@@ -292,7 +275,12 @@ async def disconnect(sid):
 @sio.on('capture')
 async def handle_capture(sid, data):
     logger.info(f"Received capture request from {sid}")
-    requested_resolution = data.get('resolution', DEFAULT_RESOLUTION) if isinstance(data, dict) else DEFAULT_RESOLUTION
+    if isinstance(data, dict):
+        requested_resolution = data.get('resolution', DEFAULT_RESOLUTION)
+        requested_format = data.get('format', DEFAULT_FORMAT).lower()
+    else:
+        requested_resolution = DEFAULT_RESOLUTION
+        requested_format = DEFAULT_FORMAT
 
     # Validate the resolution
     if requested_resolution not in SUPPORTED_RESOLUTIONS:
@@ -301,8 +289,15 @@ async def handle_capture(sid, data):
     else:
         resolution = requested_resolution
 
+    # Validate the format
+    if requested_format not in SUPPORTED_FORMATS:
+        logger.warning(f"Unsupported format requested: {requested_format}. Using default: {DEFAULT_FORMAT}")
+        format = DEFAULT_FORMAT
+    else:
+        format = requested_format
+
     try:
-        file_info = capture_image(resolution=resolution)
+        file_info = capture_image(resolution=resolution, format=format)
         await send_image(sid, file_info)
     except Exception as e:
         logger.error(f"Capture failed: {e}")
@@ -310,7 +305,7 @@ async def handle_capture(sid, data):
 
 
 async def send_image(sid, file_info):
-    """Send raw image data in chunks."""
+    """Send image data in chunks."""
     try:
         with open(file_info["filepath"], "rb") as image_file:
             metadata = {
@@ -323,15 +318,20 @@ async def send_image(sid, file_info):
                 "height": file_info["height"],
                 "camera_width": file_info["camera_width"],
                 "camera_height": file_info["camera_height"],
-                "bayer_pattern": file_info["bayer_pattern"],
+                "format": file_info["format"]
             }
             await sio.emit('image_metadata', metadata, room=sid)
 
-            while True:
-                chunk = image_file.read(CHUNK_SIZE)
+            # Read and send the file in chunks
+            remaining_bytes = file_info['size']
+            while remaining_bytes > 0:
+                chunk_size = min(CHUNK_SIZE, remaining_bytes)
+                chunk = image_file.read(chunk_size)
                 if not chunk:
                     break
                 await sio.emit('image_chunk', chunk, room=sid)
+                remaining_bytes -= len(chunk)
+
             await sio.emit('image_complete', room=sid)
             logger.info(f"Sent image {file_info['filename']} to client: {sid}")
     except Exception as e:

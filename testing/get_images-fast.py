@@ -8,6 +8,7 @@ from logging.handlers import RotatingFileHandler
 from datetime import datetime
 import numpy as np
 from typing import Dict, Any
+from PIL import Image  # Add this import for handling JPG images
 
 # --- Logging Setup ---
 LOG_DIR = "logs"
@@ -52,7 +53,7 @@ def write_to_csv(data: Dict[str, Any]):
 
 
 async def receive_images(node_address: str, node_id: str) -> None:
-    """Connects to a single node, receives raw images, and processes them."""
+    """Connects to a single node, receives images, and processes them."""
     sio = socketio.AsyncClient()
     uri = f"http://{node_address}:{5001}"
     received_data = bytearray()
@@ -63,7 +64,8 @@ async def receive_images(node_address: str, node_id: str) -> None:
     @sio.event
     async def connect():
         logger.info(f"Connected to {node_id} at {uri}")
-        await sio.emit('capture', {'resolution': '2304x1296'}) #  Use 2304x1296
+        # Request JPG format. For DNG, use: {'resolution': '2304x1296', 'format': 'dng'}
+        await sio.emit('capture', {'resolution': '2304x1296', 'format': 'jpg'})
 
     @sio.event
     async def disconnect():
@@ -79,8 +81,12 @@ async def receive_images(node_address: str, node_id: str) -> None:
 
     @sio.on('image_chunk')
     async def on_image_chunk(data: bytes):
-        nonlocal received_data
-        received_data.extend(data)
+        nonlocal received_data, metadata
+        if metadata:  # Only process chunks if metadata has been received
+            remaining = metadata['size'] - len(received_data)
+            if remaining > 0:
+                received_data.extend(data[:remaining])
+
 
     @sio.on('image_complete')
     async def on_image_complete():
@@ -91,9 +97,9 @@ async def receive_images(node_address: str, node_id: str) -> None:
             processing_start_time = time.time()
 
             try:
-                process_raw_data(received_data, metadata, node_id)
+                save_image(received_data, metadata, node_id)
             except Exception as e:
-                logger.exception(f"Error processing raw data from {node_id}: {e}")
+                logger.exception(f"Error processing image data from {node_id}: {e}")
 
             processing_time = time.time() - processing_start_time
             total_time = time.time() - total_start_time
@@ -114,7 +120,8 @@ async def receive_images(node_address: str, node_id: str) -> None:
             metadata = None
             start_time = None
             total_start_time = time.time()
-            await sio.emit('capture', {'resolution': '2304x1296'}) #  Use 2304x1296
+            # Request next image
+            await sio.emit('capture', {'resolution': '2304x1296', 'format': 'jpg'})
 
         else:
             logger.warning("Received image_complete without metadata!")
@@ -122,7 +129,7 @@ async def receive_images(node_address: str, node_id: str) -> None:
     @sio.on('capture_error')
     async def on_capture_error(data: Dict[str, str]):
         logger.error(f"Capture error from {node_id}: {data['error']}")
-        await sio.emit('capture', {'resolution': '2304x1296'}) #  Use 2304x1296
+        await sio.emit('capture', {'resolution': '2304x1296', 'format': 'jpg'})
 
     while True:
         try:
@@ -134,81 +141,37 @@ async def receive_images(node_address: str, node_id: str) -> None:
         except Exception as e:
             logger.exception(f"An unexpected error: {e}")
             await asyncio.sleep(5)
-def process_raw_data(data: bytearray, metadata: Dict[str, Any], node_id: str):
-    """Processes raw data (demosaics RGB, prepares NoIR), saves without WR."""
 
-    width = metadata['width']  # Use REQUESTED width
-    height = metadata['height'] # Use REQUESTED height
-    bayer_pattern = metadata['bayer_pattern']
-    camera_width = metadata['camera_width']
-    camera_height = metadata['camera_height']
-    file_size = metadata['size']
+def save_image(data: bytearray, metadata: Dict[str, Any], node_id: str):
+    """Saves the received image data."""
+    format = metadata.get('format', 'jpg')
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    filename = f"image_{timestamp}_{node_id}.{format}"
+    filepath = os.path.join("received_images", filename)
 
-    # Read as uint8 initially
-    raw_array = np.frombuffer(data, dtype=np.uint8)
-
-    # Calculate the expected size based on the STRIDE and HEIGHT
-    stride = (camera_width // 4) * 5
-    expected_size = stride * height
-
-    if len(raw_array) != expected_size:
-        logger.error(f"Incorrect data size. Expected: {expected_size}, got: {len(raw_array)}")
-        raise ValueError("Incorrect data size received from camera node.")
-
-    # Reshape based on stride and height
-    reshaped_data = raw_array.reshape((height, stride))
-
-    # Unpack the 10-bit data
-    unpacked_data = np.zeros((height, width), dtype=np.uint16)
-    unpacked_data[:, 0::4] = ((reshaped_data[:, 0::5] << 2) | (reshaped_data[:, 1::5] >> 6)) & 0x3FF
-    unpacked_data[:, 1::4] = ((reshaped_data[:, 1::5] << 4) | (reshaped_data[:, 2::5] >> 4)) & 0x3FF
-    unpacked_data[:, 2::4] = ((reshaped_data[:, 2::5] << 6) | (reshaped_data[:, 3::5] >> 2)) & 0x3FF
-    unpacked_data[:, 3::4] = ((reshaped_data[:, 3::5] << 8) | reshaped_data[:, 4::5]) & 0x3FF
-
-    raw_image = unpacked_data
-
-    if node_id == "node_1":  # RGB Camera
-        # Correct Bayer Pattern Handling
-        if bayer_pattern.startswith("RGGB"):
-            rgb_image = np.zeros((height, width, 3), dtype=np.uint16)
-            rgb_image[:, :, 0] = raw_image[0::2, 0::2]  # Red
-            rgb_image[:, :, 1] = (raw_image[0::2, 1::2] + raw_image[1::2, 0::2]) // 2  # Green (average)
-            rgb_image[:, :, 2] = raw_image[1::2, 1::2]  # Blue
-        # Add other Bayer patterns as needed (BGGR, GRBG, GBRG)
-        elif bayer_pattern.startswith("BGGR"):
-            rgb_image = np.zeros((height, width, 3), dtype=np.uint16)
-            rgb_image[:, :, 2] = raw_image[0::2, 0::2]  # Blue
-            rgb_image[:, :, 1] = (raw_image[0::2, 1::2] + raw_image[1::2, 0::2]) // 2  # Green (average)
-            rgb_image[:, :, 0] = raw_image[1::2, 1::2]  # Red
-        elif bayer_pattern.startswith("GRBG"):
-            rgb_image = np.zeros((height, width, 3), dtype=np.uint16)
-            rgb_image[:, :, 1] = raw_image[0::2, 0::2]  # Green
-            rgb_image[:, :, 0] = raw_image[0::2, 1::2]  # Red
-            rgb_image[:, :, 2] = raw_image[1::2, 0::2]  # Blue
-            rgb_image[:, :, 1] = (rgb_image[:,:,1] + raw_image[1::2, 1::2])//2 # Average greens
-        elif bayer_pattern.startswith("GBRG"):
-            rgb_image = np.zeros((height, width, 3), dtype=np.uint16)
-            rgb_image[:, :, 1] = raw_image[0::2, 0::2]  # Green
-            rgb_image[:, :, 2] = raw_image[0::2, 1::2]  # Blue
-            rgb_image[:, :, 0] = raw_image[1::2, 0::2]  # Red
-            rgb_image[:, :, 1] = (rgb_image[:,:,1] + raw_image[1::2, 1::2])//2 # Average greens
-
-        else:
-            raise ValueError(f"Unsupported Bayer pattern: {bayer_pattern}")
-
-        logger.info(f"Processed RGB data from {node_id}. Image shape: {rgb_image.shape}")
-        np.save(f"received_images/raw_rgb_{node_id}.npy", rgb_image)  # Save in received_images
-
-    else:  # NoIR Cameras
-        # No channel extraction needed on get_images.py anymore
-        noir_channel = raw_image
-        logger.info(f"Processed NoIR data from {node_id}. Channel shape: {noir_channel.shape}")
-        np.save(f"received_images/raw_noir_{node_id}.npy", noir_channel)  # Save in received_images
+    try:
+        # Simply write the bytes to file - works for both JPG and DNG
+        with open(filepath, 'wb') as f:
+            f.write(data)
+        
+        # For JPG, we can verify it's valid by trying to open it
+        if format == 'jpg':
+            try:
+                with Image.open(filepath) as img:
+                    logger.info(f"Successfully verified JPG image: {filename}")
+            except Exception as e:
+                logger.error(f"Invalid JPG image received: {e}")
+                raise
+        
+        logger.info(f"Saved {format.upper()} image: {filename}")
+    except Exception as e:
+        logger.error(f"Failed to save image: {e}")
+        raise
 
 async def main():
     """Connects to multiple nodes concurrently."""
     nodes = {
-        "node_1": "192.168.47.56",
+        "node_1": "192.168.166.56",
         "node_2": "192.168.195.73",
         "node_3": "192.168.195.70",
         "node_4": "192.168.195.56",
