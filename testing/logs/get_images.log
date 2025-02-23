@@ -120,3 +120,286 @@
 2025-02-23 23:20:44,765 - get_images - INFO - Image transfer time from node_1: 0.4512 seconds
 2025-02-23 23:20:44,766 - get_images - INFO - Image processing time from node_1: 0.0130 seconds
 2025-02-23 23:20:44,766 - get_images - INFO - Total time elapsed: 3.6300 seconds
+2025-02-23 23:29:03,288 - get_images - INFO - Connected to node_4 at http://192.168.166.50:5001
+2025-02-23 23:29:03,527 - get_images - INFO - Connected to node_3 at http://192.168.166.70:5001
+2025-02-23 23:29:03,531 - get_images - INFO - Connected to node_1 at http://192.168.166.56:5001
+2025-02-23 23:29:05,249 - get_images - WARNING - Failed to connect to node_2 (http://192.168.166.73:5001): Cannot connect to host 192.168.166.73:5001 ssl:default [The remote computer refused the network connection]. Retrying...
+2025-02-23 23:29:06,472 - get_images - INFO - Received metadata from node_4: {'filename': 'capture_20250223_232903_4.jpg', 'timestamp': '20250223_232903', 'node_id': '4', 'size': 1181370, 'chunk_size': 65536, 'width': 2304, 'height': 1296, 'format': 'jpg'}
+2025-02-23 23:29:06,737 - get_images - INFO - Received metadata from node_1: {'filename': 'capture_20250223_232903_1.jpg', 'timestamp': '20250223_232903', 'node_id': '1', 'size': 1359073, 'chunk_size': 65536, 'width': 2304, 'height': 1296, 'format': 'jpg'}
+2025-02-23 23:29:06,963 - get_images - INFO - Received metadata from node_3: {'filename': 'capture_20250223_232903_3.jpg', 'timestamp': '20250223_232903', 'node_id': '3', 'size': 1215785, 'chunk_size': 65536, 'width': 2304, 'height': 1296, 'format': 'jpg'}
+2025-02-23 23:29:07,023 - get_images - INFO - Received complete image from node_4
+2025-02-23 23:29:07,075 - get_images - INFO - Successfully verified JPG image: image_20250223_232907_node_4.jpg
+2025-02-23 23:29:07,076 - get_images - INFO - Saved JPG image: image_20250223_232907_node_4.jpg
+2025-02-23 23:29:07,077 - get_images - INFO - Image transfer time from node_4: 0.5523 seconds
+2025-02-23 23:29:07,077 - get_images - INFO - Image processing time from node_4: 0.0528 seconds
+2025-02-23 23:29:07,077 - get_images - INFO - Total time elapsed: 3.9900 seconds
+2025-02-23 23:29:07,704 - get_images - INFO - Received complete image from node_1
+2025-02-23 23:29:07,717 - get_images - INFO - Successfully verified JPG image: image_20250223_232907_node_1.jpg
+2025-02-23 23:29:07,718 - get_images - INFO - Saved JPG image: image_20250223_232907_node_1.jpg
+2025-02-23 23:29:07,719 - get_images - INFO - Image transfer time from node_1: 0.9687 seconds
+2025-02-23 23:29:07,720 - get_images - INFO - Image processing time from node_1: 0.0140 seconds
+2025-02-23 23:29:07,720 - get_images - INFO - Total time elapsed: 4.6331 seconds
+2025-02-23 23:29:07,756 - get_images - INFO - Received complete image from node_3
+2025-02-23 23:29:07,764 - get_images - INFO - Successfully verified JPG image: image_20250223_232907_node_3.jpg
+2025-02-23 23:29:07,765 - get_images - INFO - Saved JPG image: image_20250223_232907_node_3.jpg
+2025-02-23 23:29:07,766 - get_images - INFO - Image transfer time from node_3: 0.7931 seconds
+2025-02-23 23:29:07,766 - get_images - INFO - Image processing time from node_3: 0.0100 seconds
+2025-02-23 23:29:07,767 - get_images - INFO - Total time elapsed: 4.6787 seconds
+2025-02-23 23:29:10,310 - get_images - INFO - Received metadata from node_4: {'filename': 'capture_20250223_232907_4.jpg', 'timestamp': '20250223_232907', 'node_id': '4', 'size': 1163424, 'chunk_size': 65536, 'width': 2304, 'height': 1296, 'format': 'jpg'}
+2025-02-23 23:29:10,391 - get_images - INFO - Connected to node_2 at http://192.168.166.73:5001
+2025-02-23 23:29:10,821 - get_images - INFO - Received metadata from node_1: {'filename': 'capture_20250223_232907_1.jpg', 'timestamp': '20250223_232907', 'node_id': '1', 'size': 1362291, 'chunk_size': 65536, 'width': 2304, 'height': 1296, 'format': 'jpg'}
+2025-02-23 23:29:10,853 - get_images - INFO - Received complete image from node_4
+2025-02-23 23:29:10,862 - get_images - INFO - Successfully verified JPG image: image_20250223_232910_node_4.jpg
+2025-02-23 23:29:10,862 - get_images - INFO - Saved JPG image: image_20250223_232910_node_4.jpg
+2025-02-23 23:29:10,863 - get_images - INFO - Image transfer time from node_4: 0.5437 seconds
+2025-02-23 23:29:10,863 - get_images - INFO - Image processing time from node_4: 0.0097 seconds
+2025-02-23 23:29:10,864 - get_images - INFO - Total time elapsed: 3.7848 seconds
+2025-02-23 23:29:11,243 - get_images - INFO - Received complete image from node_1
+2025-02-23 23:29:11,253 - get_images - INFO - Successfully verified JPG image: image_20250223_232911_node_1.jpg
+2025-02-23 23:29:11,254 - get_images - INFO - Saved JPG image: image_20250223_232911_node_1.jpg
+2025-02-23 23:29:11,254 - get_images - INFO - Image transfer time from node_1: 0.4220 seconds
+2025-02-23 23:29:11,255 - get_images - INFO - Image processing time from node_1: 0.0110 seconds
+2025-02-23 23:29:11,255 - get_images - INFO - Total time elapsed: 3.5321 seconds
+2025-02-23 23:29:11,272 - get_images - INFO - Received metadata from node_3: {'filename': 'capture_20250223_232907_3.jpg', 'timestamp': '20250223_232907', 'node_id': '3', 'size': 1184026, 'chunk_size': 65536, 'width': 2304, 'height': 1296, 'format': 'jpg'}
+2025-02-23 23:29:11,768 - get_images - INFO - Received complete image from node_3
+2025-02-23 23:29:11,779 - get_images - INFO - Successfully verified JPG image: image_20250223_232911_node_3.jpg
+2025-02-23 23:29:11,780 - get_images - INFO - Saved JPG image: image_20250223_232911_node_3.jpg
+2025-02-23 23:29:11,780 - get_images - INFO - Image transfer time from node_3: 0.4969 seconds
+2025-02-23 23:29:11,781 - get_images - INFO - Image processing time from node_3: 0.0110 seconds
+2025-02-23 23:29:11,781 - get_images - INFO - Total time elapsed: 4.0117 seconds
+2025-02-23 23:29:13,792 - get_images - INFO - Received metadata from node_2: {'filename': 'capture_20250223_232910_2.jpg', 'timestamp': '20250223_232910', 'node_id': '2', 'size': 785587, 'chunk_size': 65536, 'width': 2304, 'height': 1296, 'format': 'jpg'}
+2025-02-23 23:29:14,045 - get_images - INFO - Received metadata from node_4: {'filename': 'capture_20250223_232910_4.jpg', 'timestamp': '20250223_232910', 'node_id': '4', 'size': 1178738, 'chunk_size': 65536, 'width': 2304, 'height': 1296, 'format': 'jpg'}
+2025-02-23 23:29:14,151 - get_images - INFO - Received complete image from node_2
+2025-02-23 23:29:14,169 - get_images - INFO - Successfully verified JPG image: image_20250223_232914_node_2.jpg
+2025-02-23 23:29:14,171 - get_images - INFO - Saved JPG image: image_20250223_232914_node_2.jpg
+2025-02-23 23:29:14,171 - get_images - INFO - Image transfer time from node_2: 0.3593 seconds
+2025-02-23 23:29:14,172 - get_images - INFO - Image processing time from node_2: 0.0190 seconds
+2025-02-23 23:29:14,173 - get_images - INFO - Total time elapsed: 11.0834 seconds
+2025-02-23 23:29:14,385 - get_images - INFO - Received metadata from node_1: {'filename': 'capture_20250223_232911_1.jpg', 'timestamp': '20250223_232911', 'node_id': '1', 'size': 1260843, 'chunk_size': 65536, 'width': 2304, 'height': 1296, 'format': 'jpg'}
+2025-02-23 23:29:14,501 - get_images - INFO - Received complete image from node_4
+2025-02-23 23:29:14,520 - get_images - INFO - Successfully verified JPG image: image_20250223_232914_node_4.jpg
+2025-02-23 23:29:14,521 - get_images - INFO - Saved JPG image: image_20250223_232914_node_4.jpg
+2025-02-23 23:29:14,523 - get_images - INFO - Image transfer time from node_4: 0.4576 seconds
+2025-02-23 23:29:14,524 - get_images - INFO - Image processing time from node_4: 0.0200 seconds
+2025-02-23 23:29:14,525 - get_images - INFO - Total time elapsed: 3.6571 seconds
+2025-02-23 23:29:14,996 - get_images - INFO - Received metadata from node_3: {'filename': 'capture_20250223_232911_3.jpg', 'timestamp': '20250223_232911', 'node_id': '3', 'size': 1218075, 'chunk_size': 65536, 'width': 2304, 'height': 1296, 'format': 'jpg'}
+2025-02-23 23:29:14,998 - get_images - INFO - Received complete image from node_1
+2025-02-23 23:29:15,007 - get_images - INFO - Successfully verified JPG image: image_20250223_232914_node_1.jpg
+2025-02-23 23:29:15,008 - get_images - INFO - Saved JPG image: image_20250223_232914_node_1.jpg
+2025-02-23 23:29:15,009 - get_images - INFO - Image transfer time from node_1: 0.6124 seconds
+2025-02-23 23:29:15,009 - get_images - INFO - Image processing time from node_1: 0.0110 seconds
+2025-02-23 23:29:15,010 - get_images - INFO - Total time elapsed: 3.7512 seconds
+2025-02-23 23:30:27,926 - get_images - INFO - Connected to node_3 at http://192.168.166.70:5001
+2025-02-23 23:30:28,111 - get_images - INFO - Connected to node_1 at http://192.168.166.56:5001
+2025-02-23 23:30:28,113 - get_images - INFO - Connected to node_4 at http://192.168.166.50:5001
+2025-02-23 23:30:28,114 - get_images - INFO - Connected to node_2 at http://192.168.166.73:5001
+2025-02-23 23:30:31,137 - get_images - INFO - Received metadata from node_3: {'filename': 'capture_20250223_233027_3.jpg', 'timestamp': '20250223_233027', 'node_id': '3', 'size': 1307106, 'chunk_size': 65536, 'width': 2304, 'height': 1296, 'format': 'jpg'}
+2025-02-23 23:30:31,228 - get_images - INFO - Received metadata from node_4: {'filename': 'capture_20250223_233028_4.jpg', 'timestamp': '20250223_233028', 'node_id': '4', 'size': 1117851, 'chunk_size': 65536, 'width': 2304, 'height': 1296, 'format': 'jpg'}
+2025-02-23 23:30:31,299 - get_images - INFO - Received metadata from node_1: {'filename': 'capture_20250223_233028_1.jpg', 'timestamp': '20250223_233028', 'node_id': '1', 'size': 1299125, 'chunk_size': 65536, 'width': 2304, 'height': 1296, 'format': 'jpg'}
+2025-02-23 23:30:31,347 - get_images - INFO - Received metadata from node_2: {'filename': 'capture_20250223_233028_2.jpg', 'timestamp': '20250223_233028', 'node_id': '2', 'size': 1117226, 'chunk_size': 65536, 'width': 2304, 'height': 1296, 'format': 'jpg'}
+2025-02-23 23:30:32,025 - get_images - INFO - Received complete image from node_3
+2025-02-23 23:30:32,065 - get_images - INFO - Successfully verified JPG image: image_20250223_233032_node_3.jpg
+2025-02-23 23:30:32,066 - get_images - INFO - Saved JPG image: image_20250223_233032_node_3.jpg
+2025-02-23 23:30:32,067 - get_images - INFO - Image transfer time from node_3: 0.8891 seconds
+2025-02-23 23:30:32,068 - get_images - INFO - Image processing time from node_3: 0.0411 seconds
+2025-02-23 23:30:32,069 - get_images - INFO - Total time elapsed: 4.2589 seconds
+2025-02-23 23:30:32,595 - get_images - INFO - Received complete image from node_4
+2025-02-23 23:30:32,604 - get_images - INFO - Successfully verified JPG image: image_20250223_233032_node_4.jpg
+2025-02-23 23:30:32,605 - get_images - INFO - Saved JPG image: image_20250223_233032_node_4.jpg
+2025-02-23 23:30:32,605 - get_images - INFO - Image transfer time from node_4: 1.3680 seconds
+2025-02-23 23:30:32,605 - get_images - INFO - Image processing time from node_4: 0.0090 seconds
+2025-02-23 23:30:32,606 - get_images - INFO - Total time elapsed: 4.7960 seconds
+2025-02-23 23:30:32,717 - get_images - INFO - Received complete image from node_2
+2025-02-23 23:30:32,727 - get_images - INFO - Successfully verified JPG image: image_20250223_233032_node_2.jpg
+2025-02-23 23:30:32,728 - get_images - INFO - Saved JPG image: image_20250223_233032_node_2.jpg
+2025-02-23 23:30:32,729 - get_images - INFO - Image transfer time from node_2: 1.3711 seconds
+2025-02-23 23:30:32,729 - get_images - INFO - Image processing time from node_2: 0.0110 seconds
+2025-02-23 23:30:32,730 - get_images - INFO - Total time elapsed: 4.9201 seconds
+2025-02-23 23:30:32,745 - get_images - INFO - Received complete image from node_1
+2025-02-23 23:30:32,755 - get_images - INFO - Successfully verified JPG image: image_20250223_233032_node_1.jpg
+2025-02-23 23:30:32,756 - get_images - INFO - Saved JPG image: image_20250223_233032_node_1.jpg
+2025-02-23 23:30:32,757 - get_images - INFO - Image transfer time from node_1: 1.4466 seconds
+2025-02-23 23:30:32,757 - get_images - INFO - Image processing time from node_1: 0.0110 seconds
+2025-02-23 23:30:32,758 - get_images - INFO - Total time elapsed: 4.9491 seconds
+2025-02-23 23:30:35,237 - get_images - INFO - Received metadata from node_3: {'filename': 'capture_20250223_233032_3.jpg', 'timestamp': '20250223_233032', 'node_id': '3', 'size': 1308630, 'chunk_size': 65536, 'width': 2304, 'height': 1296, 'format': 'jpg'}
+2025-02-23 23:30:35,718 - get_images - INFO - Received metadata from node_4: {'filename': 'capture_20250223_233032_4.jpg', 'timestamp': '20250223_233032', 'node_id': '4', 'size': 1120030, 'chunk_size': 65536, 'width': 2304, 'height': 1296, 'format': 'jpg'}
+2025-02-23 23:30:35,747 - get_images - INFO - Received complete image from node_3
+2025-02-23 23:30:35,758 - get_images - INFO - Successfully verified JPG image: image_20250223_233035_node_3.jpg
+2025-02-23 23:30:35,759 - get_images - INFO - Saved JPG image: image_20250223_233035_node_3.jpg
+2025-02-23 23:30:35,759 - get_images - INFO - Image transfer time from node_3: 0.5101 seconds
+2025-02-23 23:30:35,760 - get_images - INFO - Image processing time from node_3: 0.0119 seconds
+2025-02-23 23:30:35,760 - get_images - INFO - Total time elapsed: 3.6889 seconds
+2025-02-23 23:30:35,862 - get_images - INFO - Received metadata from node_1: {'filename': 'capture_20250223_233032_1.jpg', 'timestamp': '20250223_233032', 'node_id': '1', 'size': 1300017, 'chunk_size': 65536, 'width': 2304, 'height': 1296, 'format': 'jpg'}
+2025-02-23 23:30:36,047 - get_images - INFO - Received metadata from node_2: {'filename': 'capture_20250223_233032_2.jpg', 'timestamp': '20250223_233032', 'node_id': '2', 'size': 1111557, 'chunk_size': 65536, 'width': 2304, 'height': 1296, 'format': 'jpg'}
+2025-02-23 23:30:36,591 - get_images - INFO - Received complete image from node_4
+2025-02-23 23:30:36,602 - get_images - INFO - Successfully verified JPG image: image_20250223_233036_node_4.jpg
+2025-02-23 23:30:36,603 - get_images - INFO - Saved JPG image: image_20250223_233036_node_4.jpg
+2025-02-23 23:30:36,603 - get_images - INFO - Image transfer time from node_4: 0.8733 seconds
+2025-02-23 23:30:36,604 - get_images - INFO - Image processing time from node_4: 0.0110 seconds
+2025-02-23 23:30:36,604 - get_images - INFO - Total time elapsed: 3.9959 seconds
+2025-02-23 23:30:37,096 - get_images - INFO - Received complete image from node_1
+2025-02-23 23:30:37,112 - get_images - INFO - Successfully verified JPG image: image_20250223_233037_node_1.jpg
+2025-02-23 23:30:37,113 - get_images - INFO - Saved JPG image: image_20250223_233037_node_1.jpg
+2025-02-23 23:30:37,114 - get_images - INFO - Image transfer time from node_1: 1.2344 seconds
+2025-02-23 23:30:37,115 - get_images - INFO - Image processing time from node_1: 0.0170 seconds
+2025-02-23 23:30:37,116 - get_images - INFO - Total time elapsed: 4.3552 seconds
+2025-02-23 23:30:37,119 - get_images - INFO - Received complete image from node_2
+2025-02-23 23:30:37,136 - get_images - INFO - Successfully verified JPG image: image_20250223_233037_node_2.jpg
+2025-02-23 23:30:37,137 - get_images - INFO - Saved JPG image: image_20250223_233037_node_2.jpg
+2025-02-23 23:30:37,138 - get_images - INFO - Image transfer time from node_2: 1.0728 seconds
+2025-02-23 23:30:37,139 - get_images - INFO - Image processing time from node_2: 0.0180 seconds
+2025-02-23 23:30:37,140 - get_images - INFO - Total time elapsed: 4.4072 seconds
+2025-02-23 23:32:45,144 - get_images - INFO - Connected to node_3 at http://192.168.166.70:5001
+2025-02-23 23:32:45,191 - get_images - INFO - Connected to node_1 at http://192.168.166.56:5001
+2025-02-23 23:32:45,193 - get_images - INFO - Connected to node_4 at http://192.168.166.50:5001
+2025-02-23 23:32:45,199 - get_images - INFO - Connected to node_2 at http://192.168.166.73:5001
+2025-02-23 23:32:48,363 - get_images - INFO - Received metadata from node_4: {'filename': 'capture_20250223_233245_4.jpg', 'timestamp': '20250223_233245', 'node_id': '4', 'size': 1150367, 'chunk_size': 65536, 'width': 2304, 'height': 1296, 'format': 'jpg'}
+2025-02-23 23:32:48,376 - get_images - INFO - Received metadata from node_1: {'filename': 'capture_20250223_233245_1.jpg', 'timestamp': '20250223_233245', 'node_id': '1', 'size': 1266000, 'chunk_size': 65536, 'width': 2304, 'height': 1296, 'format': 'jpg'}
+2025-02-23 23:32:48,394 - get_images - INFO - Received metadata from node_3: {'filename': 'capture_20250223_233245_3.jpg', 'timestamp': '20250223_233245', 'node_id': '3', 'size': 1286137, 'chunk_size': 65536, 'width': 2304, 'height': 1296, 'format': 'jpg'}
+2025-02-23 23:32:48,529 - get_images - INFO - Received metadata from node_2: {'filename': 'capture_20250223_233245_2.jpg', 'timestamp': '20250223_233245', 'node_id': '2', 'size': 1092780, 'chunk_size': 65536, 'width': 2304, 'height': 1296, 'format': 'jpg'}
+2025-02-23 23:32:50,560 - get_images - INFO - Received complete image from node_3
+2025-02-23 23:32:50,653 - get_images - INFO - Successfully saved JPG image: image_20250223_233250_node_3.jpg
+2025-02-23 23:32:50,655 - get_images - INFO - Saved JPG image: image_20250223_233250_node_3.jpg (with rotation for node_3)
+2025-02-23 23:32:50,657 - get_images - INFO - Image transfer time from node_3: 2.1662 seconds
+2025-02-23 23:32:50,657 - get_images - INFO - Image processing time from node_3: 0.0963 seconds
+2025-02-23 23:32:50,658 - get_images - INFO - Total time elapsed: 5.6854 seconds
+2025-02-23 23:32:50,766 - get_images - INFO - Received complete image from node_2
+2025-02-23 23:32:50,815 - get_images - INFO - Successfully saved JPG image: image_20250223_233250_node_2.jpg
+2025-02-23 23:32:50,816 - get_images - INFO - Saved JPG image: image_20250223_233250_node_2.jpg (with rotation for node_2)
+2025-02-23 23:32:50,817 - get_images - INFO - Image transfer time from node_2: 2.2379 seconds
+2025-02-23 23:32:50,818 - get_images - INFO - Image processing time from node_2: 0.0500 seconds
+2025-02-23 23:32:50,819 - get_images - INFO - Total time elapsed: 5.8463 seconds
+2025-02-23 23:32:51,295 - get_images - INFO - Received complete image from node_1
+2025-02-23 23:32:51,347 - get_images - INFO - Successfully saved JPG image: image_20250223_233250_node_1.jpg
+2025-02-23 23:32:51,349 - get_images - INFO - Saved JPG image: image_20250223_233250_node_1.jpg (with rotation for node_1)
+2025-02-23 23:32:51,351 - get_images - INFO - Image transfer time from node_1: 2.9191 seconds
+2025-02-23 23:32:51,352 - get_images - INFO - Image processing time from node_1: 0.0550 seconds
+2025-02-23 23:32:51,353 - get_images - INFO - Total time elapsed: 6.3800 seconds
+2025-02-23 23:32:51,527 - get_images - INFO - Received complete image from node_4
+2025-02-23 23:32:51,579 - get_images - INFO - Successfully saved JPG image: image_20250223_233250_node_4.jpg
+2025-02-23 23:32:51,581 - get_images - INFO - Saved JPG image: image_20250223_233250_node_4.jpg (with rotation for node_4)
+2025-02-23 23:32:51,582 - get_images - INFO - Image transfer time from node_4: 3.1643 seconds
+2025-02-23 23:32:51,582 - get_images - INFO - Image processing time from node_4: 0.0550 seconds
+2025-02-23 23:32:51,583 - get_images - INFO - Total time elapsed: 6.6104 seconds
+2025-02-23 23:32:53,926 - get_images - INFO - Received metadata from node_3: {'filename': 'capture_20250223_233250_3.jpg', 'timestamp': '20250223_233250', 'node_id': '3', 'size': 1266069, 'chunk_size': 65536, 'width': 2304, 'height': 1296, 'format': 'jpg'}
+2025-02-23 23:32:53,984 - get_images - INFO - Received metadata from node_2: {'filename': 'capture_20250223_233250_2.jpg', 'timestamp': '20250223_233250', 'node_id': '2', 'size': 1131900, 'chunk_size': 65536, 'width': 2304, 'height': 1296, 'format': 'jpg'}
+2025-02-23 23:32:54,460 - get_images - INFO - Received metadata from node_1: {'filename': 'capture_20250223_233251_1.jpg', 'timestamp': '20250223_233251', 'node_id': '1', 'size': 1263005, 'chunk_size': 65536, 'width': 2304, 'height': 1296, 'format': 'jpg'}
+2025-02-23 23:32:54,751 - get_images - INFO - Received metadata from node_4: {'filename': 'capture_20250223_233251_4.jpg', 'timestamp': '20250223_233251', 'node_id': '4', 'size': 1148118, 'chunk_size': 65536, 'width': 2304, 'height': 1296, 'format': 'jpg'}
+2025-02-23 23:32:55,842 - get_images - INFO - Received complete image from node_3
+2025-02-23 23:32:55,909 - get_images - INFO - Successfully saved JPG image: image_20250223_233255_node_3.jpg
+2025-02-23 23:32:55,911 - get_images - INFO - Saved JPG image: image_20250223_233255_node_3.jpg (with rotation for node_3)
+2025-02-23 23:32:55,914 - get_images - INFO - Image transfer time from node_3: 1.9162 seconds
+2025-02-23 23:32:55,914 - get_images - INFO - Image processing time from node_3: 0.0710 seconds
+2025-02-23 23:32:55,915 - get_images - INFO - Total time elapsed: 5.2545 seconds
+2025-02-23 23:32:56,000 - get_images - INFO - Received complete image from node_2
+2025-02-23 23:32:56,047 - get_images - INFO - Successfully saved JPG image: image_20250223_233255_node_2.jpg
+2025-02-23 23:32:56,048 - get_images - INFO - Saved JPG image: image_20250223_233255_node_2.jpg (with rotation for node_2)
+2025-02-23 23:32:56,049 - get_images - INFO - Image transfer time from node_2: 2.0169 seconds
+2025-02-23 23:32:56,050 - get_images - INFO - Image processing time from node_2: 0.0480 seconds
+2025-02-23 23:32:56,051 - get_images - INFO - Total time elapsed: 5.2286 seconds
+2025-02-23 23:32:56,537 - get_images - INFO - Received complete image from node_1
+2025-02-23 23:32:56,587 - get_images - INFO - Successfully saved JPG image: image_20250223_233255_node_1.jpg
+2025-02-23 23:32:56,589 - get_images - INFO - Saved JPG image: image_20250223_233255_node_1.jpg (with rotation for node_1)
+2025-02-23 23:32:56,591 - get_images - INFO - Image transfer time from node_1: 2.0781 seconds
+2025-02-23 23:32:56,591 - get_images - INFO - Image processing time from node_1: 0.0540 seconds
+2025-02-23 23:32:56,592 - get_images - INFO - Total time elapsed: 5.2373 seconds
+2025-02-23 23:32:58,096 - get_images - INFO - Received complete image from node_4
+2025-02-23 23:32:58,147 - get_images - INFO - Successfully saved JPG image: image_20250223_233255_node_4.jpg
+2025-02-23 23:32:58,148 - get_images - INFO - Saved JPG image: image_20250223_233255_node_4.jpg (with rotation for node_4)
+2025-02-23 23:32:58,150 - get_images - INFO - Image transfer time from node_4: 3.3460 seconds
+2025-02-23 23:32:58,150 - get_images - INFO - Image processing time from node_4: 0.0530 seconds
+2025-02-23 23:32:58,151 - get_images - INFO - Total time elapsed: 6.5657 seconds
+2025-02-23 23:32:59,150 - get_images - INFO - Received metadata from node_3: {'filename': 'capture_20250223_233256_3.jpg', 'timestamp': '20250223_233256', 'node_id': '3', 'size': 1272778, 'chunk_size': 65536, 'width': 2304, 'height': 1296, 'format': 'jpg'}
+2025-02-23 23:32:59,214 - get_images - INFO - Received metadata from node_2: {'filename': 'capture_20250223_233256_2.jpg', 'timestamp': '20250223_233256', 'node_id': '2', 'size': 1092403, 'chunk_size': 65536, 'width': 2304, 'height': 1296, 'format': 'jpg'}
+2025-02-23 23:32:59,760 - get_images - INFO - Received metadata from node_1: {'filename': 'capture_20250223_233256_1.jpg', 'timestamp': '20250223_233256', 'node_id': '1', 'size': 1261591, 'chunk_size': 65536, 'width': 2304, 'height': 1296, 'format': 'jpg'}
+2025-02-23 23:33:01,338 - get_images - INFO - Received metadata from node_4: {'filename': 'capture_20250223_233258_4.jpg', 'timestamp': '20250223_233258', 'node_id': '4', 'size': 1151031, 'chunk_size': 65536, 'width': 2304, 'height': 1296, 'format': 'jpg'}
+2025-02-23 23:33:03,306 - get_images - INFO - Received complete image from node_3
+2025-02-23 23:33:03,380 - get_images - INFO - Successfully saved JPG image: image_20250223_233303_node_3.jpg
+2025-02-23 23:33:03,382 - get_images - INFO - Saved JPG image: image_20250223_233303_node_3.jpg (with rotation for node_3)
+2025-02-23 23:33:03,384 - get_images - INFO - Image transfer time from node_3: 4.1568 seconds
+2025-02-23 23:33:03,384 - get_images - INFO - Image processing time from node_3: 0.0770 seconds
+2025-02-23 23:33:03,385 - get_images - INFO - Total time elapsed: 7.4685 seconds
+2025-02-23 23:33:03,826 - get_images - INFO - Received complete image from node_2
+2025-02-23 23:33:03,877 - get_images - INFO - Successfully saved JPG image: image_20250223_233303_node_2.jpg
+2025-02-23 23:33:03,879 - get_images - INFO - Saved JPG image: image_20250223_233303_node_2.jpg (with rotation for node_2)
+2025-02-23 23:33:03,880 - get_images - INFO - Image transfer time from node_2: 4.6132 seconds
+2025-02-23 23:33:03,881 - get_images - INFO - Image processing time from node_2: 0.0523 seconds
+2025-02-23 23:33:03,882 - get_images - INFO - Total time elapsed: 7.8280 seconds
+2025-02-23 23:33:04,262 - get_images - INFO - Received complete image from node_1
+2025-02-23 23:33:04,319 - get_images - INFO - Successfully saved JPG image: image_20250223_233303_node_1.jpg
+2025-02-23 23:33:04,322 - get_images - INFO - Saved JPG image: image_20250223_233303_node_1.jpg (with rotation for node_1)
+2025-02-23 23:33:04,324 - get_images - INFO - Image transfer time from node_1: 4.5033 seconds
+2025-02-23 23:33:04,324 - get_images - INFO - Image processing time from node_1: 0.0610 seconds
+2025-02-23 23:33:04,325 - get_images - INFO - Total time elapsed: 7.7315 seconds
+2025-02-23 23:33:04,895 - get_images - INFO - Received complete image from node_4
+2025-02-23 23:33:04,948 - get_images - INFO - Successfully saved JPG image: image_20250223_233303_node_4.jpg
+2025-02-23 23:33:04,949 - get_images - INFO - Saved JPG image: image_20250223_233303_node_4.jpg (with rotation for node_4)
+2025-02-23 23:33:04,950 - get_images - INFO - Image transfer time from node_4: 3.5584 seconds
+2025-02-23 23:33:04,951 - get_images - INFO - Image processing time from node_4: 0.0540 seconds
+2025-02-23 23:33:04,952 - get_images - INFO - Total time elapsed: 6.7986 seconds
+2025-02-23 23:33:06,572 - get_images - INFO - Received metadata from node_3: {'filename': 'capture_20250223_233303_3.jpg', 'timestamp': '20250223_233303', 'node_id': '3', 'size': 1276001, 'chunk_size': 65536, 'width': 2304, 'height': 1296, 'format': 'jpg'}
+2025-02-23 23:33:07,471 - get_images - INFO - Received metadata from node_2: {'filename': 'capture_20250223_233303_2.jpg', 'timestamp': '20250223_233303', 'node_id': '2', 'size': 1094742, 'chunk_size': 65536, 'width': 2304, 'height': 1296, 'format': 'jpg'}
+2025-02-23 23:33:07,473 - get_images - INFO - Received metadata from node_1: {'filename': 'capture_20250223_233304_1.jpg', 'timestamp': '20250223_233304', 'node_id': '1', 'size': 1262861, 'chunk_size': 65536, 'width': 2304, 'height': 1296, 'format': 'jpg'}
+2025-02-23 23:33:08,143 - get_images - INFO - Received metadata from node_4: {'filename': 'capture_20250223_233304_4.jpg', 'timestamp': '20250223_233304', 'node_id': '4', 'size': 1153754, 'chunk_size': 65536, 'width': 2304, 'height': 1296, 'format': 'jpg'}
+2025-02-23 23:33:09,457 - get_images - INFO - Received complete image from node_2
+2025-02-23 23:33:09,505 - get_images - INFO - Successfully saved JPG image: image_20250223_233309_node_2.jpg
+2025-02-23 23:33:09,507 - get_images - INFO - Saved JPG image: image_20250223_233309_node_2.jpg (with rotation for node_2)
+2025-02-23 23:33:09,508 - get_images - INFO - Image transfer time from node_2: 1.9862 seconds
+2025-02-23 23:33:09,508 - get_images - INFO - Image processing time from node_2: 0.0500 seconds
+2025-02-23 23:33:09,509 - get_images - INFO - Total time elapsed: 5.6250 seconds
+2025-02-23 23:33:09,759 - get_images - INFO - Received complete image from node_3
+2025-02-23 23:33:09,813 - get_images - INFO - Successfully saved JPG image: image_20250223_233309_node_3.jpg
+2025-02-23 23:33:09,815 - get_images - INFO - Saved JPG image: image_20250223_233309_node_3.jpg (with rotation for node_3)
+2025-02-23 23:33:09,816 - get_images - INFO - Image transfer time from node_3: 3.1878 seconds
+2025-02-23 23:33:09,817 - get_images - INFO - Image processing time from node_3: 0.0560 seconds
+2025-02-23 23:33:09,818 - get_images - INFO - Total time elapsed: 6.4296 seconds
+2025-02-23 23:33:10,039 - get_images - INFO - Received complete image from node_1
+2025-02-23 23:33:10,103 - get_images - INFO - Successfully saved JPG image: image_20250223_233309_node_1.jpg
+2025-02-23 23:33:10,105 - get_images - INFO - Saved JPG image: image_20250223_233309_node_1.jpg (with rotation for node_1)
+2025-02-23 23:33:10,107 - get_images - INFO - Image transfer time from node_1: 2.5658 seconds
+2025-02-23 23:33:10,107 - get_images - INFO - Image processing time from node_1: 0.0674 seconds
+2025-02-23 23:33:10,108 - get_images - INFO - Total time elapsed: 5.7802 seconds
+2025-02-23 23:33:10,659 - get_images - INFO - Received complete image from node_4
+2025-02-23 23:33:10,709 - get_images - INFO - Successfully saved JPG image: image_20250223_233309_node_4.jpg
+2025-02-23 23:33:10,711 - get_images - INFO - Saved JPG image: image_20250223_233309_node_4.jpg (with rotation for node_4)
+2025-02-23 23:33:10,712 - get_images - INFO - Image transfer time from node_4: 2.5173 seconds
+2025-02-23 23:33:10,713 - get_images - INFO - Image processing time from node_4: 0.0520 seconds
+2025-02-23 23:33:10,713 - get_images - INFO - Total time elapsed: 5.7587 seconds
+2025-02-23 23:33:12,738 - get_images - INFO - Received metadata from node_2: {'filename': 'capture_20250223_233309_2.jpg', 'timestamp': '20250223_233309', 'node_id': '2', 'size': 1124276, 'chunk_size': 65536, 'width': 2304, 'height': 1296, 'format': 'jpg'}
+2025-02-23 23:33:12,957 - get_images - INFO - Received metadata from node_3: {'filename': 'capture_20250223_233309_3.jpg', 'timestamp': '20250223_233309', 'node_id': '3', 'size': 1271539, 'chunk_size': 65536, 'width': 2304, 'height': 1296, 'format': 'jpg'}
+2025-02-23 23:33:13,305 - get_images - INFO - Received metadata from node_1: {'filename': 'capture_20250223_233310_1.jpg', 'timestamp': '20250223_233310', 'node_id': '1', 'size': 1260395, 'chunk_size': 65536, 'width': 2304, 'height': 1296, 'format': 'jpg'}
+2025-02-23 23:33:13,830 - get_images - INFO - Received metadata from node_4: {'filename': 'capture_20250223_233310_4.jpg', 'timestamp': '20250223_233310', 'node_id': '4', 'size': 1151607, 'chunk_size': 65536, 'width': 2304, 'height': 1296, 'format': 'jpg'}
+2025-02-23 23:33:14,308 - get_images - INFO - Received complete image from node_2
+2025-02-23 23:33:14,365 - get_images - INFO - Successfully saved JPG image: image_20250223_233314_node_2.jpg
+2025-02-23 23:33:14,367 - get_images - INFO - Saved JPG image: image_20250223_233314_node_2.jpg (with rotation for node_2)
+2025-02-23 23:33:14,368 - get_images - INFO - Image transfer time from node_2: 1.5698 seconds
+2025-02-23 23:33:14,368 - get_images - INFO - Image processing time from node_2: 0.0600 seconds
+2025-02-23 23:33:14,369 - get_images - INFO - Total time elapsed: 4.8582 seconds
+2025-02-23 23:33:14,885 - get_images - INFO - Received complete image from node_1
+2025-02-23 23:33:14,947 - get_images - INFO - Successfully saved JPG image: image_20250223_233314_node_1.jpg
+2025-02-23 23:33:14,949 - get_images - INFO - Saved JPG image: image_20250223_233314_node_1.jpg (with rotation for node_1)
+2025-02-23 23:33:14,951 - get_images - INFO - Image transfer time from node_1: 1.5822 seconds
+2025-02-23 23:33:14,951 - get_images - INFO - Image processing time from node_1: 0.0650 seconds
+2025-02-23 23:33:14,952 - get_images - INFO - Total time elapsed: 4.8424 seconds
+2025-02-23 23:33:15,226 - get_images - INFO - Received complete image from node_3
+2025-02-23 23:33:15,317 - get_images - INFO - Successfully saved JPG image: image_20250223_233314_node_3.jpg
+2025-02-23 23:33:15,319 - get_images - INFO - Saved JPG image: image_20250223_233314_node_3.jpg (with rotation for node_3)
+2025-02-23 23:33:15,321 - get_images - INFO - Image transfer time from node_3: 2.2706 seconds
+2025-02-23 23:33:15,321 - get_images - INFO - Image processing time from node_3: 0.0935 seconds
+2025-02-23 23:33:15,322 - get_images - INFO - Total time elapsed: 5.5028 seconds
+2025-02-23 23:33:15,443 - get_images - INFO - Received complete image from node_4
+2025-02-23 23:33:15,496 - get_images - INFO - Successfully saved JPG image: image_20250223_233314_node_4.jpg
+2025-02-23 23:33:15,498 - get_images - INFO - Saved JPG image: image_20250223_233314_node_4.jpg (with rotation for node_4)
+2025-02-23 23:33:15,499 - get_images - INFO - Image transfer time from node_4: 1.6133 seconds
+2025-02-23 23:33:15,499 - get_images - INFO - Image processing time from node_4: 0.0550 seconds
+2025-02-23 23:33:15,500 - get_images - INFO - Total time elapsed: 4.7848 seconds
+2025-02-23 23:33:17,530 - get_images - INFO - Received metadata from node_2: {'filename': 'capture_20250223_233314_2.jpg', 'timestamp': '20250223_233314', 'node_id': '2', 'size': 1088377, 'chunk_size': 65536, 'width': 2304, 'height': 1296, 'format': 'jpg'}
+2025-02-23 23:33:18,118 - get_images - INFO - Received metadata from node_1: {'filename': 'capture_20250223_233314_1.jpg', 'timestamp': '20250223_233314', 'node_id': '1', 'size': 1243126, 'chunk_size': 65536, 'width': 2304, 'height': 1296, 'format': 'jpg'}
+2025-02-23 23:33:18,485 - get_images - INFO - Received metadata from node_3: {'filename': 'capture_20250223_233315_3.jpg', 'timestamp': '20250223_233315', 'node_id': '3', 'size': 1268198, 'chunk_size': 65536, 'width': 2304, 'height': 1296, 'format': 'jpg'}
+2025-02-23 23:33:18,639 - get_images - INFO - Received metadata from node_4: {'filename': 'capture_20250223_233315_4.jpg', 'timestamp': '20250223_233315', 'node_id': '4', 'size': 1150481, 'chunk_size': 65536, 'width': 2304, 'height': 1296, 'format': 'jpg'}
+2025-02-23 23:33:18,640 - get_images - INFO - Received complete image from node_2
+2025-02-23 23:33:18,690 - get_images - INFO - Successfully saved JPG image: image_20250223_233318_node_2.jpg
+2025-02-23 23:33:18,692 - get_images - INFO - Saved JPG image: image_20250223_233318_node_2.jpg (with rotation for node_2)
+2025-02-23 23:33:18,693 - get_images - INFO - Image transfer time from node_2: 1.1107 seconds
+2025-02-23 23:33:18,694 - get_images - INFO - Image processing time from node_2: 0.0520 seconds
+2025-02-23 23:33:18,695 - get_images - INFO - Total time elapsed: 4.3232 seconds

@@ -2,13 +2,49 @@ class CameraController {
     constructor() {
         this.captureBtn = document.getElementById('captureBtn');
         this.previewContainer = document.getElementById('previewContainer');
+        this.previewImage = document.getElementById('previewImage');
+        this.previewOverlay = document.getElementById('previewOverlay');
         this.toast = new bootstrap.Toast(document.getElementById('captureToast'));
+        this.socket = null;
         
         this.setupEventListeners();
+        this.connectToPreview();
     }
 
     setupEventListeners() {
         this.captureBtn.addEventListener('click', () => this.captureImages());
+        window.addEventListener('beforeunload', () => this.disconnectPreview());
+    }
+
+    connectToPreview() {
+        // Connect to node_1 for preview
+        this.socket = io('http://192.168.166.56:5001');
+
+        this.socket.on('connect', () => {
+            console.log('Connected to preview stream');
+            this.previewOverlay.classList.add('d-none');
+        });
+
+        this.socket.on('disconnect', () => {
+            console.log('Disconnected from preview stream');
+            this.previewOverlay.classList.remove('d-none');
+        });
+
+        this.socket.on('preview_frame', (data) => {
+            this.previewImage.src = 'data:image/jpeg;base64,' + data.frame;
+        });
+
+        this.socket.on('connect_error', (error) => {
+            console.error('Preview connection error:', error);
+            this.previewOverlay.classList.remove('d-none');
+        });
+    }
+
+    disconnectPreview() {
+        if (this.socket) {
+            this.socket.disconnect();
+            this.socket = null;
+        }
     }
 
     async captureImages() {

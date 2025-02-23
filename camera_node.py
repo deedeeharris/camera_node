@@ -16,6 +16,8 @@ from dotenv import load_dotenv
 import socketio
 import numpy as np
 import re
+import threading
+import base64
 
 
 load_dotenv()
@@ -33,6 +35,11 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# --- Global Variables ---
+preview_process = None
+preview_active = False
+preview_lock = threading.Lock()
+
 # --- Configuration ---
 CAPTURE_DIR = "captured_photos"
 LOG_DIR = "logs"
@@ -43,6 +50,8 @@ PORT = int(os.getenv("PORT", 5001))
 NODE_ID = os.getenv("NODE_ID", f"camera_node_{os.getpid()}")
 CHUNK_SIZE = 64 * 1024
 DEFAULT_RESOLUTION = "2304x1296"  # Changed to 2304x1296
+PREVIEW_RESOLUTION = "640x480"  # Lower resolution for preview
+PREVIEW_FPS = 10  # Frame rate for preview
 SUPPORTED_RESOLUTIONS = ["2304x1296", "1536x864", "1152x648"]  # Add others as needed
 SUPPORTED_FORMATS = ["jpg", "dng"]  # New supported formats
 DEFAULT_FORMAT = "jpg"  # Default format
@@ -256,15 +265,101 @@ def capture_image(resolution: str = DEFAULT_RESOLUTION, format: str = DEFAULT_FO
             os.remove(filepath)
         raise HTTPException(status_code=500, detail=str(e))
 
+async def start_preview():
+    """Start the preview stream."""
+    global preview_process, preview_active
+    
+    with preview_lock:
+        if preview_active:
+            return
+        
+        try:
+            # Use libcamera-vid for streaming
+            cmd = [
+                "libcamera-vid",
+                "-t", "0",  # Run indefinitely
+                "--width", "640",
+                "--height", "480",
+                "--framerate", str(PREVIEW_FPS),
+                "--codec", "mjpeg",
+                "--output", "-"  # Output to stdout
+            ]
+            
+            preview_process = subprocess.Popen(
+                cmd,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE
+            )
+            
+            preview_active = True
+            
+            # Start reading frames in a separate thread
+            threading.Thread(target=read_preview_frames, daemon=True).start()
+            
+            logger.info("Preview stream started")
+        except Exception as e:
+            logger.error(f"Failed to start preview: {e}")
+            if preview_process:
+                preview_process.terminate()
+            preview_process = None
+            preview_active = False
+            raise
+
+def read_preview_frames():
+    """Read frames from preview process and emit them via WebSocket."""
+    global preview_process, preview_active
+    
+    try:
+        while preview_active and preview_process:
+            # Read JPEG header (FF D8)
+            while preview_process.stdout.read(2) != b'\xff\xd8':
+                continue
+            
+            # Read until JPEG end (FF D9)
+            frame_data = b'\xff\xd8'
+            while True:
+                byte = preview_process.stdout.read(1)
+                frame_data += byte
+                if len(frame_data) > 2 and frame_data[-2:] == b'\xff\xd9':
+                    break
+            
+            # Convert to base64 and emit
+            frame_base64 = base64.b64encode(frame_data).decode('utf-8')
+            asyncio.run(sio.emit('preview_frame', {'frame': frame_base64}))
+            
+    except Exception as e:
+        logger.error(f"Preview stream error: {e}")
+    finally:
+        stop_preview()
+
+def stop_preview():
+    """Stop the preview stream."""
+    global preview_process, preview_active
+    
+    with preview_lock:
+        preview_active = False
+        if preview_process:
+            try:
+                preview_process.terminate()
+                preview_process.wait(timeout=5)
+            except Exception as e:
+                logger.error(f"Error stopping preview: {e}")
+            finally:
+                preview_process = None
+
 # --- Socket.IO Event Handlers ---
 @sio.event
 async def connect(sid, environ):
     logger.info(f"Client connected: {sid}")
+    if NODE_ID == "node_1":  # Only start preview for node_1
+        await start_preview()
 
 
 @sio.event
 async def disconnect(sid):
     logger.info(f"Client disconnected: {sid}")
+    if NODE_ID == "node_1":  # Only stop preview for node_1
+        stop_preview()
 
 
 @sio.on('capture')
